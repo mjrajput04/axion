@@ -7,6 +7,6 @@ const ThreeScene = dynamic(() => import("@/components/ThreeScene"), { ssr: false
 
 export default function ConditionalThreeScene() {
   const pathname = usePathname();
-  if (pathname === "/about") return null;
+  if (pathname === "/about" || pathname === "/expertise/ai-edge") return null;
   return <ThreeScene />;
 }
