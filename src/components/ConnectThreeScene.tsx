@@ -23,7 +23,7 @@ function SignalWaves() {
     });
   }, []);
 
-  const waveRefs = useRef<(THREE.Points | null)[]>([]);
+  const waveRefs = useRef<(THREE.Points<THREE.BufferGeometry<THREE.NormalBufferAttributes>> | null)[]>([]);
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
@@ -50,7 +50,7 @@ function SignalWaves() {
   return (
     <group ref={groupRef}>
       {waves.map((wave, i) => (
-        <points key={i} ref={(el) => { waveRefs.current[i] = el; }}>
+        <points key={i} ref={(el) => { waveRefs.current[i] = el as THREE.Points<THREE.BufferGeometry<THREE.NormalBufferAttributes>> | null; }}>
           <bufferGeometry>
             <bufferAttribute attach="attributes-position" args={[wave.pos.slice(), 3]} />
           </bufferGeometry>

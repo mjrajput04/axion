@@ -68,14 +68,14 @@ function ParticleNetwork() {
     <>
       <points ref={pointsRef}>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
+          <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         </bufferGeometry>
         <pointsMaterial size={0.12} color="#D4AF37" transparent opacity={0.9} sizeAttenuation blending={THREE.AdditiveBlending} />
       </points>
       
       <lineSegments ref={linesRef}>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" count={connections.length / 3} array={connections} itemSize={3} />
+          <bufferAttribute attach="attributes-position" args={[connections, 3]} />
         </bufferGeometry>
         <lineBasicMaterial color="#C9A85C" transparent opacity={0.15} blending={THREE.AdditiveBlending} />
       </lineSegments>
@@ -198,7 +198,7 @@ function AmbientDust() {
   return (
     <points ref={dustRef}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial size={0.03} color="#D4AF37" transparent opacity={0.3} sizeAttenuation blending={THREE.AdditiveBlending} />
     </points>
