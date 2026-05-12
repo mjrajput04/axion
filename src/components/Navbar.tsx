@@ -11,6 +11,14 @@ const Navbar = () => {
   const [isExpertiseOpen, setIsExpertiseOpen] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // Hide Navbar on all admin, user dashboard, login, and register routes
   if (
     pathname?.startsWith("/admin") || 
@@ -20,14 +28,6 @@ const Navbar = () => {
   ) {
     return null;
   }
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const expertiseLinks = [
     { name: "Labour Codes", href: "/expertise/labour" },
