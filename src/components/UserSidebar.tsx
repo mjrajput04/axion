@@ -18,7 +18,19 @@ import {
   Bell
 } from "lucide-react";
 
-const menuItems = [
+interface IMenuItem {
+  name: string;
+  href: string;
+  icon: React.ElementType;
+  gated?: boolean;
+}
+
+interface IMenuSection {
+  title: string;
+  items: IMenuItem[];
+}
+
+const menuItems: IMenuSection[] = [
   {
     title: "Intelligence",
     items: [
@@ -83,7 +95,9 @@ export function UserSidebar() {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <item.icon className={`w-4 h-4 ${isActive ? "text-[#d4af37]" : "text-[#525252] group-hover:text-[#a3a3a3]"}`} />
+                      {React.createElement(item.icon as React.ComponentType<{className?: string}>, { 
+                        className: `w-4 h-4 ${isActive ? "text-[#d4af37]" : "text-[#525252] group-hover:text-[#a3a3a3]"}` 
+                      })}
                       <span className="text-[11px] font-bold uppercase tracking-widest">{item.name}</span>
                     </div>
                     {item.gated && !isActive && (
