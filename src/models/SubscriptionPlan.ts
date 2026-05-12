@@ -13,9 +13,9 @@ const SubscriptionPlanSchema = new Schema({
   tier: {
     type: String,
     required: true,
-    enum: ['free', 'growth', 'enterprise'],
     unique: true,
     lowercase: true,
+    trim: true,
   },
   name: {
     type: String,
