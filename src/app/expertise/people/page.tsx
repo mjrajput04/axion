@@ -61,7 +61,6 @@ const surfaces = [
 export default function PeopleArchitecture() {
   return (
     <div className="min-h-screen">
-      <PeopleThreeScene />
 
       {/* HERO */}
       <header className="relative min-h-screen flex items-center justify-center bg-transparent pt-20 overflow-hidden">

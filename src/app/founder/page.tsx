@@ -68,7 +68,6 @@ const codified = [
 export default function Founder() {
   return (
     <div className="min-h-screen">
-      <FounderThreeScene />
 
       {/* HERO */}
       <header className="relative min-h-screen flex items-center justify-center bg-transparent pt-20 overflow-hidden">

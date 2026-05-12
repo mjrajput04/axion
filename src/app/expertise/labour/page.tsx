@@ -76,7 +76,6 @@ export default function LabourCodes() {
 
   return (
     <div className="min-h-screen">
-      <LabourThreeScene />
 
       {/* HERO */}
       <header className="relative min-h-screen flex items-center justify-center bg-transparent pt-20 overflow-hidden">

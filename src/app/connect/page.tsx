@@ -30,7 +30,6 @@ export default function Connect() {
 
   return (
     <div className="min-h-screen">
-      <ConnectThreeScene />
 
       {/* HERO */}
       <header className="relative min-h-screen flex items-center justify-center bg-transparent pt-20 overflow-hidden">

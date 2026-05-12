@@ -52,8 +52,7 @@ const movements = [
 export default function About() {
   return (
     <div className="min-h-screen">
-      <AboutThreeScene />
-
+      
       {/* HERO — full viewport */}
       <header className="relative min-h-screen flex items-center justify-center bg-transparent pt-20 overflow-hidden">
         <div className="shell text-center relative z-10">
