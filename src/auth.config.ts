@@ -8,7 +8,8 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isAdminRoute = nextUrl.pathname.startsWith("/admin");
-      const isLoginPage = nextUrl.pathname === "/admin/login";
+      const isUserRoute = nextUrl.pathname.startsWith("/user");
+      const isLoginPage = nextUrl.pathname === "/admin/login" || nextUrl.pathname === "/login";
 
       if (isAdminRoute) {
         if (!isLoginPage && !isLoggedIn) {
@@ -18,6 +19,16 @@ export const authConfig = {
           return Response.redirect(new URL("/admin/dashboard", nextUrl));
         }
       }
+
+      if (isUserRoute) {
+        if (!isLoggedIn) {
+          return false; // Redirect to /login
+        }
+        if (isLoginPage && isLoggedIn) {
+          return Response.redirect(new URL("/user/dashboard", nextUrl));
+        }
+      }
+
       return true;
     },
     async jwt({ token, user }) {

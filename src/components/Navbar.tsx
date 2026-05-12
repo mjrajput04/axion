@@ -11,8 +11,13 @@ const Navbar = () => {
   const [isExpertiseOpen, setIsExpertiseOpen] = useState(false);
   const pathname = usePathname();
 
-  // Hide Navbar on all admin routes
-  if (pathname?.startsWith("/admin")) {
+  // Hide Navbar on all admin, user dashboard, login, and register routes
+  if (
+    pathname?.startsWith("/admin") || 
+    pathname?.startsWith("/user") || 
+    pathname === "/login" || 
+    pathname === "/register"
+  ) {
     return null;
   }
 
@@ -103,6 +108,13 @@ const Navbar = () => {
         </Link>
         <Link href="/connect" className="nav-cta">
           Connect
+        </Link>
+
+        <Link 
+          href="/login" 
+          className="ml-4 px-6 py-2 bg-[#d4af37] text-black text-[10px] font-bold uppercase tracking-[0.2em] rounded-full hover:bg-[#c4a137] transition-all active:scale-[0.98]"
+        >
+          Login
         </Link>
       </div>
     </nav>

@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import { authConfig } from "./auth.config";
 import dbConnect from "@/lib/db";
 import Admin from "@/models/Admin";
+import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -13,22 +14,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!credentials?.email || !credentials?.password) return null;
 
         await dbConnect();
-        const admin = await Admin.findOne({ email: credentials.email });
+        
+        // Try to find in Admin first (for /admin login)
+        let account = await Admin.findOne({ email: credentials.email });
+        
+        // If not found in Admin, try User
+        if (!account) {
+          account = await User.findOne({ email: credentials.email });
+        }
 
-        if (!admin || !admin.password) return null;
+        if (!account || !account.password) return null;
 
         const isPasswordCorrect = await bcrypt.compare(
           credentials.password as string,
-          admin.password
+          account.password
         );
 
         if (!isPasswordCorrect) return null;
 
         return {
-          id: admin._id.toString(),
-          email: admin.email,
-          name: admin.name,
-          role: admin.role,
+          id: account._id.toString(),
+          email: account.email,
+          name: account.name,
+          role: account.role || 'user',
         };
       },
     }),
