@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Mail, Lock, Loader2, Shield } from "lucide-react";
+import { LogIn, Mail, Lock, Loader2, Shield } from "lucide-react";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -25,62 +25,64 @@ export default function AdminLoginPage() {
       });
 
       if (result?.error) {
-        setError("Invalid identity or access key");
+        setError("Invalid email or password");
       } else {
         router.push("/admin/dashboard");
       }
     } catch (err) {
-      setError("System error. Re-initialization required.");
+      setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#050505] font-sans selection:bg-[#d4af37]/10 selection:text-[#d4af37]">
-      <div className="w-full max-w-sm p-10 space-y-10 bg-[#050505] border border-[#1a1a1a] rounded-2xl relative overflow-hidden">
+    <div className="flex items-center justify-center min-h-screen bg-[#0a0a0a] font-sans selection:bg-[#d4af37]/30 selection:text-[#d4af37]">
+      <div className="w-full max-w-md p-10 space-y-10 bg-[#0a0a0a] rounded-3xl border border-[#2a2a2a] shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+        {/* Subtle background glow */}
+        <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#d4af37]/5 rounded-full blur-3xl group-hover:bg-[#d4af37]/10 transition-colors"></div>
         
-        <div className="text-center">
+        <div className="text-center relative">
           <div className="flex justify-center mb-6">
-            <div className="p-3 bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl">
-              <Shield className="w-6 h-6 text-[#e5e5e5]" />
+            <div className="p-4 bg-[#1a1a1a] border border-[#d4af37]/20 rounded-2xl shadow-[0_0_20px_rgba(212,175,55,0.05)] group-hover:border-[#d4af37]/40 transition-colors">
+              <Shield className="w-8 h-8 text-[#d4af37]" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#e5e5e5]">Axion <span className="text-[#525252]">Admin</span></h1>
-          <p className="mt-3 text-[9px] font-bold uppercase tracking-[0.4em] text-[#404040]">Authorization Required</p>
+          <h1 className="text-3xl font-bold tracking-tight text-[#e5e5e5]">Axion <span className="text-[#d4af37]">Admin</span></h1>
+          <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-[#737373]">Authorized Personnel Only</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="mt-10 space-y-6 relative">
           <div className="space-y-5">
             <div>
-              <label className="block text-[9px] font-bold uppercase tracking-[0.2em] text-[#525252] mb-2 px-1">Identity</label>
-              <div className="relative group">
+              <label className="block text-[10px] font-bold uppercase tracking-widest text-[#737373] mb-2 px-1">Identity</label>
+              <div className="relative group/input">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                  <Mail className="w-3.5 h-3.5 text-[#2a2a2a] group-focus-within:text-[#737373] transition-colors" />
+                  <Mail className="w-4 h-4 text-[#525252] group-focus-within/input:text-[#d4af37] transition-colors" />
                 </div>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-11 pr-4 py-3.5 bg-[#080808] border border-[#1a1a1a] rounded-xl text-[#e5e5e5] text-xs placeholder-[#2a2a2a] focus:outline-none focus:border-[#d4af37]/20 transition-all"
+                  className="block w-full pl-11 pr-4 py-4 bg-[#111] border border-[#2a2a2a] rounded-xl text-[#e5e5e5] text-sm placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30 focus:border-[#d4af37]/30 transition-all"
                   placeholder="admin@axion.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[9px] font-bold uppercase tracking-[0.2em] text-[#525252] mb-2 px-1">Access Key</label>
-              <div className="relative group">
+              <label className="block text-[10px] font-bold uppercase tracking-widest text-[#737373] mb-2 px-1">Access Key</label>
+              <div className="relative group/input">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                  <Lock className="w-3.5 h-3.5 text-[#2a2a2a] group-focus-within:text-[#737373] transition-colors" />
+                  <Lock className="w-4 h-4 text-[#525252] group-focus-within/input:text-[#d4af37] transition-colors" />
                 </div>
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-11 pr-4 py-3.5 bg-[#080808] border border-[#1a1a1a] rounded-xl text-[#e5e5e5] text-xs placeholder-[#2a2a2a] focus:outline-none focus:border-[#d4af37]/20 transition-all"
+                  className="block w-full pl-11 pr-4 py-4 bg-[#111] border border-[#2a2a2a] rounded-xl text-[#e5e5e5] text-sm placeholder-[#404040] focus:outline-none focus:ring-1 focus:ring-[#d4af37]/30 focus:border-[#d4af37]/30 transition-all"
                   placeholder="••••••••"
                 />
               </div>
@@ -88,7 +90,7 @@ export default function AdminLoginPage() {
           </div>
 
           {error && (
-            <div className="p-3 text-[9px] font-bold uppercase tracking-widest text-red-900/80 bg-red-900/5 border border-red-900/10 rounded-lg text-center">
+            <div className="p-4 text-[10px] font-bold uppercase tracking-wider text-red-500 bg-red-500/5 border border-red-500/10 rounded-xl text-center">
               {error}
             </div>
           )}
@@ -96,19 +98,19 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center py-4 bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl text-[9px] font-bold uppercase tracking-[0.3em] text-[#a3a3a3] hover:text-[#e5e5e5] hover:border-[#d4af37]/20 transition-all active:scale-[0.98] disabled:opacity-50"
+            className="w-full flex items-center justify-center py-4 px-4 border border-[#d4af37]/20 rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] text-[#e5e5e5] bg-[#1a1a1a] hover:bg-[#d4af37]/10 hover:border-[#d4af37]/40 hover:text-[#d4af37] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
           >
             {loading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
               "Initialize Access"
             )}
           </button>
         </form>
 
-        <div className="text-center pt-2">
-          <p className="text-[8px] font-bold uppercase tracking-[0.5em] text-[#2a2a2a]">
-            V.1.0.SECURE
+        <div className="text-center relative pt-4">
+          <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-[#404040]">
+            System.Axion.v1.0
           </p>
         </div>
       </div>
