@@ -11,6 +11,11 @@ const Navbar = () => {
   const [isExpertiseOpen, setIsExpertiseOpen] = useState(false);
   const pathname = usePathname();
 
+  // Hide Navbar on all admin routes
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
