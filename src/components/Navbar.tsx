@@ -12,56 +12,55 @@ const Navbar = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Hide Navbar on all admin, user dashboard, login, and register routes
   if (
-    pathname?.startsWith("/admin") || 
-    pathname?.startsWith("/user") || 
-    pathname === "/login" || 
+    pathname?.startsWith("/admin") ||
+    pathname?.startsWith("/user") ||
+    pathname === "/login" ||
     pathname === "/register"
   ) {
     return null;
   }
 
   const expertiseLinks = [
-    { name: "Labour Codes", href: "/expertise/labour" },
-    { name: "AI Edge Lab", href: "/expertise/ai-edge" },
-    { name: "Family Business", href: "/expertise/family" },
-    { name: "People Architecture", href: "/expertise/people" },
+    { name: "Labour Codes", href: "/expertise/labour", desc: "Cost · Classification · Compliance" },
+    { name: "AI Edge Lab", href: "/expertise/ai-edge", desc: "Judgment · Architecture · Governance" },
+    { name: "Family Business", href: "/expertise/family", desc: "Ownership · Succession · Institution" },
+    { name: "People Architecture", href: "/expertise/people", desc: "BCR · Structure · Signalling" },
   ];
 
   return (
-    <nav className={`nav ${isScrolled ? "is-scrolled" : ""}`}>
-      <Link href="/" className="brand">
+    <motion.nav
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className={`nav ${isScrolled ? "is-scrolled" : ""}`}
+    >
+      {/* Brand */}
+      <Link href="/" className="brand group">
         Ax<em>ion</em>
         <span className="domain">INDEX</span>
       </Link>
 
-      <div className="flex items-center gap-10">
-        <Link 
-          href="/about" 
-          className={`text-[11px] font-mono tracking-[0.24em] uppercase transition-colors ${
-            pathname === "/about" ? "text-[var(--accent)]" : "text-[var(--fg-3)] hover:text-[var(--fg)]"
-          }`}
-        >
-          About
-        </Link>
+      {/* Nav Links */}
+      <div className="flex items-center gap-8">
+        <NavLink href="/about" label="About" active={pathname === "/about"} />
 
         {/* Expertise Dropdown */}
-        <div 
+        <div
           className="relative"
           onMouseEnter={() => setIsExpertiseOpen(true)}
           onMouseLeave={() => setIsExpertiseOpen(false)}
         >
-          <button 
-            className={`text-[11px] font-mono tracking-[0.24em] uppercase transition-colors flex items-center gap-2 outline-none ${
-              pathname.startsWith("/expertise") ? "text-[var(--accent)]" : "text-[var(--fg-3)] hover:text-[var(--fg)]"
+          <button
+            className={`text-[10.5px] font-mono tracking-[0.24em] uppercase flex items-center gap-2 outline-none transition-colors duration-300 ${
+              pathname.startsWith("/expertise")
+                ? "text-[var(--accent)]"
+                : "text-[var(--fg-3)] hover:text-[var(--fg)]"
             }`}
           >
             Expertise
@@ -69,56 +68,80 @@ const Navbar = () => {
               animate={{ rotate: isExpertiseOpen ? 180 : 0 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
-              <ChevronDown size={12} />
+              <ChevronDown size={11} />
             </motion.div>
           </button>
 
           <AnimatePresence>
             {isExpertiseOpen && (
               <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                initial={{ opacity: 0, y: 8, scale: 0.97 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                 className="nav-dropdown"
               >
-                {expertiseLinks.map((link) => (
-                  <Link 
-                    key={link.href} 
-                    href={link.href}
-                    className={`nav-dropdown-item ${pathname === link.href ? "bg-[var(--line)] text-[var(--fg)]" : ""}`}
-                    onClick={() => setIsExpertiseOpen(false)}
+                {expertiseLinks.map((link, i) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.04 }}
                   >
-                    {link.name}
-                    <span>→</span>
-                  </Link>
+                    <Link
+                      href={link.href}
+                      className={`nav-dropdown-item ${pathname === link.href ? "text-[var(--accent)] bg-[var(--accent-soft)]" : ""}`}
+                      onClick={() => setIsExpertiseOpen(false)}
+                    >
+                      <div>
+                        <div className="text-[10.5px] tracking-[0.2em]">{link.name}</div>
+                        <div className="text-[9px] text-[var(--fg-5)] tracking-[0.1em] mt-0.5 normal-case font-sans">{link.desc}</div>
+                      </div>
+                      <span className="text-[var(--accent)] opacity-0 group-hover:opacity-100">→</span>
+                    </Link>
+                  </motion.div>
                 ))}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        <Link 
-          href="/founder" 
-          className={`text-[11px] font-mono tracking-[0.24em] uppercase transition-colors ${
-            pathname === "/founder" ? "text-[var(--accent)]" : "text-[var(--fg-3)] hover:text-[var(--fg)]"
-          }`}
-        >
-          Founder
-        </Link>
+        <NavLink href="/founder" label="Founder" active={pathname === "/founder"} />
+
         <Link href="/connect" className="nav-cta">
           Connect
         </Link>
 
-        <Link 
-          href="/login" 
-          className="ml-4 px-6 py-2 bg-[#d4af37] text-black text-[10px] font-bold uppercase tracking-[0.2em] rounded-full hover:bg-[#c4a137] transition-all active:scale-[0.98]"
+        <Link
+          href="/login"
+          className="ml-2 px-5 py-2 font-mono text-[9.5px] tracking-[0.22em] uppercase font-semibold rounded-full transition-all duration-300 active:scale-[0.97]"
+          style={{
+            background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
+            color: "#080A0F",
+          }}
         >
           Login
         </Link>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
+
+function NavLink({ href, label, active }: { href: string; label: string; active: boolean }) {
+  return (
+    <Link
+      href={href}
+      className={`text-[10.5px] font-mono tracking-[0.24em] uppercase transition-colors duration-300 relative group ${
+        active ? "text-[var(--accent)]" : "text-[var(--fg-3)] hover:text-[var(--fg)]"
+      }`}
+    >
+      {label}
+      <span
+        className="absolute -bottom-1 left-0 h-[1px] bg-[var(--accent)] transition-all duration-400 origin-left"
+        style={{ width: active ? "100%" : "0%", transform: "scaleX(1)" }}
+      />
+    </Link>
+  );
+}
 
 export default Navbar;
