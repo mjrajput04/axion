@@ -19,7 +19,7 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h1 className="h-display hero-glow leading-[0.95] mb-8 drop-shadow-2xl">
+            <h1 className="h-display hero-glow text-[clamp(64px,9vw,140px)] leading-[0.95] mb-8 drop-shadow-2xl">
               From <s className="opacity-50">ambiguity</s><br />
               to <em className="text-[var(--accent)]">architecture.</em>
             </h1>
