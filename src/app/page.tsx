@@ -66,7 +66,7 @@ export default function Home() {
             </div>
 
             {/* Right side: Stacking Cards */}
-            <div className="flex flex-col gap-[20vh] pb-[20vh]">
+            <div className="flex flex-col gap-[10vh] pb-0">
               {[
                 { num: "01", text: "Growth is <em>accelerating.</em><br>Stability is not.", href: "/expertise/people", icon: <Layers size={24} /> },
                 { num: "02", text: "The organisation behaves differently<br><em>depending on who is in the room.</em>", href: "/expertise/people", icon: <Target size={24} /> },
@@ -78,7 +78,7 @@ export default function Home() {
                 <div 
                   key={i} 
                   className="sticky transition-all duration-500"
-                  style={{ top: `${i * 70}px` }}
+                  style={{ top: `${128 + i * 48}px`, zIndex: 10 + i }}
                 >
                   {/* Signal label pinned outside card — always visible when stacked */}
                   <div className="flex items-center justify-between px-6 py-5 bg-[#0E1117] border border-b-0 border-[rgba(255,255,255,0.08)] rounded-t-[24px]">
