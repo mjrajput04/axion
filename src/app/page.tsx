@@ -78,7 +78,7 @@ export default function Home() {
                 <div 
                   key={i} 
                   className="sticky transition-all duration-500"
-                  style={{ top: `${128 + i * 48}px`, zIndex: 10 + i }}
+                  style={{ top: `${128 + i * 48}px`, zIndex: 10 }}
                 >
                   {/* Signal label pinned outside card — always visible when stacked */}
                   <div className="flex items-center justify-between px-6 py-5 bg-[#0E1117] border border-b-0 border-[rgba(255,255,255,0.08)] rounded-t-[24px]">
