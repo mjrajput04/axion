@@ -440,39 +440,6 @@ export default function Home() {
       </section>
 
 
-      {/* HELD SECTION - Case Studies */}
-      <section className="chapter section-deep" id="held">
-        <div className="shell">
-          <div className="mb-20">
-            <Reveal>
-              <span className="eyebrow mb-6 text-[var(--accent)]">What this has held</span>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="h-section">
-                Architecture is tested <br/>
-                <em className="text-[var(--accent)]">under consequence.</em>
-              </h2>
-            </Reveal>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { num: "01", name: "Udaan", desc: "Scaled from 800 to 4,000 across 22 languages and 28 states. Manning held at 95% through COVID." },
-              { num: "02", name: "Gameskraft", desc: "Held through 28% retroactive GST shock. 97.1% top-performer retention. Zero involuntary layoffs." },
-              { num: "03", name: "Tata Global Beverages", desc: "London-to-Mumbai global HQ relocation, 95%+ retention through the transition." }
-            ].map((item, i) => (
-              <Reveal key={i} delay={i * 0.1}>
-                <div className="cool-card group h-full">
-                  <div className="font-mono text-[10px] text-[var(--accent)] mb-8 opacity-60">[ {item.num} ]</div>
-                  <h3 className="font-serif text-[28px] mb-6 group-hover:text-[var(--accent)] transition-colors duration-500">{item.name}</h3>
-                  <p className="text-[15px] text-[var(--fg-3)] leading-relaxed">{item.desc}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* MAKE IT REAL SECTION - What happens next */}
       <section className="chapter section-deep" id="real">
         <div className="shell">
