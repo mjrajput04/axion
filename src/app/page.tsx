@@ -34,9 +34,6 @@ export default function Home() {
 
           <Reveal delay={0.3}>
             <div className="flex flex-col items-center gap-10">
-              <Link href="/connect" className="nav-cta scale-125 px-12 py-5 bg-[var(--fg)] text-[var(--bg)] border-none hover:bg-[var(--accent)] hover:text-[var(--bg)] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                Start Diagnostic
-              </Link>
               <a className="kbd-arrow text-[var(--fg-3)] hover:text-[var(--accent)]" href="#signals">Read the signal</a>
             </div>
           </Reveal>
@@ -60,15 +57,10 @@ export default function Home() {
                   You need to read <em className="text-[var(--accent)]">what is breaking.</em>
                 </h2>
               </Reveal>
-              <Reveal delay={0.2}>
-                <div className="flex items-center gap-4 text-[var(--fg-4)] font-mono text-[11px] uppercase tracking-widest mb-12">
-                  <Activity size={14} className="text-[var(--accent)]" />
-                  Live Diagnostic Map
-                </div>
-              </Reveal>
+
               <Reveal delay={0.3}>
                 <p className="text-[var(--fg-3)] max-w-[32ch] leading-relaxed">
-                  Scroll to explore the structural signals that indicate architectural drift.
+                  Scroll to explore.
                 </p>
               </Reveal>
             </div>
@@ -85,21 +77,17 @@ export default function Home() {
               ].map((signal, i) => (
                 <div 
                   key={i} 
-                  className="sticky h-fit transition-all duration-500"
-                  style={{ top: `${160 + (i * 24)}px` }}
+                  className="sticky transition-all duration-500"
+                  style={{ top: `${i * 70}px` }}
                 >
+                  {/* Signal label pinned outside card — always visible when stacked */}
+                  <div className="flex items-center justify-between px-6 py-5 bg-[#0E1117] border border-b-0 border-[rgba(255,255,255,0.08)] rounded-t-[24px]">
+                    <span className="font-mono text-[13px] text-[var(--fg-3)] tracking-[0.3em] font-bold">SIGNAL {signal.num}</span>
+                    <div className="text-[var(--fg-4)]">{signal.icon}</div>
+                  </div>
                   <Reveal delay={0.1} className="h-full">
-                    <Link href={signal.href} className="cool-card group block h-full bg-[#0E1117] border-[rgba(255,255,255,0.08)] hover:border-[var(--accent)] transition-all duration-500 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
-                      <div className="flex justify-between items-start mb-12">
-                        <span className="font-mono text-[12px] text-[var(--accent)] tracking-[0.3em] font-bold">SIGNAL {signal.num}</span>
-                        <div className="text-[var(--fg-4)] group-hover:text-[var(--accent)] transition-colors duration-300">
-                          {signal.icon}
-                        </div>
-                      </div>
-                      <h3 className="text-[clamp(24px,3vw,32px)] font-serif leading-[1.3] text-[var(--fg)] mb-12" dangerouslySetInnerHTML={{ __html: signal.text }} />
-                      <div className="flex items-center gap-4 pt-8 border-t border-[var(--line)] font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)] group-hover:text-[var(--fg)] transition-colors">
-                        Diagnose architecture <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
-                      </div>
+                    <Link href={signal.href} className="cool-card group block h-full bg-[#0E1117] border-[rgba(255,255,255,0.08)] hover:border-[var(--accent)] transition-all duration-500 shadow-[0_-20px_50px_rgba(0,0,0,0.5)] !rounded-t-none">
+                      <h3 className="text-[clamp(24px,3vw,32px)] font-serif leading-[1.3] text-[var(--fg)] mb-12 mt-4" dangerouslySetInnerHTML={{ __html: signal.text }} />
                     </Link>
                   </Reveal>
                 </div>
@@ -117,7 +105,7 @@ export default function Home() {
             <div className="lg:sticky lg:top-0 h-screen flex flex-col justify-center py-20 pr-10 z-30 pointer-events-none">
               <div className="pointer-events-auto">
                 <Reveal>
-                  <span className="eyebrow mb-8 text-[var(--accent)]">Engagement Logic</span>
+                  <span className="eyebrow mb-8 text-[var(--accent)]">How We Do It</span>
                 </Reveal>
                 <Reveal delay={0.1}>
                   <h2 className="h-display text-[clamp(32px,4.5vw,56px)] leading-[0.95] mb-10">
@@ -132,9 +120,6 @@ export default function Home() {
                 </Reveal>
                 <Reveal delay={0.3}>
                   <div className="flex flex-col gap-8 pt-12 border-t border-[rgba(255,255,255,0.08)]">
-                    <Link href="/connect" className="nav-cta self-start bg-[var(--fg)] text-[var(--bg)] border-none px-12 py-4 scale-110 font-bold hover:bg-[var(--accent)] transition-all">
-                      Start Diagnostic
-                    </Link>
                     <p className="font-mono text-[11px] tracking-[0.4em] uppercase text-[var(--fg-4)]">Read your organisation properly.</p>
                   </div>
                 </Reveal>
@@ -200,7 +185,7 @@ export default function Home() {
         <div className="shell">
           <div className="mb-24">
             <Reveal>
-              <span className="eyebrow mb-6 text-[var(--accent)]">This is Axion Index</span>
+              <span className="eyebrow mb-6 text-[var(--accent)]">Our Approach at Axion Index</span>
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="h-section">
@@ -235,91 +220,6 @@ export default function Home() {
         <div className="absolute left-[-5%] bottom-[-10%] w-[40%] aspect-square bg-[radial-gradient(circle,rgba(160,160,160,0.03)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
-      {/* BELIEF TO SYSTEM SECTION - Unique Sequential Flow */}
-      <section className="chapter section-deep relative" id="evolution">
-        <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-20 items-start">
-            <div>
-              <Reveal>
-                <span className="eyebrow mb-6 text-[var(--accent)]">What this actually looks like</span>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <h2 className="h-section mb-12">
-                  How a belief becomes <br/>
-                  <em className="text-[var(--accent)]">a system that holds.</em>
-                </h2>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <p className="lead text-[var(--fg-3)]">
-                  That is how organisations stop depending on individuals.
-                </p>
-              </Reveal>
-            </div>
-
-            <div className="relative pl-12 md:pl-24">
-              {/* Vertical Connector Line with Growth Animation */}
-              <motion.div 
-                initial={{ scaleY: 0 }}
-                whileInView={{ scaleY: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-                className="absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-[var(--accent)] via-[var(--accent-2)] to-transparent origin-top"
-              />
-
-              {[
-                { num: "01", text: "A belief becomes a hiring bar." },
-                { num: "02", text: "A hiring bar becomes a decision rule." },
-                { num: "03", text: "A decision rule becomes a repeatable system." }
-              ].map((step, i) => (
-                <div key={i} className="mb-24 last:mb-0 relative">
-                  {/* Step Dot */}
-                  <motion.div 
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 + (i * 0.3), duration: 0.5 }}
-                    className="absolute left-[-52px] md:left-[-100px] top-4 w-4 h-4 rounded-full bg-[var(--bg)] border-2 border-[var(--accent)] z-10 shadow-[0_0_15px_var(--accent)]" 
-                  />
-                  
-                  <Reveal delay={0.3 + (i * 0.2)} x={40}>
-                    <div className="group">
-                      <span className="font-mono text-[10px] tracking-[0.4em] text-[var(--accent)] mb-4 block">[ {step.num} ]</span>
-                      <h3 className="font-serif text-[clamp(18px,2.5vw,32px)] leading-[1.2] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-500">
-                        {step.text}
-                      </h3>
-                    </div>
-                  </Reveal>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ARCHITECTURE LAYERS - Layered Visual */}
-      <section className="chapter section-tint relative overflow-hidden" id="architecture-layers">
-        <div className="shell shell--narrow">
-          <div className="text-center">
-            <Reveal>
-              <span className="eyebrow eyebrow--center mb-6 text-[var(--accent)]">Architecture</span>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="h-display mb-8">
-                Three layers.<br />
-                <em className="text-[var(--accent)]">One operating logic.</em>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <p className="lead mx-auto text-[var(--fg-2)] leading-relaxed">
-                The platform stands on three layers —<br />
-                the founder’s thinking,<br />
-                Axion Index as the codification platform,<br />
-                and the system layer being built on top.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
 
       {/* PRACTICES SECTION - Interactive Accordion */}
       <section className="chapter section-dark overflow-hidden" id="practices">
@@ -459,12 +359,42 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ROLES SECTION - Who We Engage With */}
+      <section className="chapter section-deep" id="roles">
+        <div className="shell">
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(300px,1fr)_1.5fr] gap-16 items-start">
+            <div>
+              <Reveal>
+                <h2 className="h-statement">
+                  Who we engage with <em className="text-[var(--accent)]">depending on where you sit.</em>
+                </h2>
+              </Reveal>
+            </div>
+            
+            <div className="flex flex-col border-t border-[rgba(255,255,255,0.05)]">
+              {[
+                { if: "Founder / CEO", then: "See where the organisation will break — before it does." },
+                { if: "CFO", then: "Read workforce as cost, risk, and control architecture — not headcount." },
+                { if: "CHRO", then: "Stop running HR programs. Start running the operating system underneath them." },
+              ].map((role, i) => (
+                <Reveal key={i} delay={i * 0.1}>
+                  <div className="py-10 border-b border-[rgba(255,255,255,0.05)] group hover:bg-[rgba(255,255,255,0.01)] transition-colors px-4 -mx-4">
+                    <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] mb-4 block">{role.if}</span>
+                    <p className="font-serif text-[24px] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors" dangerouslySetInnerHTML={{ __html: role.then }} />
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* METHOD SECTION - How this is built */}
       <section className="chapter section-tint relative overflow-hidden" id="method">
         <div className="shell">
           <div className="max-w-[800px] mx-auto text-center flex flex-col items-center">
             <Reveal>
-              <span className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">How this is built</span>
+              <span className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">Our Founding Philosophy</span>
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="h-section mb-10">
@@ -502,19 +432,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Final Statement */}
-            <div className="pt-16 border-t border-[rgba(255,255,255,0.05)] w-full">
-              <Reveal delay={0.6}>
-                <p className="font-serif italic text-[clamp(20px,2.5vw,32px)] leading-tight text-[var(--fg-2)] mb-4">
-                  You don’t see frameworks.
-                </p>
-              </Reveal>
-              <Reveal delay={0.7}>
-                <p className="font-serif italic text-[clamp(20px,2.5vw,32px)] leading-tight text-[var(--accent)]">
-                  You see what they fix.
-                </p>
-              </Reveal>
-            </div>
           </div>
         </div>
 
@@ -522,63 +439,6 @@ export default function Home() {
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square bg-[radial-gradient(circle,rgba(160,160,160,0.03)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
-      {/* ROLES SECTION - What this changes */}
-      <section className="chapter section-deep" id="roles">
-        <div className="shell">
-          <div className="grid grid-cols-1 md:grid-cols-[minmax(300px,1fr)_1.5fr] gap-16 items-start">
-            <div>
-              <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">What this changes</span></Reveal>
-              <Reveal delay={0.1}>
-                <h2 className="h-statement">
-                  What this changes <em className="text-[var(--accent)]">depending on where you sit.</em>
-                </h2>
-              </Reveal>
-            </div>
-            
-            <div className="flex flex-col border-t border-[rgba(255,255,255,0.05)]">
-              {[
-                { if: "Founder / CEO", then: "See where the organisation will break — before it does." },
-                { if: "CFO", then: "Read workforce as cost, risk, and control architecture — not headcount." },
-                { if: "CHRO", then: "Stop running HR programs. Start running the operating system underneath them." },
-              ].map((role, i) => (
-                <Reveal key={i} delay={i * 0.1}>
-                  <div className="py-10 border-b border-[rgba(255,255,255,0.05)] group hover:bg-[rgba(255,255,255,0.01)] transition-colors px-4 -mx-4">
-                    <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] mb-4 block">{role.if}</span>
-                    <p className="font-serif text-[24px] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors" dangerouslySetInnerHTML={{ __html: role.then }} />
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PHILOSOPHY SECTION - High Impact Centered */}
-      <section className="chapter section-dark relative overflow-hidden" id="philosophy">
-        <div className="shell text-center">
-          <Reveal>
-            <span className="eyebrow eyebrow--center mb-10 text-[var(--accent)]">Philosophy</span>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <h2 className="h-section mb-10 max-w-[20ch] mx-auto">
-              Architecture is not designed in <em className="text-[var(--accent)]">presentations.</em>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <p className="font-serif italic text-[clamp(20px,2.8vw,36px)] text-[var(--fg-2)] mb-12">
-              It is read in signals.
-            </p>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <p className="body-text mx-auto text-[var(--fg-3)] max-w-[45ch]">
-              We don’t sell services. We read what is already breaking — and build what must hold.
-            </p>
-          </Reveal>
-        </div>
-        
-        {/* Abstract background detail */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(160,160,160,0.03)_0%,transparent_70%)] pointer-events-none" />
-      </section>
 
       {/* HELD SECTION - Case Studies */}
       <section className="chapter section-deep" id="held">
@@ -661,7 +521,6 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.2}>
             <div className="flex flex-wrap justify-center gap-6">
-              <Link className="nav-cta scale-110" href="/connect">Start Diagnostic</Link>
               <a className="ill-btn scale-110" href="#practices">Explore Practices</a>
             </div>
           </Reveal>
