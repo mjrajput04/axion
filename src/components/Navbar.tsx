@@ -25,7 +25,8 @@ const Navbar = () => {
     pathname?.startsWith("/admin") ||
     pathname?.startsWith("/user") ||
     pathname === "/login" ||
-    pathname === "/register"
+    pathname === "/register" ||
+    pathname === "/founder"
   ) {
     return null;
   }
@@ -33,6 +34,8 @@ const Navbar = () => {
   const expertiseLinks = [
     { name: "People Architecture", href: "/expertise/people", desc: "BCR · Structure · Signalling" },
     { name: "AI Edge Lab", href: "/expertise/ai-edge", desc: "Judgment · Architecture · Governance" },
+    { name: "Labour Codes", href: "/expertise/labour", desc: "Cost · Classification · Compliance" },
+    { name: "Family Business", href: "/expertise/family", desc: "Ownership · Succession · Institution" },
   ];
 
   const allLinks = [
@@ -119,8 +122,6 @@ const Navbar = () => {
             </AnimatePresence>
           </div>
 
-          <NavLink href="/expertise/labour" label="Labour Codes" active={pathname === "/expertise/labour"} />
-          <NavLink href="/expertise/family" label="Family Business" active={pathname === "/expertise/family"} />
           <NavLink href="/founder" label="Founder" active={pathname === "/founder"} />
           <NavLink href="/research" label="Research & Journals" active={pathname === "/research"} />
 
