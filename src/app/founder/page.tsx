@@ -382,6 +382,42 @@ export default function Founder() {
       ══════════════════════════════════════════════════════════════════ */}
       <EconomicsSection />
 
+      {/* ── FOUNDER FOOTER ── */}
+      <footer className="relative border-t border-[rgba(255,255,255,0.06)]" style={{ background: "#050505" }}>
+        <div className="flex flex-col items-center justify-center py-16 gap-6">
+          {/* Diamond icon */}
+          <div style={{ color: "rgba(201,168,76,0.5)", fontSize: "28px", lineHeight: 1 }}>◇</div>
+
+          {/* Name + title */}
+          <div className="text-center">
+            <p className="font-serif font-normal mb-1" style={{ fontSize: "clamp(18px,2vw,24px)", color: "#F5F0E8" }}>
+              Nitin Nahata
+            </p>
+            <p className="font-serif font-light" style={{ fontSize: "clamp(12px,1.1vw,15px)", color: "rgba(200,195,185,0.45)" }}>
+              The Operating Architect
+            </p>
+          </div>
+
+          {/* LinkedIn */}
+          <a
+            href="https://www.linkedin.com/in/nitinnahata"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono tracking-[0.35em] uppercase transition-colors duration-300"
+            style={{ fontSize: "11px", color: "#C9A84C" }}
+            onMouseEnter={e => (e.currentTarget.style.color = "#E8C97A")}
+            onMouseLeave={e => (e.currentTarget.style.color = "#C9A84C")}
+          >
+            LinkedIn
+          </a>
+
+          {/* Copyright */}
+          <p className="font-mono tracking-[0.3em] uppercase" style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)" }}>
+            &copy; 2026 Nitin Nahata. All rights reserved.
+          </p>
+        </div>
+      </footer>
+
     </div>
   );
 }
@@ -969,7 +1005,7 @@ function EconomicsSection() {
                 className="p-7"
                 style={{ background: "rgba(18,18,18,0.7)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px" }}
               >
-                <div className="text-[22px] mb-5">{item.icon}</div>
+                <div className="text-[32px] mb-5">{item.icon}</div>
                 <h3 className="font-serif font-normal mb-4" style={{ fontSize: "clamp(16px,1.5vw,20px)", color: "#F5F0E8" }}>
                   {item.title}
                 </h3>
