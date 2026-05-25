@@ -21,27 +21,47 @@ const codified = [
 ];
 
 export default function Founder() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
     <div className="min-h-screen">
 
+      {/* ── HEADER ── */}
+      <nav style={{ position: "sticky", top: 0, zIndex: 200, minHeight: "44px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", background: "rgba(8,8,8,0.94)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "0 52px" }} className="px-4 md:px-[52px]">
+        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: "0.24em", textTransform: "uppercase", color: "#F5F0E8" }}>
+          Nitin Nahata · <Link href="/" style={{ color: "#C9A84C", textDecoration: "none" }}>Axionindex</Link>
+        </div>
+        <div className="hidden md:flex" style={{ alignItems: "center", gap: "28px" }}>
+          {[["#story","Story"],["#roots","Roots"],["#articles","Articles"],["#recognition","Recognition"],["#model","Model"]].map(([href, label]) => (
+            <a key={href} href={href} style={{ fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(200,195,185,0.55)", textDecoration: "none" }}>{label}</a>
+          ))}
+          <Link href="/" style={{ fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", background: "#C9A84C", color: "#080808", padding: "8px 18px", textDecoration: "none" }}>← Home</Link>
+        </div>
+        <div className="flex md:hidden" style={{ alignItems: "center", gap: "12px" }}>
+          <Link href="/" style={{ fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", background: "#C9A84C", color: "#080808", padding: "6px 14px", textDecoration: "none" }}>← Home</Link>
+          <button onClick={() => setMobileOpen(!mobileOpen)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "18px", color: "#F5F0E8", padding: "4px", lineHeight: 1 }} aria-label="Toggle menu">
+            {mobileOpen ? "✕" : "☰"}
+          </button>
+        </div>
+        {mobileOpen && (
+          <div className="flex md:hidden" style={{ width: "100%", flexDirection: "column", borderTop: "1px solid rgba(255,255,255,0.08)", background: "rgba(8,8,8,0.98)", paddingBottom: "12px" }}>
+            {[["#story","Story"],["#roots","Roots"],["#articles","Articles"],["#recognition","Recognition"],["#model","Model"]].map(([href, label]) => (
+              <a key={href} href={href} onClick={() => setMobileOpen(false)} style={{ fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(200,195,185,0.55)", textDecoration: "none", padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>{label}</a>
+            ))}
+          </div>
+        )}
+      </nav>
 
       {/* ══════════════════════════════════════════════════════════════════
           HERO — The Making of the Operating Architect
       ══════════════════════════════════════════════════════════════════ */}
       <header
+        id="story"
         className="relative min-h-screen flex items-stretch overflow-hidden"
         style={{ background: "#080808" }}
       >
-        {/* Back to home arrow — top right */}
-        <Link
-          href="/"
-          className="absolute top-6 right-6 z-20 flex items-center gap-2 font-jetbrains text-[10px] tracking-[0.25em] uppercase text-[var(--fg-4)] hover:text-[var(--fg)] transition-colors duration-300 group"
-        >
-          <span className="group-hover:-translate-x-1 transition-transform duration-300">←</span>
-          Home
-        </Link>
-        {/* LEFT — full-height B&W photo with colour hover */}
-        <div className="hidden md:block w-[42%] lg:w-[45%] relative shrink-0 group/photo">
+        {/* LEFT — full-height photo */}
+        <div className="hidden md:block w-[42%] lg:w-[45%] relative shrink-0">
           <div
             className="absolute inset-0"
             style={{
@@ -50,18 +70,11 @@ export default function Founder() {
               pointerEvents: "none",
             }}
           />
-          {/* B&W — default visible */}
           <img
-            src="/nitishpic.png"
+            src="/nitishhh.png"
             alt="Nitin Nahata"
-            className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 group-hover/photo:opacity-0"
-            style={{ filter: "grayscale(100%)" }}
-          />
-          {/* Colour — visible on hover */}
-          <img
-            src="/nitishcolorfull.png"
-            alt="Nitin Nahata"
-            className="absolute inset-0 w-full h-full object-cover object-top opacity-0 transition-opacity duration-700 group-hover/photo:opacity-100"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ objectPosition: "center 39%" }}
           />
         </div>
 
@@ -370,19 +383,23 @@ export default function Founder() {
       {/* ══════════════════════════════════════════════════════════════════
           THE ROOTS — 2003–2019
       ══════════════════════════════════════════════════════════════════ */}
-      <RootsSection />
+      <div id="roots"><RootsSection /></div>
 
       {/* ══════════════════════════════════════════════════════════════════
           THE SYNTHESIS — Section 4
       ══════════════════════════════════════════════════════════════════ */}
       <SynthesisSection />
 
+      {/* ── FEATURED ARTICLES ── */}
+      <div id="articles"><FeaturedArticlesSection /></div>
+
+      {/* ── AWARDS & EDUCATION ── */}
+      <div id="recognition"><AwardsEducationSection /></div>
+
       {/* ══════════════════════════════════════════════════════════════════
           THE ECONOMICS — Section 5
       ══════════════════════════════════════════════════════════════════ */}
-      <EconomicsSection />
-
-      {/* ── FOUNDER FOOTER ── */}
+      <div id="model"><EconomicsSection /></div>
       <footer className="relative border-t border-[rgba(255,255,255,0.06)]" style={{ background: "#050505" }}>
         <div className="flex flex-col items-center justify-center py-16 gap-6">
           {/* Diamond icon */}
@@ -847,8 +864,7 @@ function EconomicsSection() {
       className="relative"
       style={{
         background: "#050505",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
-        padding: "clamp(80px,12vh,160px) 0",
+        padding: "0 0 clamp(80px,12vh,160px) 0",
       }}
     >
       <div className="shell">
@@ -1023,6 +1039,303 @@ function EconomicsSection() {
           </Reveal>
         </div>
 
+      </div>
+    </section>
+  );
+}
+
+// ─── ARTICLE CARD ─────────────────────────────────────────────────────────────
+
+function ArticleCard({ article, index }: { article: typeof articles[0]; index: number }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.a
+      href={article.link}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-6% 0px" }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      animate={{
+        y: hovered ? -6 : 0,
+        boxShadow: hovered
+          ? "0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.3)"
+          : "0 0 0 1px rgba(255,255,255,0.07)",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "block",
+        background: hovered ? "rgba(24,24,24,0.95)" : "rgba(18,18,18,0.7)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        borderRadius: "6px",
+        padding: "24px 24px 28px",
+        textDecoration: "none",
+        position: "relative",
+        transition: "background 0.25s",
+      }}
+    >
+      {/* Tag */}
+      <span
+        className="font-jetbrains tracking-[0.18em] uppercase inline-block mb-4"
+        style={{
+          fontSize: "9px",
+          color: "#C9A84C",
+          background: "rgba(201,168,76,0.1)",
+          border: "1px solid rgba(201,168,76,0.2)",
+          padding: "3px 8px",
+          borderRadius: "3px",
+        }}
+      >
+        {article.tag}
+      </span>
+
+      {/* Arrow — only visible on hover */}
+      <span
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          color: "#C9A84C",
+          fontSize: "14px",
+          opacity: hovered ? 1 : 0,
+          transition: "opacity 0.2s",
+        }}
+      >
+        ↗
+      </span>
+
+      {/* Title */}
+      <h3
+        className="font-serif font-normal mb-2"
+        style={{
+          fontSize: "clamp(15px,1.3vw,18px)",
+          color: "#F5F0E8",
+          lineHeight: 1.35,
+        }}
+      >
+        {article.title}
+      </h3>
+
+      {/* Subtitle */}
+      <p
+        className="font-sans font-light"
+        style={{
+          fontSize: "clamp(12px,1vw,14px)",
+          color: "rgba(200,195,185,0.45)",
+          lineHeight: 1.5,
+        }}
+      >
+        {article.sub}
+      </p>
+    </motion.a>
+  );
+}
+
+// ─── FEATURED ARTICLES SECTION ───────────────────────────────────────────────
+
+const articles = [
+  { tag: "Talent Development", title: "Fresh Outta Campus: Straight Into the Game", sub: "How Gameskraft is Powering Early Talent", link: "#" },
+  { tag: "AI & HR", title: "Should AI Replace Empathy?", sub: "The Limits of Technology in Hiring", link: "#", highlight: true },
+  { tag: "HR Strategy", title: "What Does HR Want?", sub: "A Deep Dive Into the Wishlist of HR Leaders", link: "#" },
+  { tag: "Employee Experience", title: "Building Employee Experience Framework", sub: "Gameskraft's Approach in the Time of Expansion", link: "#" },
+  { tag: "Performance", title: "Continuous Feedback Through 'Konversations'", sub: "Innovative Performance Management", link: "#" },
+  { tag: "HR Leadership", title: "The Art of Being Relevant", sub: "Where Does the HR Function Stand?", link: "#" },
+  { tag: "Startups", title: "HR in Start-Ups", sub: "Unconventional Wisdom and Constant Re-Alignment", link: "#" },
+  { tag: "Recruitment", title: "Recruiting In-House, Outsourcing, or Hybrid", sub: "Which Hiring Practice Works Best for Startups?", link: "#" },
+  { tag: "Performance", title: "Innovative Performance Management System", sub: "How to Earn Employees' Trust", link: "#" },
+  { tag: "Policy", title: "Are Unlimited Leave Policies Working?", sub: "No Questions Asked Leave Analysis", link: "#" },
+  { tag: "Future of Work", title: "Can a 4-5 Day Workweek Be a Game Changer?", sub: "Exploring Flexible Work in India", link: "#" },
+  { tag: "Industry Insights", title: "Online Gaming Industry in 2023", sub: "A Lot More Than Just Entertainment", link: "#" },
+  { tag: "HR Tech", title: "Beyond Tech", sub: "How Far Can HR Tech Address Human Emotions?", link: "#" },
+  { tag: "HR Tech", title: "HR Tech Tools Defining 2023", sub: "Industry Trends and Innovations", link: "#", highlight: true },
+];
+
+function FeaturedArticlesSection() {
+  return (
+    <section
+      className="relative"
+      style={{
+        background: "#050505",
+        padding: "0 0 clamp(80px,12vh,140px) 0",
+      }}
+    >
+      <div className="shell">
+        {/* Header */}
+        <div className="text-center mb-14">
+          <Reveal>
+            <span
+              className="font-jetbrains tracking-[0.35em] uppercase block mb-4"
+              style={{ fontSize: "11px", color: "#C9A84C" }}
+            >
+              THOUGHT LEADERSHIP
+            </span>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <h2
+              className="font-serif font-normal mb-4"
+              style={{ fontSize: "clamp(32px,4vw,56px)", color: "#F5F0E8" }}
+            >
+              Featured Articles
+            </h2>
+          </Reveal>
+          <Reveal delay={0.14}>
+            <p
+              className="font-sans font-light"
+              style={{ fontSize: "clamp(13px,1.1vw,16px)", color: "rgba(200,195,185,0.5)", maxWidth: "48ch", margin: "0 auto" }}
+            >
+              Insights featured in Economic Times, Financial Express, Moneycontrol, and more.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Grid */}
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          style={{ gap: "16px" }}
+        >
+          {articles.map((article, i) => (
+            <ArticleCard key={i} article={article} index={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── AWARDS & EDUCATION SECTION ──────────────────────────────────────────────
+
+function AwardsEducationSection() {
+  const honours = [
+    "Jombay's HR 40 Under 40",
+    "Economic Times Human Capital Awards",
+    "BW Businessworld HR Excellence Awards",
+    "Two Harvard Business Publishing Case Studies",
+  ];
+
+  return (
+    <section
+      className="relative"
+      style={{
+        background: "#050505",
+        padding: "0 0 clamp(80px,12vh,140px) 0",
+      }}
+    >
+      <div className="shell">
+        {/* Header */}
+        <div className="text-center mb-14">
+          <Reveal>
+            <span
+              className="font-jetbrains tracking-[0.35em] uppercase block mb-4"
+              style={{ fontSize: "11px", color: "#C9A84C" }}
+            >
+              RECOGNITION
+            </span>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <h2
+              className="font-serif font-normal"
+              style={{ fontSize: "clamp(32px,4vw,56px)", color: "#F5F0E8" }}
+            >
+              Awards &amp; Education
+            </h2>
+          </Reveal>
+        </div>
+
+        {/* Two column grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "48px", maxWidth: "860px", margin: "0 auto" }}>
+
+          {/* LEFT — Honours */}
+          <Reveal delay={0.1}>
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <span style={{ fontSize: "18px", color: "#C9A84C" }}>◎</span>
+                <h3 className="font-serif font-normal" style={{ fontSize: "clamp(18px,2vw,24px)", color: "#F5F0E8" }}>
+                  Honours
+                </h3>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {honours.map((h, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: "rgba(18,18,18,0.7)",
+                      border: "1px solid rgba(255,255,255,0.07)",
+                      borderRadius: "6px",
+                      padding: "14px 18px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                    }}
+                  >
+                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#C9A84C", flexShrink: 0 }} />
+                    <span className="font-sans font-light" style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.8)" }}>
+                      {h}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          {/* RIGHT — Education + Based In */}
+          <Reveal delay={0.16}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+
+              {/* Education */}
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <span style={{ fontSize: "18px", color: "#C9A84C" }}>🎓</span>
+                  <h3 className="font-serif font-normal" style={{ fontSize: "clamp(18px,2vw,24px)", color: "#F5F0E8" }}>
+                    Education
+                  </h3>
+                </div>
+                <div
+                  style={{
+                    background: "rgba(18,18,18,0.7)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    borderRadius: "6px",
+                    padding: "20px 22px",
+                  }}
+                >
+                  <p className="font-serif font-normal mb-2" style={{ fontSize: "clamp(14px,1.2vw,17px)", color: "#F5F0E8" }}>
+                    TISS Mumbai
+                  </p>
+                  <p className="font-sans font-light" style={{ fontSize: "clamp(12px,1vw,14px)", color: "rgba(200,195,185,0.5)", lineHeight: 1.65 }}>
+                    Tata Institute of Social Sciences — blending academic rigor with lived experience across corporate giants and startup insurgents.
+                  </p>
+                </div>
+              </div>
+
+              {/* Based In */}
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <span style={{ fontSize: "18px", color: "#C9A84C" }}>◎</span>
+                  <h3 className="font-serif font-normal" style={{ fontSize: "clamp(18px,2vw,24px)", color: "#F5F0E8" }}>
+                    Based In
+                  </h3>
+                </div>
+                <div
+                  style={{
+                    background: "rgba(18,18,18,0.7)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    borderRadius: "6px",
+                    padding: "20px 22px",
+                  }}
+                >
+                  <p className="font-serif font-normal mb-2" style={{ fontSize: "clamp(14px,1.2vw,17px)", color: "#F5F0E8" }}>
+                    Bangalore, India
+                  </p>
+                  <p className="font-sans font-light" style={{ fontSize: "clamp(12px,1vw,14px)", color: "rgba(200,195,185,0.5)", lineHeight: 1.65 }}>
+                    Advising organisations on scaling strategies, leadership design, culture architecture, and sustainable growth practices.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </Reveal>
+
+        </div>
       </div>
     </section>
   );
