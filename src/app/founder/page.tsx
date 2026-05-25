@@ -185,7 +185,7 @@ export default function Founder() {
           </Reveal>
 
           {/* Story cards */}
-          <div className="flex flex-col gap-6 max-w-[680px] mx-auto">
+          <div className="flex flex-col gap-6 max-w-[900px] mx-auto">
 
             {/* Card 1 — The Origins */}
             <motion.div
@@ -197,12 +197,12 @@ export default function Founder() {
               style={{
                 background: "rgba(18,18,18,0.7)",
                 border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "12px",
+                borderRadius: "4px",
               }}
             >
               <span
                 className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
-                style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}
+                style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)" }}
               >
                 DELHI · A MARWARI HOUSEHOLD
               </span>
@@ -241,12 +241,12 @@ export default function Founder() {
               style={{
                 background: "rgba(18,18,18,0.7)",
                 border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "12px",
+                borderRadius: "4px",
               }}
             >
               <span
                 className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
-                style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}
+                style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)" }}
               >
                 DELHI · 2002 — SRCC VS. BANGALORE
               </span>
@@ -285,12 +285,12 @@ export default function Founder() {
               style={{
                 background: "rgba(18,18,18,0.7)",
                 border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "12px",
+                borderRadius: "4px",
               }}
             >
               <span
                 className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
-                style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}
+                style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)" }}
               >
                 BANGALORE · 2002–2005
               </span>
@@ -329,12 +329,12 @@ export default function Founder() {
               style={{
                 background: "rgba(18,18,18,0.7)",
                 border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "12px",
+                borderRadius: "4px",
               }}
             >
               <span
                 className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
-                style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}
+                style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)" }}
               >
                 MUMBAI
               </span>
@@ -382,138 +382,6 @@ export default function Founder() {
       ══════════════════════════════════════════════════════════════════ */}
       <EconomicsSection />
 
-      {/* DEFINING INSIGHT */}
-      <section className="chapter section-dark relative" id="insight">
-        <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-16 items-start">
-            <motion.div initial={{ opacity: 0, x: -60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-10% 0px" }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}>
-              <Reveal><span className="eyebrow mb-6 text-[var(--accent)]">The defining insight</span></Reveal>
-              <p className="font-serif text-[clamp(20px,2.4vw,32px)] leading-[1.5] text-[var(--fg-2)]">
-                Most failures are not strategy failures. They are people-system failures that happen silently, long before anyone notices. By the time they show up as attrition or culture issues, the damage is already structural.
-              </p>
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, x: 60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-10% 0px" }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-              className="p-10 glass-card">
-              <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] opacity-60 block mb-6">The thesis · in his words</span>
-              <p className="font-serif italic text-[clamp(18px,2vw,26px)] leading-[1.6] text-[var(--fg-2)] mb-8">
-                &ldquo;I architect order before scale demands it. The work is to make the patterns survive the person.&rdquo;
-              </p>
-              <div className="pt-6 border-t border-[var(--line)]">
-                <p className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-5)]">— Nitin Nahata · Founder · Axion Index</p>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* CAREER ARC */}
-      <section className="chapter section-deep relative" id="career">
-        <div className="shell">
-          <div className="mb-20">
-            <Reveal><span className="eyebrow mb-4 text-[var(--accent)]">§F · 03 · The career arc</span></Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="h-section mb-4">
-                22 years · 4 institutions.<br />
-                <em>Each a different stress test.</em>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <p className="lead text-[var(--fg-3)] max-w-[52ch]">
-                Twenty-two years inside the systems beneath organisations. Four institutions, sequenced. Each one a different stress test of the same underlying question: how do you build a people architecture that survives the person who built it?
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="flex flex-col">
-            {career.map((item, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -70 : 70 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-10% 0px" }}
-                transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.04 }}
-                className="grid grid-cols-1 md:grid-cols-[100px_1fr] lg:grid-cols-[100px_1fr_1fr_160px] gap-6 md:gap-8 lg:gap-10 py-12 border-b border-[var(--line)] group items-start hover:bg-[rgba(201,168,76,0.01)] transition-colors px-4 -mx-4"
-              >
-                <div>
-                  <span className="font-serif italic text-[clamp(28px,3vw,42px)] text-[var(--accent)] leading-[0.85] opacity-25 group-hover:opacity-90 transition-opacity duration-500 block">
-                    {item.code}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="font-serif text-[clamp(18px,2vw,26px)] font-medium leading-[1.2] text-[var(--fg)] mb-2 group-hover:text-[var(--accent)] transition-colors duration-500">
-                    {item.full}
-                  </h3>
-                  <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--fg-4)]">{item.sub}</span>
-                </div>
-                <p className="text-[15px] leading-[1.65] text-[var(--fg-3)]">{item.body}</p>
-                <div className="p-5 glass-card self-start text-center">
-                  <div className="font-serif italic text-[clamp(24px,2.5vw,36px)] text-[var(--accent)] leading-[1] mb-2">{item.stat}</div>
-                  <p className="font-mono text-[9px] tracking-widest uppercase text-[var(--fg-4)] leading-[1.5]">{item.statLabel}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHAT GOT CODIFIED */}
-      <section className="chapter section-dark relative" id="codified">
-        <div className="shell">
-          <div className="mb-20">
-            <Reveal><span className="eyebrow mb-4 text-[var(--accent)]">§F · 04 · What got codified</span></Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="h-section">
-                The work,<br />
-                <em>made transferable.</em>
-              </h2>
-            </Reveal>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {codified.map((item, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-10% 0px" }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
-              >
-                <motion.div whileHover={{ y: -4, borderColor: "var(--line-gold)" }} transition={{ duration: 0.3 }} className="cool-card group h-full">
-                  <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] opacity-60 mb-4 block">{item.label}</span>
-                  <h3 className="font-serif text-[clamp(18px,2vw,24px)] text-[var(--fg)] mb-4 group-hover:text-[var(--accent)] transition-colors duration-500">{item.title}</h3>
-                  <p className="text-[14px] leading-[1.7] text-[var(--fg-3)]">{item.body}</p>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CLOSING CTA */}
-      <section className="chapter py-40 overflow-hidden relative" style={{ background: "linear-gradient(180deg, var(--bg) 0%, #0C0E14 50%, var(--bg) 100%)" }}>
-        <div className="shell text-center relative z-10">
-          <Reveal><span className="eyebrow eyebrow--center mb-10 text-[var(--accent)]">Continue</span></Reveal>
-          <Reveal delay={0.1}>
-            <h2 className="h-display mb-12">
-              From ambiguity<br />
-              to <em>architecture.</em>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <div className="flex flex-wrap justify-center gap-5">
-              <Link href="/about" className="nav-cta">About Axion Index</Link>
-              <Link href="/#practices" className="nav-cta">The four practices</Link>
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                <Link href="/connect" className="inline-flex items-center gap-3 px-10 py-5 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
-                  style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F", boxShadow: "0 0 40px rgba(201,168,76,0.2)" }}>
-                  Begin a diagnostic <ArrowRight size={14} />
-                </Link>
-              </motion.div>
-            </div>
-          </Reveal>
-        </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%)" }} />
-      </section>
     </div>
   );
 }
@@ -949,69 +817,6 @@ function EconomicsSection() {
     >
       <div className="shell">
 
-        {/* Header */}
-        <div className="text-center mb-16">
-          <Reveal>
-            <span className="font-serif tracking-[0.35em] uppercase block mb-4" style={{ fontSize: "12px", color: "#C9A84C" }}>
-              THE ECONOMICS
-            </span>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h2 className="font-serif font-normal leading-[1.05] tracking-[-0.02em] mb-6" style={{ fontSize: "clamp(28px,4vw,58px)", color: "#F5F0E8" }}>
-              The Proof Behind the Philosophy
-            </h2>
-          </Reveal>
-          <Reveal delay={0.14}>
-            <p className="font-serif font-normal" style={{ fontSize: "clamp(16px,1.5vw,22px)", color: "rgba(200,195,185,0.55)" }}>
-              Every Claim, Mapped to Evidence
-            </p>
-          </Reveal>
-        </div>
-
-        {/* Proof rows */}
-        <div className="flex flex-col gap-4 max-w-[760px] mx-auto mb-20">
-          {PROOF_ROWS.map((row, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-6% 0px" }}
-              transition={{ duration: 0.55, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-              className="p-6 sm:p-8"
-              style={{ background: "rgba(18,18,18,0.7)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px" }}
-            >
-              {/* Stat + label row */}
-              <div className="flex items-baseline gap-5 mb-5">
-                <span className="font-serif font-normal leading-none" style={{ fontSize: "clamp(28px,3.5vw,48px)", color: "#C9A84C" }}>
-                  {row.stat}
-                </span>
-                <span className="font-serif font-normal" style={{ fontSize: "clamp(14px,1.3vw,18px)", color: "#F5F0E8" }}>
-                  {row.label}
-                </span>
-              </div>
-              {/* Divider */}
-              <div style={{ height: "1px", background: "rgba(255,255,255,0.07)", marginBottom: "16px" }} />
-              {/* 3-col grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {[
-                  { col: "CONTEXT",      val: row.context },
-                  { col: "INTERVENTION", val: row.intervention },
-                  { col: "RESULT",       val: row.result },
-                ].map((c, j) => (
-                  <div key={j}>
-                    <span className="font-serif tracking-[0.3em] uppercase block mb-2" style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)" }}>
-                      {c.col}
-                    </span>
-                    <p className="font-serif font-light leading-[1.55]" style={{ fontSize: "clamp(12px,1vw,14px)", color: "rgba(200,195,185,0.65)" }}>
-                      {c.val}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
         {/* The Signature Model */}
         <div className="text-center mb-10">
           <Reveal>
@@ -1122,61 +927,64 @@ function EconomicsSection() {
           </Reveal>
         </div>
 
-        {/* Gameskraft System Transformation */}
-        <div className="text-center mb-10 mt-20">
-          <Reveal>
-            <h3 className="font-serif font-normal" style={{ fontSize: "clamp(24px,3vw,42px)", color: "#F5F0E8" }}>
-              Gameskraft System Transformation
-            </h3>
+        {/* What Comes Next */}
+        <div className="mt-24 pt-16" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="text-center mb-14">
+            <Reveal>
+              <span className="font-serif tracking-[0.35em] uppercase block mb-4" style={{ fontSize: "11px", color: "#C9A84C" }}>
+                WHAT COMES NEXT
+              </span>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <h2 className="font-serif font-normal leading-[1.05] tracking-[-0.02em]" style={{ fontSize: "clamp(28px,4vw,52px)", color: "#F5F0E8" }}>
+                The arc continues
+              </h2>
+            </Reveal>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-[860px] mx-auto mb-16">
+            {[
+              {
+                icon: "📖",
+                title: "The Books",
+                body: <><em>Baptism by Chaos</em> — the startup HR survival manual. <em>The Operating Architect</em> — the codified philosophy. Two books that turn lived scars into transferable architecture.</>,
+              },
+              {
+                icon: "⚙️",
+                title: <>The Startup<br />— HROS</>,
+                body: "A people operating system for unfinished organisations. Not another HR tool — but the codification of every framework forged through two decades of collision.",
+              },
+              {
+                icon: "🎯",
+                title: "The Mission",
+                body: "Democratising HR through codification. Making institutional-grade people architecture accessible to every growing company, not just those who can afford a twenty-year veteran.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-6% 0px" }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="p-7"
+                style={{ background: "rgba(18,18,18,0.7)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px" }}
+              >
+                <div className="text-[22px] mb-5">{item.icon}</div>
+                <h3 className="font-serif font-normal mb-4" style={{ fontSize: "clamp(16px,1.5vw,20px)", color: "#F5F0E8" }}>
+                  {item.title}
+                </h3>
+                <p className="font-serif font-light leading-[1.7]" style={{ fontSize: "clamp(12px,1vw,14px)", color: "rgba(200,195,185,0.55)" }}>
+                  {item.body}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          <Reveal delay={0.2}>
+            <p className="font-serif italic text-center max-w-[680px] mx-auto" style={{ fontSize: "clamp(16px,1.8vw,24px)", color: "rgba(200,195,185,0.7)", lineHeight: 1.6 }}>
+              &ldquo;The founders who watched me build are funding what I build next. The arc is complete. The next chapter is my own.&rdquo;
+            </p>
           </Reveal>
-        </div>
-
-        <div className="max-w-[760px] mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-[1fr_40px_1fr] gap-4 items-start">
-            {/* Day Zero */}
-            <Reveal delay={0.1}>
-              <div className="p-6 sm:p-8 h-full" style={{ background: "rgba(18,18,18,0.7)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px" }}>
-                <span className="font-serif tracking-[0.3em] uppercase block mb-5" style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)" }}>
-                  DAY ZERO
-                </span>
-                <ul className="flex flex-col gap-3">
-                  {DAY_ZERO.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span style={{ color: "rgba(201,168,76,0.4)", fontSize: "12px", marginTop: "4px" }}>•</span>
-                      <span className="font-serif font-light leading-[1.5]" style={{ fontSize: "clamp(13px,1.2vw,16px)", color: "rgba(200,195,185,0.5)" }}>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-
-            {/* Arrow */}
-            <div className="hidden sm:flex items-center justify-center pt-16">
-              <span className="font-serif" style={{ fontSize: "20px", color: "rgba(201,168,76,0.4)" }}>→</span>
-            </div>
-
-            {/* 24 Months */}
-            <Reveal delay={0.15}>
-              <div className="p-6 sm:p-8 h-full" style={{ background: "rgba(22,18,10,0.85)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: "8px" }}>
-                <span className="font-serif tracking-[0.3em] uppercase block mb-5" style={{ fontSize: "12px", color: "#C9A84C" }}>
-                  24 MONTHS
-                </span>
-                <ul className="flex flex-col gap-3">
-                  {TWENTY_FOUR_MONTHS.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span style={{ color: "#C9A84C", fontSize: "12px", marginTop: "4px" }}>•</span>
-                      <span className="font-serif font-light leading-[1.5]" style={{ fontSize: "clamp(13px,1.2vw,16px)", color: "rgba(240,238,235,0.9)" }}>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* Bottom line */}
-          <div className="flex justify-center mt-16">
-            <div style={{ width: "1px", height: "60px", background: "rgba(255,255,255,0.12)" }} />
-          </div>
         </div>
 
       </div>
