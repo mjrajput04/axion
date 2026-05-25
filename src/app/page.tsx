@@ -265,6 +265,56 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════
+          METHOD — Founding Philosophy
+      ══════════════════════════════════════════ */}
+      <section className="section-tint relative overflow-hidden py-16" id="method">
+        <div className="shell">
+          <div className="max-w-[800px] mx-auto text-center flex flex-col items-center">
+            <Reveal>
+              <span className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">Our Founding Philosophy</span>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="h-section mb-10">
+                Our Operating <em>Logic.</em>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="body-text mx-auto text-[var(--fg-3)] mb-8">
+                Interpreted across labour, AI, people, and ownership.
+              </p>
+            </Reveal>
+
+            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 mb-4">
+              {[{ label: "Belief" }, { label: "Conviction" }, { label: "Rhythm" }].map((item, i) => (
+                <div key={i} className="flex items-center gap-4 md:gap-6">
+                  <Reveal delay={0.3 + i * 0.15} y={10}>
+                    <motion.div
+                      whileHover={{ y: -8 }}
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      className="group relative px-8 py-6 border border-[var(--line)] rounded-[20px] bg-[var(--bg-1)] hover:border-[var(--line-gold)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_var(--accent-glow)] transition-all duration-500 cursor-default"
+                    >
+                      <span className="font-serif text-[clamp(22px,2.8vw,38px)] text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors duration-500">
+                        {item.label}
+                      </span>
+                      <div className="absolute top-0 right-0 w-16 h-16 rounded-[20px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style={{ background: "radial-gradient(circle at top right, var(--accent-glow), transparent 70%)" }} />
+                    </motion.div>
+                  </Reveal>
+                  {i < 2 && (
+                    <Reveal delay={0.4 + i * 0.15} scale={0.8}>
+                      <span className="text-[var(--accent)] opacity-40 text-[24px] font-light">→</span>
+                    </Reveal>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square pointer-events-none"
+          style={{ background: "radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)" }} />
+      </section>
+
+      {/* ══════════════════════════════════════════
           STATEMENTS — Four operating logic
       ══════════════════════════════════════════ */}
       <section className="chapter section-dark relative overflow-hidden" id="statements">
@@ -318,8 +368,8 @@ export default function Home() {
             <Reveal><span className="eyebrow eyebrow--center mb-4">Where the work happens</span></Reveal>
             <Reveal delay={0.1}>
               <h2 className="h-section mx-auto max-w-[20ch]">
-                Four practices.<br />
-                <em>One operating logic.</em>
+                One Operating Logic.<br />
+                <em>Four Practices.</em>
               </h2>
             </Reveal>
           </div>
@@ -399,7 +449,7 @@ export default function Home() {
             <div>
               <Reveal>
                 <h2 className="h-statement">
-                  Who we engage with <em>depending on where you sit.</em>
+                  How we engage with <em>depending on where you sit.</em>
                 </h2>
               </Reveal>
             </div>
@@ -422,88 +472,116 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════
-          METHOD — Founding Philosophy
-      ══════════════════════════════════════════ */}
-      <section className="chapter section-tint relative overflow-hidden" id="method">
-        <div className="shell">
-          <div className="max-w-[800px] mx-auto text-center flex flex-col items-center">
-            <Reveal>
-              <span className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">Our Founding Philosophy</span>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="h-section mb-10">
-                One platform method.<br />
-                <em>Four practice doctrines.</em>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <p className="body-text mx-auto text-[var(--fg-3)] mb-20">
-                Interpreted across labour, AI, people, and ownership.
-              </p>
-            </Reveal>
-
-            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 mb-20">
-              {[{ label: "Belief" }, { label: "Conviction" }, { label: "Rhythm" }].map((item, i) => (
-                <div key={i} className="flex items-center gap-6 md:gap-10">
-                  <Reveal delay={0.3 + i * 0.15} y={10}>
-                    <div className="group">
-                      <span className="font-serif text-[clamp(28px,3.5vw,48px)] text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors duration-500 cursor-default">
-                        {item.label}
-                      </span>
-                    </div>
-                  </Reveal>
-                  {i < 2 && (
-                    <Reveal delay={0.4 + i * 0.15} scale={0.8}>
-                      <span className="text-[var(--accent)] opacity-40 text-[24px] font-light">→</span>
-                    </Reveal>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square pointer-events-none"
-          style={{ background: "radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)" }} />
-      </section>
-
-      {/* ══════════════════════════════════════════
           MAKE IT REAL — What happens next
       ══════════════════════════════════════════ */}
-      <section className="chapter section-deep" id="real">
-        <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-20 items-start">
-            <div>
-              <Reveal>
-                <span className="eyebrow mb-6 text-[var(--accent)]">Make it real</span>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <h2 className="h-section mb-8">
-                  What happens <br/>
-                  <em>next.</em>
-                </h2>
-              </Reveal>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {[
-                { num: "01", title: "You bring the signal." },
-                { num: "02", title: "We diagnose the architecture." },
-                { num: "03", title: "We define the intervention." },
-                { num: "04", title: "We make it hold." },
-              ].map((item, i) => (
-                <Reveal key={i} delay={i * 0.1} y={20}>
-                  <motion.div
-                    whileHover={{ y: -4, borderColor: "var(--line-gold)" }}
-                    transition={{ duration: 0.3 }}
-                    className="cool-card group bg-[var(--bg-1)] border-[var(--line)] shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
-                  >
-                    <div className="font-mono text-[10px] text-[var(--accent)] mb-4 opacity-60">{item.num}</div>
-                    <h3 className="font-serif text-[22px] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors">{item.title}</h3>
-                  </motion.div>
-                </Reveal>
-              ))}
-            </div>
+      <section className="section-deep overflow-hidden" id="real">
+        {/* Header */}
+        <div className="shell pt-32 pb-20">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <Reveal>
+              <span className="eyebrow text-[var(--accent)]">The engagement</span>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="h-section lg:text-right">
+                Four moves.<br />
+                <em>One outcome.</em>
+              </h2>
+            </Reveal>
           </div>
+          <div className="mt-10 h-[1px] bg-gradient-to-r from-[var(--line-gold)] via-[var(--line)] to-transparent opacity-40" />
         </div>
+
+        {/* Steps — full-width staggered rows */}
+        {[
+          {
+            num: "01",
+            label: "SIGNAL",
+            title: "You bring the signal.",
+            sub: "A pattern. A pressure. A question you can't quite name yet.",
+            align: "left",
+          },
+          {
+            num: "02",
+            label: "READ",
+            title: "We read the architecture.",
+            sub: "Not the symptom — the structural condition producing it.",
+            align: "right",
+          },
+          {
+            num: "03",
+            label: "DEFINE",
+            title: "We define the intervention.",
+            sub: "Precise. Sequenced. Built for your operating reality.",
+            align: "left",
+          },
+          {
+            num: "04",
+            label: "HOLD",
+            title: "We make it hold.",
+            sub: "Installed into the system. Not dependent on who is in the room.",
+            align: "right",
+          },
+        ].map((item, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-15%" }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="group relative border-t border-[var(--line)] hover:border-[var(--line-gold)] transition-colors duration-700 overflow-hidden"
+          >
+            {/* Ghost number watermark */}
+            <div
+              className={`absolute top-1/2 -translate-y-1/2 font-serif italic text-[22vw] leading-none text-white opacity-[0.018] pointer-events-none select-none transition-opacity duration-700 group-hover:opacity-[0.035] ${item.align === "right" ? "right-[-2vw]" : "left-[-2vw]"}`}
+            >
+              {item.num}
+            </div>
+
+            <div className={`shell py-16 lg:py-20 flex flex-col lg:flex-row items-start lg:items-center gap-10 lg:gap-0 ${item.align === "right" ? "lg:flex-row-reverse" : ""}`}>
+              {/* Step tag */}
+              <div className={`lg:w-1/4 flex flex-col gap-3 ${item.align === "right" ? "lg:items-end lg:text-right" : ""}`}>
+                <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--fg-5)] opacity-50">{item.label}</span>
+                <span
+                  className="font-serif italic text-[clamp(56px,8vw,96px)] leading-none text-[var(--line-strong)] group-hover:text-[var(--accent)] transition-colors duration-700"
+                  style={{ WebkitTextStroke: "1px currentColor", color: "transparent" }}
+                >
+                  {item.num}
+                </span>
+              </div>
+
+              {/* Divider line — desktop */}
+              <div className="hidden lg:block lg:w-px lg:self-stretch mx-16 bg-gradient-to-b from-transparent via-[var(--line-strong)] to-transparent group-hover:via-[var(--line-gold)] transition-colors duration-700" />
+
+              {/* Content */}
+              <div className={`flex-1 ${item.align === "right" ? "lg:text-right" : ""}`}>
+                <motion.h3
+                  initial={{ x: item.align === "right" ? 30 : -30, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+                  className="font-serif text-[clamp(28px,3.5vw,48px)] leading-[1.1] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-500 mb-4"
+                >
+                  {item.title}
+                </motion.h3>
+                <motion.p
+                  initial={{ x: item.align === "right" ? 20 : -20, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
+                  className="font-mono text-[12px] tracking-[0.2em] text-[var(--fg-5)] max-w-[40ch]"
+                  style={{ marginLeft: item.align === "right" ? "auto" : undefined }}
+                >
+                  {item.sub}
+                </motion.p>
+              </div>
+            </div>
+
+            {/* Bottom accent line on hover */}
+            <div className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full bg-gradient-to-r from-[var(--accent)] to-transparent transition-all duration-700" />
+          </motion.div>
+        ))}
+
+        <div className="h-px bg-[var(--line)] opacity-30" />
       </section>
 
       {/* ══════════════════════════════════════════
@@ -522,7 +600,7 @@ export default function Home() {
           <Reveal delay={0.2}>
             <div className="flex flex-wrap justify-center gap-5">
               <motion.a
-                href="#practices"
+                href="/expertise/ai-edge/diagnostic"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-3 px-10 py-5 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
@@ -532,7 +610,7 @@ export default function Home() {
                   boxShadow: "0 0 40px rgba(201,168,76,0.2)",
                 }}
               >
-                Explore Practices
+                Start Diagnostic
                 <ArrowRight size={14} />
               </motion.a>
             </div>
@@ -552,76 +630,96 @@ export default function Home() {
 ══════════════════════════════════════════ */
 function Footer() {
   return (
-    <footer className="foot border-t border-[var(--line)]">
-      {/* Pre-footer CTA bar */}
-      <div className="border-b border-[var(--line)] py-16">
-        <div className="shell flex flex-col md:flex-row items-center justify-between gap-8">
-          <div>
-            <p className="font-mono text-[10px] tracking-[0.35em] uppercase text-[var(--accent)] mb-3">Ready to begin?</p>
-            <h3 className="font-serif text-[clamp(24px,3vw,40px)] text-[var(--fg)]">
-              From <s className="opacity-30">ambiguity</s> to <em className="text-[var(--accent)]">architecture.</em>
-            </h3>
+    <footer className="relative overflow-hidden border-t border-[var(--line)]" style={{ background: "var(--bg)" }}>
+
+      {/* Giant background wordmark */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[30%] font-serif italic font-bold text-[22vw] leading-none text-white opacity-[0.022] pointer-events-none select-none whitespace-nowrap tracking-tight">
+        AXION
+      </div>
+
+      {/* Top band — brand + tagline full width */}
+      <div className="border-b border-[var(--line)]">
+        <div className="shell pt-10 pb-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <Link className="brand text-[clamp(24px,3.5vw,40px)] block mb-2 leading-none" href="/">
+                Ax<em>ion</em><span className="domain">INDEX</span>
+              </Link>
+              <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--fg-5)]">
+                EST. 2024 &nbsp;·&nbsp; BENGALURU &nbsp;·&nbsp; OPERATING INTELLIGENCE
+              </p>
+            </div>
           </div>
-          <Link
-            href="/connect"
-            className="shrink-0 inline-flex items-center gap-3 px-8 py-4 font-mono text-[10.5px] tracking-[0.25em] uppercase rounded-full border border-[var(--line-gold)] text-[var(--accent)] hover:bg-[var(--accent-soft)] transition-all duration-300"
-          >
-            Start Diagnostic
-            <ArrowRight size={13} />
-          </Link>
         </div>
       </div>
 
-      <div className="shell">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 py-20">
-          <div className="md:col-span-1">
-            <Link className="brand text-[24px] mb-6 block" href="/">Ax<em>ion</em><span className="domain">INDEX</span></Link>
-            <p className="text-[13px] text-[var(--fg-4)] leading-relaxed max-w-[20ch]">
-              From <s className="opacity-40">ambiguity</s><br />to architecture.
-            </p>
-          </div>
-          <div className="flex flex-col gap-6">
-            <h5 className="font-mono text-[9.5px] tracking-widest uppercase text-[var(--fg-3)]">Practices</h5>
-            <ul className="flex flex-col gap-3 font-mono text-[10.5px] text-[var(--fg-4)] uppercase tracking-wider">
+      {/* Middle band — asymmetric nav */}
+      <div className="shell py-16">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-12">
+
+          {/* Practices — takes more space */}
+          <div className="col-span-2 lg:col-span-1 lg:col-auto">
+            <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50 mb-8 block">Practices</span>
+            <ul className="flex flex-col gap-5">
               {[
+                { href: "/expertise/people", label: "People Architecture" },
                 { href: "/expertise/labour", label: "Labour Codes" },
                 { href: "/expertise/ai-edge", label: "AI Edge Lab" },
-                { href: "/expertise/people", label: "People Architecture" },
                 { href: "/expertise/family", label: "Family Business" },
-              ].map(l => (
-                <li key={l.href}><Link href={l.href} className="hover:text-[var(--accent)] transition-colors">{l.label}</Link></li>
+              ].map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--fg-4)] hover:text-[var(--accent)] transition-colors duration-300">
+                    {l.label}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
-          <div className="flex flex-col gap-6">
-            <h5 className="font-mono text-[9.5px] tracking-widest uppercase text-[var(--fg-3)]">Platform</h5>
-            <ul className="flex flex-col gap-3 font-mono text-[10.5px] text-[var(--fg-4)] uppercase tracking-wider">
+
+          {/* Platform */}
+          <div>
+            <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50 mb-8 block">Platform</span>
+            <ul className="flex flex-col gap-5">
               {[
                 { href: "/about", label: "About" },
                 { href: "/founder", label: "Founder" },
                 { href: "/connect", label: "Connect" },
               ].map(l => (
-                <li key={l.href}><Link href={l.href} className="hover:text-[var(--accent)] transition-colors">{l.label}</Link></li>
+                <li key={l.href}>
+                  <Link href={l.href} className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--fg-4)] hover:text-[var(--accent)] transition-colors duration-300">
+                    {l.label}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
-          <div className="flex flex-col gap-6">
-            <h5 className="font-mono text-[9.5px] tracking-widest uppercase text-[var(--fg-3)]">Contact</h5>
-            <div className="flex flex-col gap-3 font-mono text-[10.5px] text-[var(--fg-4)] uppercase tracking-wider">
-              <span>Bengaluru, India</span>
-              <a href="mailto:office@axionindex.com" className="hover:text-[var(--accent)] transition-colors normal-case">office@axionindex.com</a>
+
+          {/* Contact */}          <div>
+            <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50 mb-8 block">Contact</span>
+            <div className="flex flex-col gap-5">
+              <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--fg-4)]">Bengaluru, India</span>
+              <a
+                href="mailto:office@axionindex.com"
+                className="font-mono text-[11px] tracking-[0.1em] text-[var(--fg-4)] hover:text-[var(--accent)] transition-colors duration-300 normal-case"
+              >
+                office@axionindex.com
+              </a>
             </div>
           </div>
-        </div>
 
-        <div className="py-8 border-t border-[var(--line)] flex flex-wrap justify-between items-center gap-6 font-mono text-[9.5px] tracking-widest uppercase text-[var(--fg-5)]">
-          <span>&copy; 2026 AXION INDEX. ALL RIGHTS RESERVED.</span>
-          <div className="flex gap-8">
-            <span>DESIGNED FOR CONSEQUENCE</span>
-            <span>BUILT TO HOLD</span>
-          </div>
+
         </div>
       </div>
+
+      {/* Bottom bar */}
+      <div className="border-t border-[var(--line)]">
+        <div className="shell py-6 flex items-center justify-start">
+          <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-white">
+            &copy; 2026 Axion Index. All rights reserved.
+          </span>
+        </div>
+      </div>
+
     </footer>
   );
 }
