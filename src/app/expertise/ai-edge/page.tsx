@@ -363,12 +363,16 @@ export default function AIEdgeLab() {
               ))}
               <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "11px", color: "#A07830", marginTop: "16px", letterSpacing: "0.06em" }}>nitin@axionindex.org</div>
             </div>
-            <div className="pl-0 md:pl-[52px]">
+            <div className="pl-0 md:pl-[52px] flex flex-col justify-between">
               <div style={{ marginBottom: "8px" }}>
                 {[
                   "Nitin Nahata is a CHRO and organisational architect whose work centres on a single structural question: how do organisations and the people inside them evolve when intelligence becomes abundant?",
                   "Two decades across institutions and high-growth companies have shaped his thinking on the architecture of decision-making, the future structure of work, and how organisations redesign talent systems in the AI era.",
                   "As CHRO of Gameskraft, he sees firsthand how AI is changing the structure of work inside a fast-scaling organisation. As Founder of Axionindex, he is building the frameworks and instruments to measure and redesign those changes at scale.",
+                  "His work is not theoretical. Every framework he has built — BCR, E.D.G.E., the AI Replaceability Index — was forged inside real organisations, under real pressure, with real consequences.",
+                  "He does not study the future of work. He operates inside it — and builds the architecture that makes organisations ready for what is already arriving.",
+                  "Across two decades, he has scaled people systems from single-digit teams to institutions of thousands — through hypergrowth, regulatory crisis, global restructuring, and the quiet, structural pressure that precedes every visible failure.",
+                  "The AI Edge Lab is the codification of that experience — translated into diagnostics, frameworks, and instruments that any organisation can use to read its own structural position before the compression arrives.",
                 ].map((para, i) => (
                   <p key={i} style={{ fontSize: "14px", color: "#7A7870", lineHeight: 1.9, marginBottom: "14px", fontWeight: 300 }}>{para}</p>
                 ))}
