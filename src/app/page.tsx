@@ -195,7 +195,7 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section className="chapter section-deep relative py-0" id="bridge">
         <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 items-start lg:min-h-[300vh]">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 items-start lg:min-h-[110vh]">
             <div className="lg:sticky lg:top-0 h-auto lg:h-screen flex flex-col justify-center py-16 lg:py-20 lg:pr-10 z-30 pointer-events-none">
               <div className="pointer-events-auto">
                 <Reveal>
@@ -213,30 +213,24 @@ export default function Home() {
                   </p>
                 </Reveal>
                 <Reveal delay={0.3}>
-                  <div className="flex flex-col gap-8 pt-12 border-t border-[var(--line)]">
-                    <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-[var(--fg-5)]">Read your organisation properly.</p>
+                  <div className="flex flex-col gap-6 pt-10 border-t border-[var(--line)]">
+                    <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-[var(--fg-5)] mb-2">Read your organisation properly.</p>
+                    <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50">We map:</span>
                   </div>
                 </Reveal>
               </div>
             </div>
 
-            <div className="relative border-l border-[var(--line)] pl-10 md:pl-20 flex flex-col">
-              <div className="h-[20vh] flex items-end pb-10">
-                <Reveal>
-                  <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50">We map:</span>
-                </Reveal>
-              </div>
-
+            <div className="relative border-l border-[var(--line)] pl-10 md:pl-20 flex flex-col pt-20">
               {[
-                { title: "Where the system is breaking", step: "01", icon: "DIAGNOSE", bg: "linear-gradient(180deg, rgba(201,168,76,0.06) 0%, transparent 100%)" },
-                { title: "What is holding it together artificially", step: "02", icon: "CODIFY", bg: "linear-gradient(180deg, rgba(74,158,255,0.04) 0%, transparent 100%)" },
-                { title: "What will fail next", step: "03", icon: "PREDICT", bg: "linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%)" },
-                { title: "Then we redesign it so it holds", step: "04", icon: "INSTALL", bg: "linear-gradient(180deg, rgba(240,241,245,0.03) 0%, transparent 100%)" },
+                { title: "Where the system is breaking", step: "01", bg: "linear-gradient(180deg, rgba(201,168,76,0.06) 0%, transparent 100%)" },
+                { title: "What is holding it together artificially", step: "02", bg: "linear-gradient(180deg, rgba(74,158,255,0.04) 0%, transparent 100%)" },
+                { title: "What will fail next", step: "03", bg: "linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%)" },
+                { title: "Then we redesign it so it holds", step: "04", bg: "linear-gradient(180deg, rgba(240,241,245,0.03) 0%, transparent 100%)" },
               ].map((item, i) => (
-                <div key={i} className="min-h-[60vh] flex flex-col justify-center relative group">
+                <div key={i} className="min-h-[22vh] flex flex-col justify-center relative group">
                   <div className="absolute left-[-41px] md:left-[-81px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-[var(--accent)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   <div className="absolute left-[-50px] md:left-[-90px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-3">
-                    <span className="font-mono text-[8px] text-[var(--fg-5)] rotate-[-90deg] translate-y-[-30px] tracking-[0.4em]">{item.icon}</span>
                     <div className="w-3 h-3 rounded-full bg-[var(--bg)] border-2 border-[var(--accent)] z-20 group-hover:scale-[1.8] transition-transform duration-500 shadow-[0_0_15px_var(--accent-soft)]" />
                     <span className="font-serif italic text-[28px] text-[var(--fg-5)] group-hover:text-[var(--accent)] transition-colors duration-500">{item.step}</span>
                   </div>
@@ -247,15 +241,15 @@ export default function Home() {
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <div
-                      className="p-8 md:p-10 rounded-[28px] border border-[var(--line)] backdrop-blur-2xl transition-all duration-700 group-hover:border-[var(--line-gold)] group-hover:shadow-[0_30px_70px_rgba(0,0,0,0.6)]"
+                      className="p-6 md:p-8 rounded-[28px] border border-[var(--line)] backdrop-blur-2xl transition-all duration-700 group-hover:border-[var(--line-gold)] group-hover:shadow-[0_30px_70px_rgba(0,0,0,0.6)]"
                       style={{ background: item.bg }}
                     >
-                      <h3 className="font-serif text-[clamp(18px,2vw,28px)] leading-[1.2] text-[var(--fg)]">{item.title}</h3>
+                      <h3 className="font-serif text-[clamp(16px,1.6vw,22px)] leading-[1.2] text-[var(--fg)]">{item.title}</h3>
                     </div>
                   </motion.div>
                 </div>
               ))}
-              <div className="h-[20vh]" />
+              <div className="h-[5vh]" />
             </div>
           </div>
         </div>
