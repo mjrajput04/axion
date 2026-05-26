@@ -54,7 +54,7 @@ export default function AIEdgeLab() {
             <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "11px", letterSpacing: "0.24em", textTransform: "uppercase", color: "#7A7870", marginBottom: "20px" }}>AI Edge Lab · Four Actors · One Transformation</div>
             <h1 style={{ fontFamily: "'Bebas Neue','DM Sans',sans-serif", fontSize: "clamp(64px,9vw,110px)", lineHeight: 0.95, letterSpacing: "0.01em", color: "#0D0D0B" }}>THE<br />WORK<br /><span style={{ color: "#A07830" }}>SHIFT.</span></h1>
           </div>
-          <div className="p-6 md:p-10 lg:p-[52px]">
+          <div className="p-6 md:p-10 lg:p-[52px]" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <p style={{ fontSize: "15px", color: "#7A7870", lineHeight: 1.9, fontWeight: 300, marginBottom: "32px" }}>The workplace now has four actors: the Employee, the CXO, the Organisation — and AI. Each faces a different structural challenge. The AI Edge Lab is the framework that maps what that means for all four.</p>
             <div style={{ display: "flex", gap: "32px", marginBottom: "32px", flexWrap: "wrap" }}>
               {[{ n: "23%", l: "Scaled AI · McKinsey" },{ n: "90%", l: "Fail to exit pilot" },{ n: "78%", l: "Governance lags · EY" }].map((s, i) => (
@@ -72,7 +72,7 @@ export default function AIEdgeLab() {
       {/* ── FOUR ACTORS ── */}
       <section id="actors" style={{ borderBottom: "1px solid rgba(13,13,11,0.1)" }}>
         <div className="flex items-center justify-between px-6 md:px-[52px] py-4" style={{ borderBottom: "1px solid rgba(13,13,11,0.1)", background: "#EEECEA" }}>
-          <span style={{ fontFamily: "'DM Mono',monospace", fontSize: "11px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#7A7870" }}>The Four Actors of the AI Workplace</span>
+          <span style={{ fontFamily: "'DM Mono',monospace", fontSize: "14px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#7A7870" }}>The Four Actors of the AI Workplace</span>
           <span style={{ fontFamily: "'DM Mono',monospace", fontSize: "11px", color: "#B0AEA8" }}>02 / 06</span>
         </div>
         <div className="p-6 md:p-10 lg:p-[52px]">
