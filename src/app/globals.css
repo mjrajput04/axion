@@ -101,7 +101,7 @@ body::before {
 
   /* ── Eyebrow ── */
   .eyebrow {
-    @apply font-mono text-[10.5px] tracking-[0.38em] uppercase text-[var(--fg-4)] inline-flex items-center gap-3;
+    @apply font-mono text-[13px] tracking-[0.38em] uppercase text-white inline-flex items-center gap-3;
     letter-spacing: 0.38em;
   }
   .eyebrow::before {

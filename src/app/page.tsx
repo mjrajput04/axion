@@ -109,7 +109,7 @@ export default function Home() {
                 <ArrowRight size={13} className="relative z-10 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-[var(--accent-soft)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </motion.a>
-              <a className="kbd-arrow text-[var(--fg-4)] hover:text-[var(--accent)]" href="#signals">Scroll to explore</a>
+              <a className="kbd-arrow text-white hover:text-[var(--accent)]" href="#signals">Scroll to explore</a>
             </div>
           </Reveal>
         </motion.div>
@@ -144,7 +144,7 @@ export default function Home() {
               </Reveal>
               <Reveal delay={0.2}>
                 <div className="gold-line mb-6" />
-                <p className="text-[var(--fg-4)] max-w-[28ch] leading-relaxed font-mono text-[11px] tracking-[0.2em] uppercase">
+                <p className="text-[var(--fg-4)] max-w-[28ch] leading-relaxed font-mono text-[11px] tracking-[0.2em] uppercase text-white">
                   Scroll to explore.
                 </p>
               </Reveal>
@@ -195,8 +195,8 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section className="chapter section-deep relative py-0" id="bridge">
         <div className="shell">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 items-start lg:min-h-[110vh]">
-            <div className="lg:sticky lg:top-0 h-auto lg:h-screen flex flex-col justify-center py-16 lg:py-20 lg:pr-10 z-30 pointer-events-none">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 items-start">
+            <div className="lg:sticky lg:top-0 h-fit flex flex-col justify-start pt-40 pb-40 lg:pr-10 z-30 pointer-events-none">
               <div className="pointer-events-auto">
                 <Reveal>
                   <span className="eyebrow mb-8 text-[var(--accent)]">How We Do It</span>
@@ -214,21 +214,21 @@ export default function Home() {
                 </Reveal>
                 <Reveal delay={0.3}>
                   <div className="flex flex-col gap-6 pt-10 border-t border-[var(--line)]">
-                    <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-[var(--fg-5)] mb-2">Read your organisation properly.</p>
-                    <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50">We map:</span>
+                    <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-white mb-2">Read your organisation properly.</p>
+                    <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-white opacity-80">We map:</span>
                   </div>
                 </Reveal>
               </div>
             </div>
 
-            <div className="relative border-l border-[var(--line)] pl-10 md:pl-20 flex flex-col pt-20">
+            <div className="relative border-l border-[var(--line)] pl-10 md:pl-20 flex flex-col pt-20 lg:pt-20">
               {[
                 { title: "Where the system is breaking", step: "01", bg: "linear-gradient(180deg, rgba(201,168,76,0.06) 0%, transparent 100%)" },
                 { title: "What is holding it together artificially", step: "02", bg: "linear-gradient(180deg, rgba(74,158,255,0.04) 0%, transparent 100%)" },
                 { title: "What will fail next", step: "03", bg: "linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%)" },
                 { title: "Then we redesign it so it holds", step: "04", bg: "linear-gradient(180deg, rgba(240,241,245,0.03) 0%, transparent 100%)" },
               ].map((item, i) => (
-                <div key={i} className="min-h-[22vh] flex flex-col justify-center relative group">
+                <div key={i} className="min-h-[10vh] flex flex-col justify-center relative group py-4">
                   <div className="absolute left-[-41px] md:left-[-81px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-[var(--accent)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   <div className="absolute left-[-50px] md:left-[-90px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-3">
                     <div className="w-3 h-3 rounded-full bg-[var(--bg)] border-2 border-[var(--accent)] z-20 group-hover:scale-[1.8] transition-transform duration-500 shadow-[0_0_15px_var(--accent-soft)]" />
@@ -249,7 +249,7 @@ export default function Home() {
                   </motion.div>
                 </div>
               ))}
-              <div className="h-[5vh]" />
+
             </div>
           </div>
         </div>
@@ -470,7 +470,7 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section className="section-deep overflow-hidden" id="real">
         {/* Header */}
-        <div className="shell pt-32 pb-20">
+        <div className="shell pt-20 pb-4">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <Reveal>
               <span className="eyebrow text-[var(--accent)]">The engagement</span>
@@ -482,7 +482,7 @@ export default function Home() {
               </h2>
             </Reveal>
           </div>
-          <div className="mt-10 h-[1px] bg-gradient-to-r from-[var(--line-gold)] via-[var(--line)] to-transparent opacity-40" />
+
         </div>
 
         {/* Steps — full-width staggered rows */}
@@ -518,15 +518,22 @@ export default function Home() {
         ].map((item, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-15%" }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="group relative border-t border-[var(--line)] hover:border-[var(--line-gold)] transition-colors duration-700 overflow-hidden"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.04, y: -8, zIndex: 10 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
+            className="group relative border-t border-[var(--line)] transition-all duration-500 cursor-default"
+            style={{ position: "relative" }}
           >
+            {/* Hover background glow */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[4px]"
+              style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 100%)", boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.06), inset 0 0 0 1px rgba(201,168,76,0.15)" }}
+            />
+
             {/* Ghost number watermark */}
             <div
-              className={`absolute top-1/2 -translate-y-1/2 font-serif italic text-[22vw] leading-none text-white opacity-[0.018] pointer-events-none select-none transition-opacity duration-700 group-hover:opacity-[0.035] ${item.align === "right" ? "right-[-2vw]" : "left-[-2vw]"}`}
+              className={`absolute top-1/2 -translate-y-1/2 font-serif italic text-[22vw] leading-none text-white opacity-[0.018] pointer-events-none select-none transition-opacity duration-700 group-hover:opacity-[0.05] ${item.align === "right" ? "right-[-2vw]" : "left-[-2vw]"}`}
             >
               {item.num}
             </div>
@@ -534,9 +541,9 @@ export default function Home() {
             <div className={`shell py-16 lg:py-20 flex flex-col lg:flex-row items-start lg:items-center gap-10 lg:gap-0 ${item.align === "right" ? "lg:flex-row-reverse" : ""}`}>
               {/* Step tag */}
               <div className={`lg:w-1/4 flex flex-col gap-3 ${item.align === "right" ? "lg:items-end lg:text-right" : ""}`}>
-                <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--fg-5)] opacity-50">{item.label}</span>
+                <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--fg-5)] opacity-50 group-hover:opacity-100 group-hover:text-[var(--accent)] transition-all duration-500">{item.label}</span>
                 <span
-                  className="font-serif italic text-[clamp(56px,8vw,96px)] leading-none text-[var(--line-strong)] group-hover:text-[var(--accent)] transition-colors duration-700"
+                  className="font-serif italic text-[clamp(56px,8vw,96px)] leading-none group-hover:text-[var(--accent)] transition-colors duration-500"
                   style={{ WebkitTextStroke: "1px currentColor", color: "transparent" }}
                 >
                   {item.num}
@@ -544,34 +551,24 @@ export default function Home() {
               </div>
 
               {/* Divider line — desktop */}
-              <div className="hidden lg:block lg:w-px lg:self-stretch mx-16 bg-gradient-to-b from-transparent via-[var(--line-strong)] to-transparent group-hover:via-[var(--line-gold)] transition-colors duration-700" />
+              <div className="hidden lg:block lg:w-px lg:self-stretch mx-16 bg-gradient-to-b from-transparent via-[var(--line-strong)] to-transparent group-hover:via-[var(--accent)] transition-colors duration-500" />
 
               {/* Content */}
               <div className={`flex-1 ${item.align === "right" ? "lg:text-right" : ""}`}>
-                <motion.h3
-                  initial={{ x: item.align === "right" ? 30 : -30, opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
-                  viewport={{ once: true, margin: "-10%" }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-                  className="font-serif text-[clamp(28px,3.5vw,48px)] leading-[1.1] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-500 mb-4"
-                >
+                <h3 className="font-serif text-[clamp(28px,3.5vw,48px)] leading-[1.1] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-500 mb-4">
                   {item.title}
-                </motion.h3>
-                <motion.p
-                  initial={{ x: item.align === "right" ? 20 : -20, opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
-                  viewport={{ once: true, margin: "-10%" }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
-                  className="font-mono text-[12px] tracking-[0.2em] text-[var(--fg-5)] max-w-[40ch]"
+                </h3>
+                <p
+                  className="font-mono text-[12px] tracking-[0.2em] text-[var(--fg-5)] group-hover:text-[var(--fg-3)] transition-colors duration-500 max-w-[40ch]"
                   style={{ marginLeft: item.align === "right" ? "auto" : undefined }}
                 >
                   {item.sub}
-                </motion.p>
+                </p>
               </div>
             </div>
 
-            {/* Bottom accent line on hover */}
-            <div className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full bg-gradient-to-r from-[var(--accent)] to-transparent transition-all duration-700" />
+            {/* Bottom gold line — always visible faint, full on hover */}
+            <div className="absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full bg-gradient-to-r from-[var(--accent)] via-[var(--accent)] to-transparent transition-all duration-700" />
           </motion.div>
         ))}
 
@@ -639,7 +636,7 @@ function Footer() {
               <Link className="brand text-[clamp(24px,3.5vw,40px)] block mb-2 leading-none" href="/">
                 Ax<em>ion</em><span className="domain">INDEX</span>
               </Link>
-              <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--fg-5)]">
+              <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-white">
                 EST. 2024 &nbsp;·&nbsp; BENGALURU &nbsp;·&nbsp; OPERATING INTELLIGENCE
               </p>
             </div>
