@@ -10,7 +10,7 @@ import {
   LogOut, 
   BarChart3, 
   Shield,
-  CreditCard,
+  Radio,
   Package
 } from "lucide-react";
 import { signOut } from "next-auth/react";
@@ -35,6 +35,12 @@ export function Sidebar() {
           icon={<LayoutDashboard className="w-5 h-5" />} 
           label="Dashboard" 
           active={pathname === "/admin/dashboard"} 
+        />
+        <NavItem 
+          href="/admin/signals" 
+          icon={<Radio className="w-5 h-5" />} 
+          label="Signals" 
+          active={pathname === "/admin/signals"} 
         />
         <NavItem 
           href="/admin/users" 

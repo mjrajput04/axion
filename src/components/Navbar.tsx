@@ -137,6 +137,12 @@ const Navbar = () => {
           >
             Reach Us <ArrowRight size={11} />
           </Link>
+          <Link
+            href="/admin/login"
+            className="ml-1 px-4 py-2.5 font-mono text-[9.5px] tracking-[0.22em] uppercase rounded-full border border-[rgba(201,168,76,0.25)] text-[var(--fg-4)] hover:text-[var(--accent)] hover:border-[rgba(201,168,76,0.5)] transition-all duration-300"
+          >
+            Login
+          </Link>
         </div>
 
         {/* Mobile: Hamburger only */}
@@ -199,6 +205,12 @@ const Navbar = () => {
                   className="block w-full text-center py-4 font-mono text-[11px] tracking-[0.24em] uppercase border border-[rgba(201,168,76,0.3)] text-[var(--accent)] hover:bg-[rgba(201,168,76,0.06)] transition-colors rounded-lg"
                 >
                   Reach us →
+                </Link>
+                <Link
+                  href="/admin/login"
+                  className="block w-full text-center py-4 font-mono text-[11px] tracking-[0.24em] uppercase border border-[rgba(255,255,255,0.08)] text-[var(--fg-4)] hover:text-[var(--fg)] transition-colors rounded-lg mt-2"
+                >
+                  Login
                 </Link>
               </motion.div>
             </div>

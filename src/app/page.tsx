@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import DiagnosticModal from "@/components/DiagnosticModal";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 /* ── Animated grid background ── */
@@ -145,6 +146,7 @@ function StatementCard({ item, i }: { item: { num: string; title: string; desc: 
 
 export default function Home() {
   const [activePractice, setActivePractice] = useState(0);
+  const [diagOpen, setDiagOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
@@ -152,6 +154,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+
+      {diagOpen && <DiagnosticModal onClose={() => setDiagOpen(false)} />}
 
       {/* ══════════════════════════════════════════
           HERO — Cinematic full-screen
@@ -477,14 +481,18 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-3 lg:h-[520px]">
+          {/* Desktop accordion */}
+          <div className="hidden lg:flex gap-3 h-[560px]">
             {[
-              { num: "01", name: "People Architecture", sub: "The foundation. The other three sit on top of this one.", href: "/expertise/people", label: "Enter People Architecture →" },
-              { num: "02", name: "Labour Codes", sub: "When cost, classification, and compliance stop aligning.", href: "/expertise/labour", label: "Enter Labour Codes →" },
-              { num: "03", name: "AI Edge Lab", sub: "When work is changing faster than roles.", href: "/expertise/ai-edge", label: "Enter AI Edge Lab →" },
-              { num: "04", name: "Family Business", sub: "When continuity depends on individuals, not structure.", href: "/expertise/family", label: "Enter Family Business →" },
+              { num: "01", name: "People Architecture", href: "/expertise/people", sub: "When the organisation depends on who is in the room — not on how it is built. We codify the judgment, decision rights, and succession logic your best people carry in their heads into structure the company keeps after they leave. The layer beneath the org chart, made durable." },
+              { num: "02", name: "Labour Codes", href: "/expertise/labour", sub: "When cost, classification, and compliance stop aligning — and you can't see why. We turn your workforce from headcount into auditable control architecture: contracts, classification, and risk mapped to the structure that governs them. Built to hold when the rules change retroactively." },
+              { num: "03", name: "AI Edge Lab", href: "/expertise/ai-edge", sub: "When AI is making you faster, but not wiser. Output rises while decision quality quietly erodes — speed without architecture just scales bad judgment. We build the decision layer: where AI accelerates, and where a human must still hold the call. The edge is the architecture around the model, not the model." },
+              { num: "04", name: "Family Business", href: "/expertise/family", sub: "When continuity depends on individuals, not structure — and succession is the risk no one says out loud. We codify ownership, authority, and decision rights into architecture that survives the generational handover. What holds when the founder is no longer the system." },
             ].map((practice, i) => {
               const isActive = activePractice === i;
+              const words = practice.name.split(' ');
+              const first = words[0];
+              const rest = words.slice(1).join(' ');
               return (
                 <motion.div
                   key={i}
@@ -492,80 +500,163 @@ export default function Home() {
                   className={`relative overflow-hidden cursor-pointer rounded-[28px] border transition-colors duration-500 ${
                     isActive
                       ? "flex-[3] bg-[var(--bg-2)] border-[var(--line-gold)] shadow-[0_30px_60px_rgba(0,0,0,0.6),0_0_40px_var(--accent-glow)]"
-                      : "flex-1 bg-[rgba(12,14,20,0.5)] border-[var(--line)] hover:border-[var(--line-strong)]"
+                      : "flex-1 bg-[rgba(12,14,20,0.5)] border-[var(--line)] hover:border-[rgba(201,168,76,0.3)]"
                   }`}
                   layout
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <div className="absolute inset-0 p-8 flex flex-col h-full">
-                    <div className={`font-mono text-[10px] tracking-[0.3em] mb-8 transition-colors duration-500 ${isActive ? "text-[var(--accent)]" : "text-[var(--fg-5)]"}`}>
-                      [ {practice.num} ]
+                  {/* Collapsed state */}
+                  {!isActive && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-between py-8 px-3">
+                      <span className="font-mono text-[9px] tracking-[0.3em] text-[var(--fg-5)]">[{practice.num}]</span>
+                      <span
+                        className="font-serif text-[14px] text-[var(--fg-4)] tracking-wide whitespace-nowrap"
+                        style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+                      >
+                        {practice.name}
+                      </span>
+                      <span className="text-[var(--accent)] opacity-40 text-[16px]">+</span>
                     </div>
-                    <div className="flex flex-col h-full justify-between">
-                      <div className="relative">
-                        <AnimatePresence mode="wait">
-                          {isActive ? (
-                            <motion.div key="active" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.4 }}>
-                              <h3 className="font-serif text-[clamp(28px,3.5vw,44px)] leading-[1.1] text-[var(--fg)] mb-6">
-                                {practice.name.split(' ').map((word, j) =>
-                                  ['Architecture', 'Codes', 'Lab', 'Business'].includes(word)
-                                    ? <em key={j} className="italic block text-[var(--accent)]">{word}</em>
-                                    : <span key={j}>{word} </span>
-                                )}
-                              </h3>
-                              <p className="text-[15px] text-[var(--fg-3)] leading-relaxed max-w-[30ch] mb-8">{practice.sub}</p>
-                            </motion.div>
-                          ) : (
-                            <motion.div key="collapsed" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="lg:absolute lg:top-0 lg:left-0 lg:origin-top-left lg:rotate-[-90deg] lg:translate-y-[300px] lg:translate-x-[5px] whitespace-nowrap">
-                              <h3 className="font-serif text-[22px] text-[var(--fg-4)] tracking-wide">{practice.name}</h3>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                      {isActive && (
-                        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="pt-8 border-t border-[var(--line)]">
-                          <Link href={practice.href} className="inline-flex items-center gap-3 font-mono text-[10.5px] tracking-widest uppercase text-[var(--accent)] hover:text-[var(--fg)] transition-colors group">
-                            {practice.label}
-                            <ArrowRight size={13} className="group-hover:translate-x-2 transition-transform" />
-                          </Link>
-                        </motion.div>
-                      )}
-                    </div>
-                  </div>
+                  )}
+
+                  {/* Expanded state */}
                   {isActive && (
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute bottom-[-10%] right-[-5%] w-[60%] aspect-square pointer-events-none"
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 p-8 flex flex-col"
+                    >
+                      <span className="font-mono text-[10px] tracking-[0.3em] text-[var(--accent)] mb-5">[{practice.num}]</span>
+                      <h3 className="font-serif text-[clamp(26px,2.8vw,40px)] leading-[1.1] text-[var(--fg)] mb-5">
+                        {first}<br /><em className="text-[var(--accent)]">{rest}</em>
+                      </h3>
+                      <p className="text-[14px] text-[var(--fg-2)] leading-relaxed flex-1" style={{ overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 6, WebkitBoxOrient: 'vertical' as const }}>
+                        {practice.sub}
+                      </p>
+                      <div className="pt-5 border-t border-[var(--line)] mt-4">
+                        <Link
+                          href={practice.href}
+                          className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.28em] uppercase text-[var(--accent)] hover:text-[var(--fg)] transition-colors group"
+                        >
+                          Enter {practice.name} <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {isActive && (
+                    <div className="absolute bottom-[-10%] right-[-5%] w-[60%] aspect-square pointer-events-none"
                       style={{ background: "radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)" }} />
                   )}
                 </motion.div>
               );
             })}
           </div>
+
+          {/* Mobile stacked */}
+          <div className="flex lg:hidden flex-col gap-4">
+            {[
+              { num: "01", name: "People Architecture", href: "/expertise/people", sub: "When the organisation depends on who is in the room — not on how it is built. We codify the judgment, decision rights, and succession logic your best people carry in their heads into structure the company keeps after they leave." },
+              { num: "02", name: "Labour Codes", href: "/expertise/labour", sub: "When cost, classification, and compliance stop aligning — and you can't see why. We turn your workforce from headcount into auditable control architecture." },
+              { num: "03", name: "AI Edge Lab", href: "/expertise/ai-edge", sub: "When AI is making you faster, but not wiser. We build the decision layer: where AI accelerates, and where a human must still hold the call." },
+              { num: "04", name: "Family Business", href: "/expertise/family", sub: "When continuity depends on individuals, not structure. We codify ownership, authority, and decision rights into architecture that survives the generational handover." },
+            ].map((practice, i) => (
+              <Link
+                key={i}
+                href={practice.href}
+                className="group block p-6 rounded-[20px] border border-[var(--line)] hover:border-[var(--line-gold)] bg-[var(--bg-1)] transition-all duration-300"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-mono text-[9px] tracking-[0.3em] text-[var(--accent)]">[{practice.num}]</span>
+                  <ArrowRight size={13} className="text-[var(--accent)] opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="font-serif text-[22px] text-[var(--fg)] mb-3">{practice.name}</h3>
+                <p className="text-[13px] text-[var(--fg-2)] leading-relaxed">{practice.sub}</p>
+              </Link>
+            ))}
+          </div>
+
+          {/* Catch-all line */}
+          <Reveal delay={0.2}>
+            <div className="mt-16 pt-10 border-t border-[var(--line)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <p className="font-serif text-[clamp(15px,1.3vw,18px)] text-[var(--fg-3)] max-w-[56ch] leading-relaxed">
+                Four practices. One method. If what's breaking doesn't fit a category, that is still a signal — bring it, and we read the architecture wherever it lives.
+              </p>
+              <Link
+                href="/connect"
+                className="shrink-0 inline-flex items-center gap-2 px-6 py-3 font-mono text-[10px] tracking-[0.28em] uppercase rounded-full font-semibold"
+                style={{ background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)", color: "#080A0F" }}
+              >
+                Reach Us <ArrowRight size={11} />
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════
-          ROLES — Who We Engage With
+          ROLES — Where You Sit
       ══════════════════════════════════════════ */}
       <section className="chapter section-dark" id="roles">
         <div className="shell">
-          <div className="grid grid-cols-1 md:grid-cols-[minmax(300px,1fr)_1.5fr] gap-16 items-start">
-            <div>
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(280px,1fr)_1.6fr] gap-16 items-start">
+            {/* Left col */}
+            <div className="md:sticky md:top-32 h-fit flex flex-col gap-10">
               <Reveal>
                 <h2 className="h-statement">
-                  How we engage with <em>depending on where you sit.</em>
+                  What changes — depending on <em>where you sit.</em>
                 </h2>
               </Reveal>
+              <Reveal delay={0.15}>
+                <div className="gold-line mb-4" />
+                <p className="font-serif italic text-[clamp(15px,1.3vw,18px)] text-[var(--fg-3)] leading-relaxed">
+                  We don't advise from the outside. We install architecture into how the organisation actually runs — and stay until it holds without us.
+                </p>
+              </Reveal>
+              <Reveal delay={0.25}>
+                <Link
+                  href="/connect"
+                  className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.28em] uppercase text-[var(--accent)] hover:text-[var(--fg)] transition-colors group w-fit"
+                >
+                  Reach Us <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Reveal>
             </div>
+
+            {/* Right col — roles */}
             <div className="flex flex-col border-t border-[var(--line)]">
               {[
-                { if: "Founder / CEO", then: "See where the organisation will break — before it does." },
-                { if: "CFO", then: "Read workforce as cost, risk, and control architecture — not headcount." },
-                { if: "CHRO", then: "Stop running HR programs. Start running the operating system underneath them." },
-              ].map((role, i) => (
-                <Reveal key={i} delay={i * 0.1}>
+                {
+                  role: "Founder / CEO",
+                  pull: "You can feel the company outgrowing the way you run it — you just can't see where it cracks first.",
+                  work: "Map the failure points before they fail, and build the architecture that removes you as the single point of dependency.",
+                },
+                {
+                  role: "CFO",
+                  pull: "Cost is climbing, and headcount explains some of it — not the part that keeps you up.",
+                  work: "Read workforce as cost, risk, and control architecture, then install the structure that makes the number governable — not just reported.",
+                },
+                {
+                  role: "CHRO",
+                  pull: "You're running more programs than ever, and the organisation is no more durable for it.",
+                  work: "Build the operating system underneath HR — so capability is designed into structure, not dependent on who's running the program.",
+                },
+                {
+                  role: "Investor / Board",
+                  pull: "The thesis is sound. The question is whether the organisation can carry it.",
+                  work: "Diligence the operating architecture — what survives the founder, and what is quietly held by individuals who can leave.",
+                },
+              ].map((item, i) => (
+                <Reveal key={i} delay={i * 0.08}>
                   <div className="py-10 border-b border-[var(--line)] group hover:bg-[rgba(201,168,76,0.02)] transition-colors px-4 -mx-4">
-                    <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] mb-4 block">{role.if}</span>
-                    <p className="font-serif text-[24px] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors" dangerouslySetInnerHTML={{ __html: role.then }} />
+                    <span className="font-mono text-[10px] tracking-widest uppercase text-[var(--accent)] mb-5 block">{item.role}</span>
+                    <p className="font-serif text-[clamp(17px,1.6vw,22px)] leading-snug text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors mb-3">
+                      {item.pull}
+                    </p>
+                    <p className="font-mono text-[11px] tracking-[0.12em] text-[var(--fg-4)] group-hover:text-[var(--fg-3)] transition-colors leading-relaxed">
+                      {item.work}
+                    </p>
                   </div>
                 </Reveal>
               ))}
@@ -640,15 +731,16 @@ export default function Home() {
               style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 100%)", boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.06), inset 0 0 0 1px rgba(201,168,76,0.15)" }}
             />
 
-            {/* Ghost number watermark */}
+            {/* Ghost number watermark — clipped to row, no overflow */}
             <div
-              className={`absolute top-1/2 -translate-y-1/2 font-serif italic text-[22vw] leading-none text-white opacity-[0.018] pointer-events-none select-none transition-opacity duration-700 group-hover:opacity-[0.05] ${item.align === "right" ? "right-[-2vw]" : "left-[-2vw]"}`}
+              className={`absolute top-1/2 -translate-y-1/2 font-serif italic text-[22vw] leading-none text-white opacity-[0.018] pointer-events-none select-none transition-opacity duration-700 group-hover:opacity-[0.04] overflow-hidden ${item.align === "right" ? "right-0" : "left-0"}`}
+              style={{ maxWidth: "40%" }}
             >
               {item.num}
             </div>
 
-            <div className={`shell py-12 lg:py-20 flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-0 ${item.align === "right" ? "lg:flex-row-reverse" : ""}`}>
-              {/* Step tag */}
+            <div className="shell py-12 lg:py-20 flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-0">
+              {/* Step tag — always left on mobile */}
               <div className={`lg:w-1/4 flex flex-col gap-3 ${item.align === "right" ? "lg:items-end lg:text-right" : ""}`}>
                 <span className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--fg-5)] opacity-50 group-hover:opacity-100 group-hover:text-[var(--accent)] transition-all duration-500">{item.label}</span>
                 <span
@@ -662,13 +754,13 @@ export default function Home() {
               {/* Divider line — desktop */}
               <div className="hidden lg:block lg:w-px lg:self-stretch mx-16 bg-gradient-to-b from-transparent via-[var(--line-strong)] to-transparent group-hover:via-[var(--accent)] transition-colors duration-500" />
 
-              {/* Content */}
+              {/* Content — always left on mobile */}
               <div className={`flex-1 ${item.align === "right" ? "lg:text-right" : ""}`}>
                 <h3 className="font-serif text-[clamp(28px,3.5vw,48px)] leading-[1.1] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-500 mb-4">
                   {item.title}
                 </h3>
                 <p
-                  className="font-mono text-[12px] tracking-[0.2em] text-[var(--fg-5)] group-hover:text-[var(--fg-3)] transition-colors duration-500 max-w-[40ch]"
+                  className="font-mono text-[12px] tracking-[0.18em] text-[var(--fg-3)] group-hover:text-[var(--fg-2)] transition-colors duration-500 max-w-[40ch]"
                   style={{ marginLeft: item.align === "right" ? "auto" : undefined }}
                 >
                   {item.sub}
@@ -698,9 +790,9 @@ export default function Home() {
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
-            <div className="flex flex-wrap justify-center gap-5">
-              <motion.a
-                href="/expertise/ai-edge/diagnostic"
+            <div className="flex flex-col items-center gap-4">
+              <motion.button
+                onClick={() => setDiagOpen(true)}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-3 px-10 py-5 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
@@ -712,7 +804,10 @@ export default function Home() {
               >
                 Start Diagnostic
                 <ArrowRight size={14} />
-              </motion.a>
+              </motion.button>
+              <p className="font-mono text-[10px] tracking-[0.15em] text-[var(--fg-4)] max-w-[44ch] text-center leading-relaxed">
+                A 30-minute architectural read. You bring the signal — we tell you what's structurally producing it. No fee, no pitch.
+              </p>
             </div>
           </Reveal>
         </div>
