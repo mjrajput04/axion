@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -126,8 +126,16 @@ const Navbar = () => {
           <NavLink href="/founder" label="Founder" active={pathname === "/founder"} />
           <NavLink href="/research" label="Research & Journals" active={pathname === "/research"} />
 
-          <Link href="/connect" className="nav-cta">
-            Reach us
+          <Link
+            href="/connect"
+            className="ml-1 px-5 py-2.5 font-mono text-[9.5px] tracking-[0.22em] uppercase font-semibold rounded-full transition-all duration-300 active:scale-[0.97] inline-flex items-center gap-2"
+            style={{
+              background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
+              color: "#080A0F",
+              boxShadow: "0 0 20px rgba(201,168,76,0.2)",
+            }}
+          >
+            Reach Us <ArrowRight size={11} />
           </Link>
         </div>
 

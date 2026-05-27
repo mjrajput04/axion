@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Signal, Layers, Target, Activity } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 /* ── Animated grid background ── */
 function GridBackground() {
@@ -167,63 +167,71 @@ export default function Home() {
 
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="shell text-center relative z-10 pt-20">
           <Reveal>
-            <div className="eyebrow eyebrow--center mb-4 text-[var(--accent)]">
-              AXION&nbsp;&nbsp;·&nbsp;&nbsp;INDEX
-            </div>
-            <div className="flex justify-center mb-10">
-              <span className="font-mono text-[10px] tracking-[0.32em] uppercase text-[var(--fg-3)] border border-[var(--line-strong)] rounded-full px-4 py-1.5">
-                Organisational Advisory
-              </span>
+            {/* Fix 3 — classification eyebrow, corner strips merged in */}
+            <div className="eyebrow eyebrow--center mb-10 text-[var(--fg-3)]">
+              OPERATING ARCHITECTURE PRACTICE&nbsp;&nbsp;·&nbsp;&nbsp;BENGALURU
             </div>
           </Reveal>
 
           <Reveal delay={0.1}>
             <h1 className="h-display hero-glow mb-8">
-              From <s className="opacity-30 line-through decoration-[var(--accent)]">ambiguity</s><br />
+              {/* Fix 6 — strikethrough contrast raised */}
+              From <s className="opacity-80 decoration-[var(--accent)] decoration-2">ambiguity</s><br />
               to <em>architecture.</em>
             </h1>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="lead mx-auto mb-14 text-[var(--fg-3)] max-w-[48ch]">
+            <p className="lead mx-auto mb-14 text-[var(--fg-2)] max-w-[48ch]">
               Most organisations don't fail when strategy breaks.<br />
               They fail when their internal architecture cannot carry<br />what they are becoming.
             </p>
           </Reveal>
 
           <Reveal delay={0.3}>
-            <div className="flex flex-col items-center gap-8">
-              {/* Gold CTA */}
+            {/* Fix 2 — primary gold CTA + secondary outline; Fix 5 — "signals" plural; Fix 7 — one scroll prompt */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <motion.a
+                href="/connect"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center gap-3 px-8 py-4 font-mono text-[11px] tracking-[0.28em] uppercase rounded-full font-semibold"
+                style={{
+                  background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
+                  color: "#080A0F",
+                  boxShadow: "0 0 32px rgba(201,168,76,0.25)",
+                }}
+              >
+                Reach Us
+                <ArrowRight size={13} />
+              </motion.a>
               <motion.a
                 href="#signals"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="group relative inline-flex items-center gap-3 px-8 py-4 font-mono text-[11px] tracking-[0.28em] uppercase overflow-hidden rounded-full"
                 style={{
-                  background: "linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%)",
                   border: "1px solid rgba(201,168,76,0.3)",
                   color: "var(--accent-2)",
                 }}
               >
-                <span className="relative z-10">Read the signal</span>
+                <span className="relative z-10">Read the signals</span>
                 <ArrowRight size={13} className="relative z-10 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-[var(--accent-soft)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </motion.a>
-              <a className="kbd-arrow text-white hover:text-[var(--accent)]" href="#signals">Scroll to explore</a>
+            </div>
+          </Reveal>
+
+          {/* Single scroll prompt */}
+          <Reveal delay={0.45}>
+            <div className="mt-16 flex justify-center">
+              <span className="kbd-arrow">Scroll to explore</span>
             </div>
           </Reveal>
         </motion.div>
 
         {/* Bottom gradient fade */}
         <div className="absolute bottom-0 left-0 w-full h-[35vh] bg-gradient-to-t from-[var(--bg)] to-transparent pointer-events-none" />
-
-        {/* Corner decorations */}
-        <div className="absolute top-24 left-8 font-mono text-[9px] tracking-[0.3em] text-[var(--fg-5)] opacity-40 hidden lg:block">
-          EST. 2024 · BENGALURU
-        </div>
-        <div className="absolute top-24 right-8 font-mono text-[9px] tracking-[0.3em] text-[var(--fg-5)] opacity-40 hidden lg:block">
-          OPERATING INTELLIGENCE
-        </div>
       </header>
 
       {/* ══════════════════════════════════════════
@@ -243,47 +251,44 @@ export default function Home() {
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
-                <div className="gold-line mb-6" />
-                <p className="text-[var(--fg-4)] max-w-[28ch] leading-relaxed font-mono text-[11px] tracking-[0.2em] uppercase text-white">
-                  Scroll to explore.
-                </p>
+                <div className="gold-line" />
               </Reveal>
             </div>
 
-            <div className="flex flex-col gap-[6vh] md:gap-[10vh] pb-0">
+            <div className="flex flex-col gap-4 pb-0">
               {[
-                { num: "01", text: "Growth is <em>accelerating.</em><br>Stability is not.", href: "/expertise/people", icon: <Layers size={18} /> },
-                { num: "02", text: "The organisation behaves differently<br><em>depending on who is in the room.</em>", href: "/expertise/people", icon: <Target size={18} /> },
-                { num: "03", text: "AI is increasing <em>output.</em><br>Decision quality is dropping.", href: "/expertise/ai-edge", icon: <Signal size={18} /> },
-                { num: "04", text: "Cost is rising.<br><em>You don't know why.</em>", href: "/expertise/labour", icon: <ArrowRight size={18} /> },
-                { num: "05", text: "The business is stable.<br><em>The future is not.</em>", href: "/expertise/family", icon: <Activity size={18} /> },
-                { num: "06", text: "You have <em>strong people.</em><br>You do not have a strong system.", href: "/expertise/ai-edge", icon: <Layers size={18} /> },
+                { num: "01", text: "Growth is <em>accelerating.</em><br>Stability is not.", href: "/expertise/people", dest: "People Architecture" },
+                { num: "02", text: "The organisation behaves differently<br><em>depending on who is in the room.</em>", href: "/expertise/people", dest: "People Architecture" },
+                { num: "03", text: "AI is increasing <em>output.</em><br>Decision quality is dropping.", href: "/expertise/ai-edge", dest: "AI Edge Lab" },
+                { num: "04", text: "Cost is rising.<br><em>You don't know why.</em>", href: "/expertise/labour", dest: "Labour Codes" },
+                { num: "05", text: "The business is stable.<br><em>The future is not.</em>", href: "/expertise/family", dest: "Family Business" },
+                { num: "06", text: "You have <em>strong people.</em><br>You do not have a strong system.", href: "/expertise/people", dest: "People Architecture" },
               ].map((signal, i) => (
-                <div
+                <motion.div
                   key={i}
-                  className="sticky transition-all duration-500"
-                  style={{ top: `${128 + i * 44}px`, zIndex: 10 }}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-8%" }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: i * 0.07 }}
+                  className="lg:sticky"
+                  style={{ top: `${128 + i * 44}px`, zIndex: 10 + i }}
                 >
-                  <div className="flex items-center justify-between px-6 py-4 bg-[var(--bg-1)] border border-b-0 border-[var(--line-strong)] rounded-t-[24px]">
-                    <span className="font-mono text-[10px] text-[var(--accent)] tracking-[0.35em] font-semibold">SIGNAL {signal.num}</span>
-                    <div className="text-[var(--accent)] opacity-50">{signal.icon}</div>
-                  </div>
-                  <Reveal delay={0.1} className="h-full">
-                    <Link
-                      href={signal.href}
-                      className="group block bg-[var(--bg-1)] border border-[var(--line-strong)] hover:border-[var(--line-gold)] transition-all duration-500 shadow-[0_-20px_50px_rgba(0,0,0,0.5)] rounded-b-[24px] p-8"
-                    >
-                      <h3
-                        className="text-[clamp(22px,2.8vw,30px)] font-serif leading-[1.35] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-500 mb-6"
-                        dangerouslySetInnerHTML={{ __html: signal.text }}
-                      />
-                      <div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase text-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity duration-400">
-                        <span>Explore</span>
-                        <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </Link>
-                  </Reveal>
-                </div>
+                  <Link
+                    href={signal.href}
+                    className="group block bg-[var(--bg-1)] border border-[var(--line-strong)] hover:border-[var(--line-gold)] transition-all duration-400 shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-[24px] px-6 py-5"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-mono text-[10px] text-[var(--accent)] tracking-[0.35em] font-semibold">SIGNAL {signal.num}</span>
+                      <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-[var(--fg-5)] group-hover:text-[var(--accent)] transition-colors duration-300 flex items-center gap-1">
+                        → {signal.dest}
+                      </span>
+                    </div>
+                    <h3
+                      className="text-[clamp(18px,2.2vw,26px)] font-serif leading-[1.35] text-[var(--fg-2)] group-hover:text-[var(--fg)] transition-colors duration-400"
+                      dangerouslySetInnerHTML={{ __html: signal.text }}
+                    />
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -302,20 +307,14 @@ export default function Home() {
                   <span className="eyebrow mb-8 text-[var(--accent)]">How We Do It</span>
                 </Reveal>
                 <Reveal delay={0.1}>
-                  <h2 className="h-display text-[clamp(32px,4.5vw,56px)] leading-[0.95] mb-10">
-                    We don't explore the <br/>
-                    <em>problem.</em>
+                  <h2 className="h-display text-[clamp(32px,4.5vw,56px)] leading-[0.95] mb-6">
+                    We don't explore the <em>problem.</em><br />
+                    We map what carries<br />the consequence.
                   </h2>
                 </Reveal>
-                <Reveal delay={0.2}>
-                  <p className="body-text text-[var(--fg-3)] text-[clamp(18px,2vw,24px)] mb-12 max-w-[24ch] leading-tight font-serif italic">
-                    We map the architecture that carries the consequence.
-                  </p>
-                </Reveal>
                 <Reveal delay={0.3}>
-                  <div className="flex flex-col gap-6 pt-10 border-t border-[var(--line)]">
-                    <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-white mb-2">Read your organisation properly.</p>
-                    <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-white opacity-80">We map:</span>
+                  <div className="pt-10 border-t border-[var(--line)]">
+                    <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-80">We map:</span>
                   </div>
                 </Reveal>
               </div>
@@ -324,7 +323,7 @@ export default function Home() {
             <div className="relative border-l border-[var(--line)] pl-10 md:pl-20 flex flex-col pt-20 lg:pt-20">
               {[
                 { title: "Where the system is breaking", step: "01", bg: "linear-gradient(180deg, rgba(201,168,76,0.06) 0%, transparent 100%)" },
-                { title: "What is holding it together artificially", step: "02", bg: "linear-gradient(180deg, rgba(74,158,255,0.04) 0%, transparent 100%)" },
+                { title: "What's holding it together artificially", step: "02", bg: "linear-gradient(180deg, rgba(74,158,255,0.04) 0%, transparent 100%)" },
                 { title: "What will fail next", step: "03", bg: "linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%)" },
                 { title: "Then we redesign it so it holds", step: "04", bg: "linear-gradient(180deg, rgba(240,241,245,0.03) 0%, transparent 100%)" },
               ].map((item, i) => (
@@ -353,110 +352,115 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="absolute right-0 bottom-[-5%] font-serif italic text-[20vw] text-white opacity-[0.015] pointer-events-none select-none whitespace-nowrap overflow-hidden max-w-full">
-          ARCHITECTURE
-        </div>
+
       </section>
 
       {/* ══════════════════════════════════════════
-          METHOD — Founding Philosophy
+          METHOD — Our Operating Logic
       ══════════════════════════════════════════ */}
-      <section className="section-tint relative overflow-hidden py-16" id="method">
+      <section className="section-tint relative overflow-hidden py-24" id="method">
         <div className="shell">
-          <div className="max-w-[800px] mx-auto text-center flex flex-col items-center">
+          <div className="max-w-[860px] mx-auto text-center flex flex-col items-center">
             <Reveal>
-              <span className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">Our Founding Philosophy</span>
+              <span className="eyebrow eyebrow--center mb-8 text-[var(--accent)]">OUR OPERATING LOGIC</span>
             </Reveal>
             <Reveal delay={0.1}>
-              <h2 className="h-section mb-10">
+              <h2 className="h-section mb-6">
                 Our Operating <em>Logic.</em>
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
-              <p className="body-text mx-auto text-[var(--fg-3)] mb-8">
-                Interpreted across labour, AI, people, and ownership.
+              <p className="text-[clamp(16px,1.4vw,19px)] text-[var(--fg-2)] mb-16 max-w-[52ch] leading-relaxed">
+                Not designed in a deck. Forged in the field — then interpreted across labour, AI, people, and ownership.
               </p>
             </Reveal>
 
-            <div className="flex flex-col md:flex-row justify-center items-center gap-0 md:gap-0 w-full mt-8 mb-4">
+            {/* Circles — intensity increases left → right */}
+            <div className="flex flex-col md:flex-row justify-center items-start gap-0 w-full mb-16">
               {[
-                { label: "Belief", desc: "Absorbed in the Soil. Tested at Udaan. Every founder starts here.", active: false },
-                { label: "Conviction", desc: "Earned through collisions at SCB, HSBC, TGB. Data, proof, and lived experience.", active: true },
-                { label: "Rhythm", desc: "Designed at Gameskraft. When conviction becomes repeatable behaviour.", active: false },
-              ].map((item, i) => (
-                <div key={i} className="flex flex-col md:flex-row items-center">
-                  <Reveal delay={0.3 + i * 0.15} y={20}>
-                    <div className="flex flex-col items-center gap-6">
-                      {/* Circle */}
+                {
+                  label: "Belief",
+                  desc: "Where every operating logic begins. A conviction about how an organisation should hold — before the pressure arrives.",
+                  intensity: 0,
+                },
+                {
+                  label: "Conviction",
+                  desc: "Belief that has survived collision with reality. Tested against data, cost, and consequence — not opinion.",
+                  intensity: 1,
+                },
+                {
+                  label: "Rhythm",
+                  desc: "When conviction stops depending on the person. Codified into repeatable behaviour the organisation keeps on its own.",
+                  intensity: 2,
+                },
+              ].map((item, i) => {
+                const styles = [
+                  // Belief — faint
+                  { border: "1px solid rgba(201,168,76,0.2)", background: "rgba(12,14,20,0.4)", boxShadow: "none", labelColor: "rgba(201,168,76,0.5)" },
+                  // Conviction — medium
+                  { border: "1px solid rgba(201,168,76,0.5)", background: "rgba(201,168,76,0.04)", boxShadow: "0 0 30px rgba(201,168,76,0.07)", labelColor: "rgba(201,168,76,0.8)" },
+                  // Rhythm — brightest / gold-filled
+                  { border: "2px solid rgba(201,168,76,0.9)", background: "rgba(201,168,76,0.1)", boxShadow: "0 0 60px rgba(201,168,76,0.18), 0 0 120px rgba(201,168,76,0.06)", labelColor: "#E8C97A" },
+                ][i];
+                return (
+                  <div key={i} className="flex flex-col md:flex-row items-center flex-1">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.88 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true, margin: "-10%" }}
+                      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.18 }}
+                      className="flex flex-col items-center gap-5 w-full"
+                    >
                       <motion.div
-                        whileHover={{ scale: 1.06 }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.35 }}
                         className="flex items-center justify-center rounded-full cursor-default"
                         style={{
-                          width: "clamp(160px,18vw,220px)",
-                          height: "clamp(160px,18vw,220px)",
-                          border: item.active ? "2px solid rgba(201,168,76,0.8)" : "1px solid rgba(201,168,76,0.35)",
-                          background: item.active ? "rgba(201,168,76,0.06)" : "rgba(12,14,20,0.6)",
-                          boxShadow: item.active ? "0 0 40px rgba(201,168,76,0.1)" : "none",
+                          width: "clamp(150px,16vw,210px)",
+                          height: "clamp(150px,16vw,210px)",
+                          border: styles.border,
+                          background: styles.background,
+                          boxShadow: styles.boxShadow,
                         }}
                       >
-                        <span className="font-serif italic text-[var(--accent)]" style={{ fontSize: "clamp(22px,2.5vw,32px)" }}>
+                        <span className="font-serif italic" style={{ fontSize: "clamp(20px,2.2vw,30px)", color: styles.labelColor }}>
                           {item.label}
                         </span>
                       </motion.div>
-                      {/* Description below circle */}
-                      <p className="font-serif text-[var(--fg-4)] text-center leading-relaxed max-w-[18ch]" style={{ fontSize: "clamp(13px,1.1vw,15px)" }}>
+                      <p className="text-[var(--fg-2)] text-center leading-relaxed max-w-[22ch] font-serif" style={{ fontSize: "clamp(13px,1.1vw,15px)" }}>
                         {item.desc}
                       </p>
-                    </div>
-                  </Reveal>
-                  {/* Arrow between circles */}
-                  {i < 2 && (
-                    <Reveal delay={0.4 + i * 0.15}>
-                      <span className="text-[var(--accent)] opacity-40 text-[22px] mx-6 md:mx-10 my-4 md:my-0 md:mb-16">
+                    </motion.div>
+                    {i < 2 && (
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.18 + 0.4 }}
+                        className="text-[var(--accent)] text-[20px] mx-4 md:mx-8 my-6 md:my-0 md:mb-20 shrink-0"
+                        style={{ opacity: 0.5 + i * 0.2 }}
+                      >
                         →
-                      </span>
-                    </Reveal>
-                  )}
-                </div>
-              ))}
+                      </motion.span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
+
+            {/* Closing line */}
+            <Reveal delay={0.6}>
+              <p className="font-serif italic text-[clamp(16px,1.5vw,20px)] text-[var(--fg-3)] max-w-[54ch] leading-relaxed border-t border-[var(--line)] pt-10">
+                This is the same arc we build for you — from what one person believes, to what the whole organisation runs on.
+              </p>
+            </Reveal>
           </div>
         </div>
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square pointer-events-none"
           style={{ background: "radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)" }} />
       </section>
 
-      {/* ══════════════════════════════════════════
-          STATEMENTS — Four operating logic
-      ══════════════════════════════════════════ */}
-      <section className="chapter section-dark relative overflow-hidden" id="statements">
-        <div className="shell">
-          <div className="mb-24">
-            <Reveal>
-              <span className="eyebrow mb-6 text-[var(--accent)]">Our Approach at Axion Index</span>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="h-section">
-                Four statements.<br />
-                <em>One operating logic.</em>
-              </h2>
-            </Reveal>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { num: "01", title: "Diagnose", desc: "We diagnose where the system is breaking." },
-              { num: "02", title: "Codify", desc: "We codify what is dependent on individuals." },
-              { num: "03", title: "Redesign", desc: "We redesign the architecture." },
-              { num: "04", title: "Hold", desc: "We make it hold under pressure." },
-            ].map((item, i) => (
-              <StatementCard key={i} item={item} i={i} />
-            ))}
-          </div>
-        </div>
-        <div className="absolute left-[-5%] bottom-[-10%] w-[40%] aspect-square bg-[radial-gradient(circle,var(--accent-glow)_0%,transparent_70%)] pointer-events-none" />
-      </section>
 
       {/* ══════════════════════════════════════════
           PRACTICES — Interactive Accordion
