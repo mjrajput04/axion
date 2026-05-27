@@ -573,83 +573,130 @@ export default function FounderPage() {
             className="relative"
             style={{ maxWidth: 860, margin: "0 auto" }}
           >
-            {/* Vertical spine — draws on scroll-enter */}
+            {/* Vertical spine — draws top→bottom on scroll-enter */}
             <motion.div
-              className="absolute pointer-events-none spine-line"
+              className="absolute pointer-events-none"
               initial={{ scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true, margin: "-5%" }}
-              transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 left: 26, top: 18, bottom: 64, width: 1,
-                background: "linear-gradient(180deg, #C9A24A, rgba(201,162,74,.28) 40%, rgba(201,162,74,.28))",
+                background: "linear-gradient(180deg, rgba(201,162,74,.18) 0%, rgba(201,162,74,.38) 40%, #C9A24A 100%)",
                 transformOrigin: "top",
               }}
             />
 
-            {STRATA.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-8%" }}
-                transition={{ duration: 0.65, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="relative"
-                style={{
-                  padding: "30px 0 30px 72px",
-                  borderBottom: s.last ? "none" : "1px solid rgba(237,235,227,.08)",
-                }}
-              >
-                {/* Number dot */}
+            {STRATA.map((s, i) => {
+              /* depth: layer I faintest, layer IV richest */
+              const depthOpacity = 0.55 + i * 0.15; // 0.55 → 1.0
+              const isLast = !!s.last;
+              return (
                 <div
-                  className="absolute flex items-center justify-center font-serif italic"
+                  key={i}
+                  className="relative"
                   style={{
-                    left: 11, top: 30, width: 31, height: 31, borderRadius: "50%",
-                    background: s.last ? "var(--accent)" : "var(--bg)",
-                    border: "1px solid rgba(201,162,74,.28)",
-                    fontSize: 14,
-                    color: s.last ? "#000" : "var(--accent)",
-                    zIndex: 2,
+                    padding: "32px 0 32px 72px",
+                    borderBottom: isLast ? "none" : "1px solid rgba(237,235,227,.07)",
                   }}
                 >
-                  {s.num}
-                </div>
+                  {/* Node — lights up when layer enters viewport */}
+                  <motion.div
+                    className="absolute flex items-center justify-center font-serif italic"
+                    initial={{ scale: 0.6, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true, margin: "-12%" }}
+                    transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                      left: isLast ? 8 : 11,
+                      top: 32,
+                      width: isLast ? 37 : 31,
+                      height: isLast ? 37 : 31,
+                      borderRadius: "50%",
+                      background: isLast ? "#C9A24A" : "#0A0A0B",
+                      border: isLast ? "none" : "1px solid rgba(201,162,74,.38)",
+                      fontSize: isLast ? 13 : 14,
+                      color: isLast ? "#000" : "#C9A24A",
+                      zIndex: 2,
+                      boxShadow: isLast ? "0 0 22px 4px rgba(201,162,74,.45)" : "none",
+                    }}
+                  >
+                    {s.num}
+                  </motion.div>
 
-                <span
-                  className="font-mono block mb-2"
-                  style={{ fontSize: "10.5px", letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}
-                >
-                  {s.loc}
-                </span>
-                <h3
-                  className="font-serif mb-3"
-                  style={{ fontSize: 24, fontWeight: 500, color: "var(--fg)" }}
-                >
-                  {s.title}
-                </h3>
-                <p style={{ color: "var(--fg-2)", fontWeight: 300, fontSize: 16, lineHeight: 1.68 }}>
-                  {s.body}
-                </p>
-                <blockquote
-                  className="font-serif italic mt-4"
-                  style={{
-                    fontSize: 16, lineHeight: 1.6, color: "var(--accent)",
-                    borderLeft: "1.5px solid var(--accent)",
-                    paddingLeft: 18, maxWidth: "64ch",
-                  }}
-                >
-                  {s.pq}
-                </blockquote>
-              </motion.div>
-            ))}
+                  {/* Layer body — staggered fade + rise */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: depthOpacity, y: 0 }}
+                    viewport={{ once: true, margin: "-10%" }}
+                    transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <span
+                      className="font-sans block mb-2"
+                      style={{ fontSize: "10px", letterSpacing: ".22em", textTransform: "uppercase", color: "#6A6A70" }}
+                    >
+                      {s.loc}
+                    </span>
+                    <h3
+                      className="font-serif mb-3"
+                      style={{ fontSize: isLast ? 26 : 23, fontWeight: isLast ? 500 : 400, color: isLast ? "#EDEBE3" : "#CCCAC2", lineHeight: 1.15 }}
+                    >
+                      {s.title}
+                    </h3>
+                    <p style={{ color: "#97979C", fontWeight: 300, fontSize: 15.5, lineHeight: 1.7, maxWidth: "68ch" }}>
+                      {s.body}
+                    </p>
+                  </motion.div>
+
+                  {/* Pull-quote — arrives slightly after body */}
+                  <motion.blockquote
+                    className="font-serif italic"
+                    initial={{ opacity: 0, x: -8 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-10%" }}
+                    transition={{ duration: 0.65, delay: i * 0.06 + 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                      marginTop: 18,
+                      fontSize: isLast ? 17 : 15.5,
+                      lineHeight: 1.62,
+                      color: isLast ? "#C9A24A" : "#8A7338",
+                      borderLeft: `1.5px solid ${isLast ? "rgba(201,162,74,.6)" : "rgba(138,115,56,.3)"}`,
+                      paddingLeft: 18,
+                      maxWidth: "60ch",
+                    }}
+                  >
+                    {s.pq}
+                  </motion.blockquote>
+
+                  {/* Bedrock arrival label — last node only */}
+                  {isLast && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true, margin: "-10%" }}
+                      transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+                      className="font-sans mt-4"
+                      style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".28em", textTransform: "uppercase", color: "#C9A24A" }}
+                    >
+                      ◆ Bedrock
+                    </motion.div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
-          <p
-            className="font-serif italic text-center mt-10"
-            style={{ fontSize: 18, lineHeight: 1.5, color: "var(--fg-3)", maxWidth: 680, margin: "40px auto 0" }}
+          {/* Closing line */}
+          <motion.p
+            className="font-serif italic text-center"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-5%" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            style={{ fontSize: 18, lineHeight: 1.5, color: "#6A6A70", maxWidth: 680, margin: "52px auto 0" }}
           >
             This was the soil. Everything that came after was built on it.
-          </p>
+          </motion.p>
         </div>
       </section>
 
