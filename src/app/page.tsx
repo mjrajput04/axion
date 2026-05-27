@@ -537,7 +537,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════
           PRACTICES — Interactive Accordion
       ══════════════════════════════════════════ */}
-      <section className="chapter section-deep overflow-hidden" id="practices">
+      <section className="chapter section-deep overflow-hidden pb-10" id="practices">
         <div className="shell">
           <div className="text-center mb-20">
             <Reveal><span className="eyebrow eyebrow--center mb-4">Where the work happens</span></Reveal>
@@ -647,7 +647,7 @@ export default function Home() {
 
           {/* Catch-all line */}
           <Reveal delay={0.2}>
-            <div className="mt-16 pt-10 border-t border-[var(--line)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div className="mt-8 pt-6 border-t border-[var(--line)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex flex-col gap-3">
                 <p className="font-serif text-[clamp(18px,1.7vw,24px)] text-[var(--fg-3)] leading-relaxed">
                   Four practices. <em style={{ color: "var(--accent)" }}>One method.</em>
@@ -806,7 +806,7 @@ export default function Home() {
 
             {/* Ghost number watermark — clipped to row, no overflow */}
             <div
-              className={`absolute top-1/2 -translate-y-1/2 font-serif italic text-[22vw] leading-none text-white opacity-[0.018] pointer-events-none select-none transition-opacity duration-700 group-hover:opacity-[0.04] overflow-hidden ${item.align === "right" ? "right-0" : "left-0"}`}
+              className={`absolute top-1/2 -translate-y-1/2 font-serif italic text-[22vw] leading-none text-white opacity-[0.018] pointer-events-none select-none transition-opacity duration-700 group-hover:opacity-[0.04] overflow-hidden ${item.align === "right" ? "right-8" : "left-0"}`}
               style={{ maxWidth: "40%" }}
             >
               {item.num}
@@ -903,7 +903,7 @@ function Footer() {
       {/* Ghost wordmark — deep background */}
       <div
         aria-hidden="true"
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[38%] font-serif italic font-bold leading-none pointer-events-none select-none whitespace-nowrap"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[10%] font-serif italic font-bold leading-none pointer-events-none select-none whitespace-nowrap"
         style={{ fontSize: "20vw", color: "rgba(240,241,245,0.018)", letterSpacing: "-0.02em" }}
       >
         AXION
