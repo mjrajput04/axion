@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
@@ -1655,9 +1655,8 @@ export default function FounderPage() {
               { sn: "02 · Written", title: "The Philosophy",   body: "Two books in progress — Baptism by Chaos and The Operating Architect — codifying the patterns into a body of work." },
               { sn: "03 · Applied", title: "The Applied Loop", body: "Axion Index — the operating-architecture advisory practice — and HROS, an AI-native people operating system, in development." },
             ].map((stage, i) => (
-              <>
+              <Fragment key={stage.sn}>
                 <motion.div
-                  key={stage.sn}
                   initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -1680,7 +1679,7 @@ export default function FounderPage() {
                 {i < 2 && (
                   <div key={`arr-${i}`} className="loop-arrow flex items-center justify-center" style={{ color: "rgba(201,162,74,.3)", fontSize: 18 }}>→</div>
                 )}
-              </>
+              </Fragment>
             ))}
           </div>
 
@@ -1779,56 +1778,201 @@ export default function FounderPage() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={{ background: "var(--bg-1)", borderTop: "1px solid rgba(201,162,74,.28)", padding: "68px 0 36px" }}>
-        <div className="shell">
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 gap-9 items-center mb-12"
-          >
-            <div>
-              <h4 className="font-serif mb-2" style={{ fontSize: 26, color: "var(--fg)", fontWeight: 500, lineHeight: 1.2 }}>
-                Codifying the operating patterns of the unfinished organisation.
-              </h4>
-              <p style={{ color: "var(--fg-3)", fontSize: 14, marginTop: 8 }}>Essays, frameworks and the build — followed by founders and operators.</p>
-            </div>
-            <div>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="you@company.com"
-                  aria-label="Email"
-                  className="flex-1 font-sans"
-                  style={{ fontSize: 14, padding: "12px 14px", border: "1px solid rgba(201,162,74,.28)", borderRadius: 6, background: "var(--bg)", color: "var(--fg)", outline: "none" }}
-                />
-                <button
-                  type="button"
-                  className="font-sans shrink-0"
-                  style={{ fontSize: 12, fontWeight: 500, letterSpacing: ".08em", textTransform: "uppercase", background: "#C9A24A", color: "#000", border: "none", borderRadius: 6, padding: "0 22px", cursor: "pointer" }}
-                >
-                  Follow
-                </button>
+      <footer className="relative overflow-hidden" style={{ background: "var(--bg)", borderTop: "1px solid rgba(201,162,74,0.18)" }}>
+
+        {/* Ghost wordmark */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[10%] font-serif italic font-bold leading-none pointer-events-none select-none whitespace-nowrap"
+          style={{ fontSize: "18vw", color: "rgba(240,241,245,0.016)", letterSpacing: "-0.02em" }}
+        >
+          NITIN
+        </div>
+
+        {/* Top gold line */}
+        <div
+          aria-hidden="true"
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[50%] h-[1px] pointer-events-none"
+          style={{ background: "linear-gradient(90deg, transparent, rgba(201,162,74,0.3), transparent)" }}
+        />
+
+        <div className="shell relative z-10">
+
+          {/* ── Main grid ── */}
+          <div className="pt-20 pb-16 grid grid-cols-1 lg:grid-cols-[1.8fr_1fr_1fr] gap-14 lg:gap-10 border-b border-[var(--line)]">
+
+            {/* Left — tagline + follow capture */}
+            <div className="flex flex-col gap-10">
+              <div>
+                <Link className="brand text-[clamp(20px,2.4vw,30px)] block mb-4 leading-none" href="/">
+                  Ax<em>ion</em><span className="domain">INDEX</span>
+                </Link>
+                <p className="font-serif italic leading-relaxed" style={{ fontSize: "clamp(14px,1.2vw,16px)", color: "var(--fg-3)", maxWidth: "32ch" }}>
+                  Codifying the operating patterns of the unfinished organisation.
+                </p>
+                <p className="font-sans mt-3" style={{ fontSize: 13, color: "var(--fg-5)", lineHeight: 1.6, maxWidth: "36ch" }}>
+                  Essays, frameworks and the build — followed by founders and operators.
+                </p>
+              </div>
+
+              {/* Email follow capture */}
+              <div>
+                <p className="font-mono mb-4" style={{ fontSize: "9px", letterSpacing: ".45em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+                  Follow the work
+                </p>
+                <div className="flex gap-2 max-w-[340px]">
+                  <input
+                    type="email"
+                    placeholder="you@company.com"
+                    aria-label="Email address"
+                    className="flex-1 font-sans"
+                    style={{
+                      fontSize: 13, padding: "11px 14px",
+                      border: "1px solid rgba(201,162,74,0.2)",
+                      borderRadius: 6,
+                      background: "rgba(12,14,20,0.8)",
+                      color: "var(--fg)",
+                      outline: "none",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="font-mono shrink-0"
+                    style={{
+                      fontSize: "10px", fontWeight: 600, letterSpacing: ".12em", textTransform: "uppercase",
+                      background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
+                      color: "#080A0F", border: "none", borderRadius: 6,
+                      padding: "0 20px", cursor: "pointer",
+                    }}
+                  >
+                    Follow
+                  </button>
+                </div>
               </div>
             </div>
+
+            {/* Index */}
+            <div>
+              <p className="font-mono mb-7" style={{ fontSize: "9px", letterSpacing: ".5em", textTransform: "uppercase", color: "var(--accent)", opacity: 0.5 }}>
+                Index
+              </p>
+              <ul className="flex flex-col gap-4">
+                {[
+                  { href: "/", label: "Home" },
+                  { href: "#story", label: "Story" },
+                  { href: "/patterns", label: "Operating Patterns" },
+                  { href: "/connect", label: "Connect" },
+                ].map((l) => (
+                  <li key={l.label}>
+                    <Link
+                      href={l.href}
+                      className="font-mono"
+                      style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-4)", textDecoration: "none", transition: "color 0.3s" }}
+                      onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-4)")}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Connect */}
+            <div>
+              <p className="font-mono mb-7" style={{ fontSize: "9px", letterSpacing: ".5em", textTransform: "uppercase", color: "var(--accent)", opacity: 0.5 }}>
+                Connect
+              </p>
+              <div className="flex flex-col gap-4">
+                <a
+                  href="https://www.linkedin.com/in/nitinnahata"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 font-mono"
+                  style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-4)", textDecoration: "none", transition: "color 0.3s" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-4)")}
+                >
+                  <span
+                    style={{
+                      width: 26, height: 26, borderRadius: "50%",
+                      border: "1px solid rgba(240,241,245,0.12)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      background: "rgba(12,14,20,0.8)", flexShrink: 0,
+                    }}
+                  >
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </span>
+                  LinkedIn
+                </a>
+                <a
+                  href="https://axionindex.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono"
+                  style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-4)", textDecoration: "none", transition: "color 0.3s" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-4)")}
+                >
+                  Axion Index ↗
+                </a>
+                <a
+                  href="mailto:office@axionindex.com"
+                  className="font-mono"
+                  style={{ fontSize: "10px", letterSpacing: ".1em", color: "var(--fg-4)", textDecoration: "none", textTransform: "none", transition: "color 0.3s" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-4)")}
+                >
+                  office@axionindex.com
+                </a>
+              </div>
+            </div>
+
           </div>
-          <div
-            className="flex flex-wrap items-center justify-between gap-3 pt-6"
-            style={{ borderTop: "1px solid var(--line)" }}
-          >
-            <div className="flex flex-wrap gap-5">
+
+          {/* ── Bottom bar ── */}
+          <div className="py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <span className="font-mono" style={{ fontSize: "9px", letterSpacing: ".4em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+              © 2026 Nitin Nahata · Axion Index. All rights reserved.
+            </span>
+            <div className="flex items-center gap-6">
               {[
                 { href: "https://www.linkedin.com/in/nitinnahata", label: "LinkedIn", external: true },
-                { href: "https://axionindex.org", label: "Axion Index", external: true },
-                { href: "/", label: "Home" },
-                { href: "#story", label: "Story" },
+                { href: "/", label: "Axion Index", external: false },
+                { href: "/patterns", label: "Operating Patterns", external: false },
+                { href: "#story", label: "Story", external: false },
               ].map((l) =>
                 l.external ? (
-                  <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className="font-sans" style={{ fontSize: 11, letterSpacing: ".08em", color: "var(--fg-5)" }}>{l.label}</a>
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono"
+                    style={{ fontSize: "9px", letterSpacing: ".3em", textTransform: "uppercase", color: "var(--fg-5)", textDecoration: "none", transition: "color 0.3s" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "var(--fg-3)")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-5)")}
+                  >
+                    {l.label}
+                  </a>
                 ) : (
-                  <Link key={l.label} href={l.href} className="font-sans" style={{ fontSize: 11, letterSpacing: ".08em", color: "var(--fg-5)" }}>{l.label}</Link>
+                  <Link
+                    key={l.label}
+                    href={l.href}
+                    className="font-mono"
+                    style={{ fontSize: "9px", letterSpacing: ".3em", textTransform: "uppercase", color: "var(--fg-5)", textDecoration: "none", transition: "color 0.3s" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "var(--fg-3)")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-5)")}
+                  >
+                    {l.label}
+                  </Link>
                 )
               )}
             </div>
-            <span className="font-sans" style={{ fontSize: "10.5px", color: "var(--fg-5)" }}>© 2026 Nitin Nahata. All rights reserved.</span>
           </div>
+
         </div>
       </footer>
 
