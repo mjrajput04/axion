@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 
 /* ─── DATA ─────────────────────────────────────────────────────────────────── */
 
@@ -201,35 +199,166 @@ export default function FounderPage() {
   const [emailNews, setEmailNews] = useState("");
   const [submittedDiag, setSubmittedDiag] = useState(false);
   const [submittedNews, setSubmittedNews] = useState(false);
+  const [navScrolled, setNavScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("story");
+
+  useEffect(() => {
+    const onScroll = () => setNavScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Intersection observer for active nav link
+  useEffect(() => {
+    const sections = ["story", "roots", "patterns", "system", "writing", "vision"];
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActiveSection(e.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, []);
+
+  const NAV_LINKS = [
+    { href: "#story",    label: "Story" },
+    { href: "#roots",    label: "Roots" },
+    { href: "#patterns", label: "Patterns" },
+    { href: "#system",   label: "System" },
+    { href: "#writing",  label: "Writing" },
+    { href: "#vision",   label: "Vision" },
+  ];
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg)" }}>
+    <div className="min-h-screen" style={{ background: "#0A0A0B" }}>
+      <style>{`
+        /* ── Founder page scoped styles ── */
+        .fn-nav {
+          position: fixed; top: 0; left: 0; right: 0; height: 64px; z-index: 900;
+          display: flex; align-items: center;
+          background: rgba(10,10,11,.6); backdrop-filter: blur(18px);
+          border-bottom: 1px solid rgba(237,235,227,.08);
+          transition: background .3s;
+        }
+        .fn-nav.s { background: rgba(10,10,11,.95); }
+        .fn-nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 38px; display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        .fn-brand { font-family: var(--font-serif), Georgia, serif; font-size: 20px; font-weight: 400; color: #EDEBE3; letter-spacing: .01em; text-decoration: none; }
+        .fn-nl { display: flex; align-items: center; gap: 30px; }
+        .fn-nl a { font-family: var(--font-mono), monospace; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #6A6A70; transition: color .2s; padding: 5px 0; position: relative; text-decoration: none; }
+        .fn-nl a:hover, .fn-nl a.on { color: #E2C078; }
+        .fn-nl a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: #C9A24A; }
+        .fn-nl .fn-btn { color: #C9A24A; border: 1px solid rgba(201,162,74,.28); border-radius: 2px; padding: 8px 15px; }
+        .fn-nl .fn-btn:hover { background: rgba(201,162,74,.08); }
+        .fn-hamb { display: none; background: none; border: 1px solid rgba(237,235,227,.08); color: #EDEBE3; width: 42px; height: 38px; border-radius: 4px; cursor: pointer; align-items: center; justify-content: center; }
+        @media (max-width: 960px) {
+          .fn-nl { position: fixed; inset: 64px 0 auto 0; flex-direction: column; gap: 0; background: #0D0D0F; border-bottom: 1px solid rgba(201,162,74,.28); max-height: 0; overflow: hidden; transition: max-height .35s; padding: 0 38px; }
+          .fn-nl.open { max-height: 580px; padding: 12px 38px 26px; }
+          .fn-nl a { padding: 14px 0; width: 100%; border-bottom: 1px solid rgba(237,235,227,.08); font-size: 13px; }
+          .fn-nl .fn-btn { margin-top: 12px; text-align: center; }
+          .fn-hamb { display: inline-flex; }
+        }
+        @media (max-width: 768px) {
+          .founder-hero { grid-template-columns: 1fr !important; }
+          .founder-hero-img { height: 42vh; min-height: 300px; }
+          .founder-hero-img::after { top: auto !important; left: 0; right: 0; bottom: 0; width: 100% !important; height: 42%; background: linear-gradient(0deg, #0A0A0B, transparent) !important; }
+          .founder-hero-txt { padding: 40px 38px 52px !important; }
+          .founder-sys-map { grid-template-columns: 1fr 1fr !important; }
+          .founder-loop { grid-template-columns: 1fr !important; }
+          .founder-loop .loop-arrow { transform: rotate(90deg); padding: 4px 0; }
+        }
+        @media (max-width: 480px) {
+          .founder-sys-map { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
+      {/* ── FIXED NAV ── */}
+      <nav className={`fn-nav${navScrolled ? " s" : ""}`} aria-label="Primary">
+        <div className="fn-nav-inner">
+          <a className="fn-brand" href="#story">Nitin Nahata</a>
+          <button
+            className="fn-hamb"
+            aria-label="Menu"
+            aria-expanded={mobileOpen}
+            aria-controls="fn-nl"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            style={{ display: "none" }}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ width: 20, height: 20 }}>
+              <line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" />
+            </svg>
+          </button>
+          <div className={`fn-nl${mobileOpen ? " open" : ""}`} id="fn-nl">
+            {NAV_LINKS.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className={activeSection === l.href.slice(1) ? "on" : ""}
+                onClick={() => setMobileOpen(false)}
+              >
+                {l.label}
+              </a>
+            ))}
+            <a
+              className="fn-btn"
+              href="https://axionindex.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileOpen(false)}
+            >
+              Axion Index ↗
+            </a>
+          </div>
+        </div>
+      </nav>
 
       {/* ── HERO ── */}
       <header
         id="story"
-        className="relative overflow-hidden"
-        style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "0.92fr 1.08fr" }}
+        className="founder-hero"
+        style={{
+          minHeight: "100vh",
+          display: "grid",
+          gridTemplateColumns: ".92fr 1.08fr",
+          alignItems: "stretch",
+        }}
       >
         {/* Left — monogram */}
         <div
-          className="relative flex items-center justify-center overflow-hidden"
-          style={{ background: "radial-gradient(120% 90% at 30% 30%, #201f24, #0c0c0e 70%)" }}
+          className="founder-hero-img"
+          style={{
+            position: "relative",
+            background: "radial-gradient(120% 90% at 30% 30%, #201f24, #0c0c0e 70%)",
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
+          {/* ::before equivalent */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{ background: "radial-gradient(60% 50% at 50% 42%, rgba(201,162,74,.05), transparent 70%)" }}
           />
+          {/* ::after equivalent — right fade into bg */}
           <div
-            className="absolute top-0 right-0 bottom-0 pointer-events-none"
-            style={{ width: "42%", background: "linear-gradient(90deg, transparent, var(--bg))" }}
+            className="absolute pointer-events-none"
+            style={{ top: 0, right: 0, bottom: 0, width: "42%", background: "linear-gradient(90deg, transparent, #0A0A0B)" }}
           />
+          {/* Monogram */}
           <div className="relative z-10 text-center">
             <div
-              className="flex items-center justify-center rounded-full mx-auto"
               style={{
-                width: 188, height: 188,
+                width: 188, height: 188, borderRadius: "50%",
                 border: "1px solid rgba(201,162,74,.28)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                margin: "0 auto",
                 boxShadow: "0 0 80px -40px rgba(201,162,74,.6)",
               }}
             >
@@ -241,8 +370,8 @@ export default function FounderPage() {
               </span>
             </div>
             <p
-              className="font-mono mt-5"
-              style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".32em", textTransform: "uppercase", color: "var(--fg-5)" }}
+              className="font-mono"
+              style={{ marginTop: 22, fontSize: 10, fontWeight: 500, letterSpacing: ".32em", textTransform: "uppercase", color: "#6A6A70" }}
             >
               The Operating Architect
             </p>
@@ -251,37 +380,60 @@ export default function FounderPage() {
 
         {/* Right — text */}
         <div
-          className="relative flex flex-col justify-center"
-          style={{ padding: "calc(64px + 36px) 9% 56px" }}
+          className="founder-hero-txt"
+          style={{
+            display: "flex", flexDirection: "column", justifyContent: "center",
+            padding: "calc(64px + 36px) 9% 56px",
+            position: "relative",
+          }}
         >
+          {/* Radial glow behind text */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{ background: "radial-gradient(80% 60% at 70% 40%, rgba(201,162,74,.035), transparent 70%)" }}
           />
-          <div className="relative">
+          <div style={{ position: "relative" }}>
             <Reveal>
-              <span className="eyebrow mb-6 block">Nitin Nahata</span>
+              <span
+                className="font-mono"
+                style={{ display: "block", marginBottom: 22, fontSize: "11.5px", fontWeight: 500, letterSpacing: ".3em", textTransform: "uppercase", color: "#C9A24A" }}
+              >
+                Nitin Nahata
+              </span>
             </Reveal>
             <Reveal delay={0.1}>
-              <h1 className="h-display hero-glow mb-6">
-                The Making of the<br />
-                <em>Operating Architect</em>
+              <h1
+                className="font-serif"
+                style={{
+                  fontWeight: 400,
+                  fontSize: "clamp(46px, 6.1vw, 80px)",
+                  lineHeight: 1.03,
+                  letterSpacing: "-.012em",
+                  color: "#EDEBE3",
+                  marginBottom: 22,
+                }}
+              >
+                The Making of the Operating Architect
               </h1>
             </Reveal>
             <Reveal delay={0.18}>
-              <p className="lead mb-8" style={{ maxWidth: "36ch" }}>
+              <p
+                className="font-sans"
+                style={{ fontWeight: 300, fontSize: "clamp(16px,1.6vw,20px)", color: "#97979C", maxWidth: "36ch", marginBottom: 30 }}
+              >
                 A 23-year journey through collision, scars &amp; conviction.
               </p>
             </Reveal>
             <Reveal delay={0.26}>
               <blockquote
-                className="font-serif italic mb-8"
+                className="font-serif"
                 style={{
-                  fontSize: "clamp(15px,1.3vw,18px)",
+                  fontStyle: "italic",
+                  fontSize: "16.5px",
                   lineHeight: 1.64,
-                  color: "var(--accent)",
+                  color: "#C9A24A",
                   maxWidth: "46ch",
-                  borderLeft: "1.5px solid var(--accent)",
+                  borderLeft: "1.5px solid #8A7338",
                   paddingLeft: 20,
                 }}
               >
@@ -290,22 +442,24 @@ export default function FounderPage() {
             </Reveal>
             <Reveal delay={0.34}>
               <div
-                className="font-mono pt-5"
+                className="font-mono"
                 style={{
-                  borderTop: "1px solid var(--line)",
+                  marginTop: 32,
+                  paddingTop: 22,
+                  borderTop: "1px solid rgba(237,235,227,.08)",
                   fontSize: "10.5px",
                   letterSpacing: ".1em",
-                  color: "var(--fg-5)",
+                  color: "#6A6A70",
                   lineHeight: 2.1,
                   textTransform: "uppercase",
                 }}
               >
-                <span style={{ color: "var(--accent)", fontWeight: 500 }}>WIPRO</span> ·{" "}
-                <span style={{ color: "var(--accent)", fontWeight: 500 }}>STANDARD CHARTERED</span> ·{" "}
-                <span style={{ color: "var(--accent)", fontWeight: 500 }}>HSBC</span> ·{" "}
-                <span style={{ color: "var(--accent)", fontWeight: 500 }}>TATA</span> ·{" "}
-                <span style={{ color: "var(--accent)", fontWeight: 500 }}>UDAAN</span> ·{" "}
-                <span style={{ color: "var(--accent)", fontWeight: 500 }}>GAMESKRAFT</span>
+                <b style={{ color: "#C9A24A", fontWeight: 500 }}>WIPRO</b> ·{" "}
+                <b style={{ color: "#C9A24A", fontWeight: 500 }}>STANDARD CHARTERED</b> ·{" "}
+                <b style={{ color: "#C9A24A", fontWeight: 500 }}>HSBC</b> ·{" "}
+                <b style={{ color: "#C9A24A", fontWeight: 500 }}>TATA</b> ·{" "}
+                <b style={{ color: "#C9A24A", fontWeight: 500 }}>UDAAN</b> ·{" "}
+                <b style={{ color: "#C9A24A", fontWeight: 500 }}>GAMESKRAFT</b>
                 <br />
                 40 Under 40 · Global HR across the Americas, Australia, the Middle East, Europe &amp; Asia · TISS
               </div>
@@ -315,8 +469,13 @@ export default function FounderPage() {
 
         {/* Bottom fade */}
         <div
-          className="absolute bottom-0 left-0 w-full pointer-events-none"
-          style={{ height: "20vh", background: "linear-gradient(to top, var(--bg), transparent)", gridColumn: "1 / -1" }}
+          style={{
+            position: "absolute", bottom: 0, left: 0, width: "100%",
+            height: "20vh",
+            background: "linear-gradient(to top, #0A0A0B, transparent)",
+            pointerEvents: "none",
+            gridColumn: "1 / -1",
+          }}
         />
       </header>
 
@@ -905,7 +1064,7 @@ export default function FounderPage() {
 
           {/* System map */}
           <div
-            className="grid gap-3"
+            className="founder-sys-map grid gap-3"
             style={{ gridTemplateColumns: "repeat(5, 1fr)", maxWidth: 1080, margin: "0 auto" }}
           >
             {SYS_MAP.map((s, i) => (
@@ -1214,3 +1373,144 @@ export default function FounderPage() {
           </div>
         </div>
       </section>
+
+      {/* ── VISION ── */}
+      <section
+        id="vision"
+        className="relative"
+        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
+      >
+        <div className="shell">
+          <Reveal>
+            <div className="mb-10">
+              <span className="eyebrow mb-4 block">The Vision</span>
+              <h2 className="h-section" style={{ maxWidth: "18ch" }}>The arc continues — as a loop</h2>
+            </div>
+          </Reveal>
+
+          {/* Loop */}
+          <div
+            className="founder-loop grid gap-3 mb-6"
+            style={{ gridTemplateColumns: "1fr auto 1fr auto 1fr", maxWidth: 1040, margin: "0 auto 36px", alignItems: "stretch" }}
+          >
+            {[
+              { sn: "01 · Lived",   title: "The Practice",   body: "23 years of collisions — the scars that became the raw material." },
+              { sn: "02 · Written", title: "The Philosophy",  body: "Two books in progress — Baptism by Chaos and The Operating Architect — codifying the patterns into a body of work." },
+              { sn: "03 · Applied", title: "The Applied Loop", body: "Axion Index — the operating-architecture advisory practice — and HROS, an AI-native people operating system, in development." },
+            ].map((stage, i) => (
+              <>
+                <motion.div
+                  key={stage.sn}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "32px 28px" }}
+                >
+                  <span className="font-mono block mb-2" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>{stage.sn}</span>
+                  <h4 className="font-serif mb-3" style={{ fontSize: 22, color: "var(--fg)", fontWeight: 500 }}>{stage.title}</h4>
+                  <p style={{ color: "var(--fg-3)", fontSize: "14.5px" }}>{stage.body}</p>
+                  {i === 2 && (
+                    <a
+                      href="#system"
+                      className="font-mono inline-block mt-4"
+                      style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--accent)", border: "1px solid rgba(201,162,74,.28)", borderRadius: 30, padding: "8px 15px" }}
+                    >
+                      See the system
+                    </a>
+                  )}
+                </motion.div>
+                {i < 2 && (
+                  <div key={`arr-${i}`} className="loop-arrow flex items-center justify-center" style={{ color: "var(--accent)", fontSize: 22 }}>→</div>
+                )}
+              </>
+            ))}
+          </div>
+
+          <p className="font-mono text-center mb-10" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--accent)", opacity: .6 }}>
+            ↺&nbsp;&nbsp;theory returns to practice
+          </p>
+
+          {/* Closing */}
+          <div className="text-center" style={{ maxWidth: 760, margin: "0 auto" }}>
+            <p className="font-serif italic mb-5" style={{ fontSize: 22, color: "var(--accent-2)" }}>
+              The loop closes where it began — in practice.
+            </p>
+            <blockquote className="font-serif italic" style={{ fontSize: "clamp(21px,2.7vw,29px)", lineHeight: 1.42, color: "var(--fg)" }}>
+              "The founders who once watched me build are part of what comes next. The rest, I'm still building."
+            </blockquote>
+            <div className="flex flex-col items-center gap-1 mt-8">
+              <span style={{ color: "var(--accent)", fontSize: 18 }}>◇</span>
+              <span className="font-serif" style={{ fontSize: 22, color: "var(--accent-2)" }}>Nitin Nahata</span>
+              <span className="font-mono" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-5)" }}>The Operating Architect</span>
+              <a
+                href="https://www.linkedin.com/in/nitinnahata"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono mt-2"
+                style={{ fontSize: "10.5px", color: "var(--accent)" }}
+              >
+                LinkedIn ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer style={{ background: "var(--bg-1)", borderTop: "1px solid rgba(201,162,74,.28)", padding: "68px 0 36px" }}>
+        <div className="shell">
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 gap-9 items-center mb-12"
+          >
+            <div>
+              <h4 className="font-serif mb-2" style={{ fontSize: 26, color: "var(--fg)", fontWeight: 500, lineHeight: 1.2 }}>
+                Codifying the operating patterns of the unfinished organisation.
+              </h4>
+              <p style={{ color: "var(--fg-3)", fontSize: 14, marginTop: 8 }}>Essays, frameworks and the build — followed by founders and operators.</p>
+            </div>
+            <div>
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder="you@company.com"
+                  aria-label="Email"
+                  className="flex-1 font-sans"
+                  style={{ fontSize: 14, padding: "12px 14px", border: "1px solid rgba(201,162,74,.28)", borderRadius: 6, background: "var(--bg)", color: "var(--fg)", outline: "none" }}
+                />
+                <button
+                  type="button"
+                  className="font-mono shrink-0"
+                  style={{ fontSize: 12, fontWeight: 500, letterSpacing: ".08em", textTransform: "uppercase", background: "var(--accent)", color: "#000", border: "none", borderRadius: 6, padding: "0 22px", cursor: "pointer" }}
+                >
+                  Follow
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            className="flex flex-wrap items-center justify-between gap-3 pt-6"
+            style={{ borderTop: "1px solid var(--line)" }}
+          >
+            <div className="flex flex-wrap gap-5">
+              {[
+                { href: "https://www.linkedin.com/in/nitinnahata", label: "LinkedIn", external: true },
+                { href: "https://axionindex.org", label: "Axion Index", external: true },
+                { href: "/", label: "Home" },
+                { href: "#story", label: "Story" },
+              ].map((l) =>
+                l.external ? (
+                  <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className="font-mono" style={{ fontSize: 11, letterSpacing: ".08em", color: "var(--fg-5)" }}>{l.label}</a>
+                ) : (
+                  <Link key={l.label} href={l.href} className="font-mono" style={{ fontSize: 11, letterSpacing: ".08em", color: "var(--fg-5)" }}>{l.label}</Link>
+                )
+              )}
+            </div>
+            <span className="font-mono" style={{ fontSize: "10.5px", color: "var(--fg-5)" }}>© 2026 Nitin Nahata. All rights reserved.</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  );
+}
