@@ -558,7 +558,7 @@ export default function FounderPage() {
         <div className="shell">
           <Reveal>
             <div className="mb-14" style={{ maxWidth: 880 }}>
-              <span className="eyebrow mb-4 block" style={{ paddingLeft: 85, color: "var(--accent)" }}>The Soil · Before 2003</span>
+              <span className="eyebrow mb-4 block" style={{ paddingLeft: 117, color: "var(--accent)" }}>The Soil · Before 2003</span>
               <h2
                 className="font-serif mb-5"
                 style={{
@@ -568,14 +568,14 @@ export default function FounderPage() {
                   letterSpacing: "-0.008em",
                   color: "var(--fg)",
                   maxWidth: "18ch",
-                  paddingLeft: 85,
+                  paddingLeft: 117,
                 }}
               >
                 Where the operating system began writing itself
               </h2>
               <p
                 className="font-sans"
-                style={{ marginTop: 18, fontSize: 18, color: "var(--fg-3)", maxWidth: "62ch", lineHeight: 1.74, fontWeight: 300, paddingLeft: 85 }}
+                style={{ marginTop: 18, fontSize: 18, color: "var(--fg-3)", maxWidth: "62ch", lineHeight: 1.74, fontWeight: 300, paddingLeft: 117 }}
               >
                 Every architect needs material to work with. For buildings, it is steel and concrete. For people systems, it is something less visible: a way of reading the world, a comfort with responsibility, an internal compass that holds when external certainty disappears.
               </p>
@@ -722,12 +722,12 @@ export default function FounderPage() {
       >
         <div className="shell">
           <Reveal>
-            <div className="mb-10" style={{ maxWidth: 880 }}>
-              <span className="eyebrow mb-4 block">The Roots · 2003 — Present</span>
+            <div className="mb-10" style={{ maxWidth: 880, paddingLeft: "32px" }}>
+              <span className="eyebrow mb-4 block" style={{ color: "#C9A24A" }}>The Roots · 2003 — Present</span>
               <h2 className="h-section mb-5" style={{ maxWidth: "22ch" }}>
                 Preparing for the war when you are not at war
               </h2>
-              <p className="lead" style={{ maxWidth: "62ch" }}>
+              <p className="lead" style={{ maxWidth: "62ch", color: "#6A6A70" }}>
                 Six collisions across institution and startup. In the early years the architecture was already built — the work was to operate inside it, learn its mechanics, understand what holds and what breaks. In the later years there was no architecture to inherit: only belief, speed and chaos — and every lesson installed in the root years, tested under live conditions.
               </p>
             </div>
@@ -752,7 +752,7 @@ export default function FounderPage() {
                 style={{
                   fontSize: "11px", fontWeight: 500, letterSpacing: ".16em",
                   textTransform: "uppercase",
-                  color: activeTab === i ? "#E2C078" : "#6A6A70",
+                  color: activeTab === i ? "#E2C078" : "#8A8A92",
                   background: "none", border: "none",
                   borderBottom: "2px solid transparent",
                   padding: "13px 18px", cursor: "pointer",
@@ -814,11 +814,19 @@ export default function FounderPage() {
                       <div
                         className="mt-6"
                         style={{
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
+                      <div
+                        style={{
                           background: "rgba(18,15,8,.9)",
                           borderLeft: "2.5px solid #C9A24A",
                           borderRadius: "0 10px 10px 0",
                           padding: "22px 26px 24px",
                           boxShadow: "0 0 40px -18px rgba(201,162,74,.35), inset 0 0 24px -16px rgba(201,162,74,.08)",
+                          width: "100%",
+                          maxWidth: 480,
                         }}
                       >
                         <span className="font-sans block mb-3" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".28em", textTransform: "uppercase", color: "#C9A24A", opacity: .7 }}>
@@ -827,6 +835,7 @@ export default function FounderPage() {
                         <p className="font-serif italic" style={{ fontSize: "clamp(18px,1.8vw,22px)", lineHeight: 1.44, color: "#E2C078", margin: 0 }}>
                           {t.scar}
                         </p>
+                      </div>
                       </div>
                     </div>
 
@@ -982,7 +991,7 @@ export default function FounderPage() {
               <span className="font-sans block mb-1" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A", opacity: .65 }}>
                 The Bridge
               </span>
-              <span className="font-sans block mb-8" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".22em", textTransform: "uppercase", color: "#4A4A52" }}>
+              <span className="font-sans block mb-8" style={{ fontSize: "14px", fontWeight: 400, letterSpacing: ".22em", textTransform: "uppercase", color: "#4A4A52" }}>
                 Two pauses that reset the lens
               </span>
 
@@ -1034,18 +1043,18 @@ export default function FounderPage() {
                       background: "rgba(10,10,11,.6)",
                     }}
                   >
-                    <span className="font-sans block mb-2" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "#C9A24A", opacity: .75 }}>
+                    <span className="font-sans block mb-2" style={{ fontSize: "12px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "#C9A24A", opacity: .75 }}>
                       {c.label}
                     </span>
-                    <h4 className="font-serif mb-3" style={{ fontWeight: 400, fontSize: 18, color: "#CCCAC2", lineHeight: 1.22 }}>
+                    <h4 className="font-serif mb-3" style={{ fontWeight: 400, fontSize: 22, color: "#CCCAC2", lineHeight: 1.22 }}>
                       {c.heading}
                     </h4>
-                    <p style={{ color: "#6A6A70", fontSize: "13.5px", fontWeight: 300, marginBottom: 14, lineHeight: 1.62 }}>
+                    <p style={{ color: "#6A6A70", fontSize: "16px", fontWeight: 300, marginBottom: 14, lineHeight: 1.62 }}>
                       {c.body}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {c.chips.map((ch) => (
-                        <span key={ch} className="font-sans inline-block" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".1em", textTransform: "uppercase", color: "#4A4A52", border: "1px solid rgba(237,235,227,.07)", borderRadius: 20, padding: "4px 11px" }}>
+                        <span key={ch} className="font-sans inline-block" style={{ fontSize: "11px", fontWeight: 400, letterSpacing: ".1em", textTransform: "uppercase", color: "#4A4A52", border: "1px solid rgba(237,235,227,.07)", borderRadius: 20, padding: "4px 11px" }}>
                           {ch}
                         </span>
                       ))}
@@ -1159,10 +1168,11 @@ export default function FounderPage() {
                     className="font-sans block mb-1"
                     style={{
                       fontSize: "9.5px",
-                      fontWeight: 500,
+                      fontWeight: 600,
                       letterSpacing: ".2em",
                       textTransform: "uppercase",
-                      color: `rgba(201,162,74,${labelOpacity})`,
+                      color: "#C9A24A",
+                      textShadow: "0 0 12px rgba(201,162,74,0.7)",
                       lineHeight: 1,
                     }}
                   >
@@ -1266,20 +1276,20 @@ export default function FounderPage() {
         <div className="shell">
 
           {/* Intro */}
-          <div style={{ maxWidth: 1120, margin: "0 auto 56px" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto 56px", paddingLeft: "32px" }}>
             <Reveal>
-              <span className="eyebrow mb-4 block">The Operating Patterns</span>
+              <span className="eyebrow mb-4 block" style={{ color: "#C9A24A" }}>The Operating Patterns</span>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="font-serif" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.38, color: "#CCCAC2", maxWidth: "36ch" }}>
-                What does an organisation actually run on — beneath the strategy, beneath the talent?
-                Eight patterns. Two tiers. The difference between a system that holds and one that doesn't.
+                <span style={{ color: "#FFFFFF", textShadow: "0 0 20px rgba(255,255,255,0.4)" }}>What does an organisation actually run on — beneath the strategy, beneath the talent?</span>{" "}
+                <span style={{ color: "#C9A24A" }}>Eight patterns. Two tiers. The difference between a system that holds and one that doesn't.</span>
               </p>
             </Reveal>
             <Reveal delay={0.14}>
               <p style={{ marginTop: 14, fontSize: "15px", color: "#6A6A70", maxWidth: "62ch", lineHeight: 1.68 }}>
                 The startup, the scaling company, the family business — the{" "}
-                <em style={{ color: "#97979C", fontStyle: "italic" }}>unfinished organisation</em>{" "}
+                <em style={{ color: "#C9A24A", fontStyle: "italic" }}>unfinished organisation</em>{" "}
                 — is still writing its operating system. These patterns are for them.
               </p>
             </Reveal>
@@ -1300,17 +1310,17 @@ export default function FounderPage() {
               >
                 {/* Tier header */}
                 <div className="flex items-baseline gap-4 mb-3">
-                  <span className="font-sans" style={{ fontSize: "10px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#6A6A70" }}>
+                  <span className="font-sans" style={{ fontSize: "13px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#EDEBE3" }}>
                     Threshold — the floor
                   </span>
                   <span
                     className="font-sans"
-                    style={{ fontSize: "8.5px", fontWeight: 500, letterSpacing: ".14em", textTransform: "uppercase", color: "#C9A24A", border: "1px solid rgba(201,162,74,.3)", borderRadius: 20, padding: "3px 9px" }}
+                    style={{ fontSize: "11px", fontWeight: 500, letterSpacing: ".14em", textTransform: "uppercase", color: "#C9A24A", border: "1px solid rgba(201,162,74,.3)", borderRadius: 20, padding: "3px 9px" }}
                   >
                     Foundation
                   </span>
                 </div>
-                <p style={{ fontSize: "13.5px", color: "#4A4A52", maxWidth: "72ch", marginBottom: 24, lineHeight: 1.58 }}>
+                <p style={{ fontSize: "16px", color: "#4A4A52", maxWidth: "72ch", marginBottom: 24, lineHeight: 1.58 }}>
                   The mechanics every organisation runs on. Get these wrong and nothing above them holds.
                 </p>
 
@@ -1353,17 +1363,17 @@ export default function FounderPage() {
               >
                 {/* Tier header */}
                 <div className="flex items-baseline gap-4 mb-3">
-                  <span className="font-sans" style={{ fontSize: "10px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#6A6A70" }}>
+                  <span className="font-sans" style={{ fontSize: "13px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#EDEBE3" }}>
                     Signature — the ceiling
                   </span>
                   <span
                     className="font-sans"
-                    style={{ fontSize: "8.5px", fontWeight: 600, letterSpacing: ".14em", textTransform: "uppercase", color: "#000", background: "#C9A24A", borderRadius: 20, padding: "3px 9px" }}
+                    style={{ fontSize: "11px", fontWeight: 600, letterSpacing: ".14em", textTransform: "uppercase", color: "#000", background: "#C9A24A", borderRadius: 20, padding: "3px 9px" }}
                   >
                     Differentiator
                   </span>
                 </div>
-                <p style={{ fontSize: "13.5px", color: "#4A4A52", maxWidth: "72ch", marginBottom: 24, lineHeight: 1.58 }}>
+                <p style={{ fontSize: "16px", color: "#4A4A52", maxWidth: "72ch", marginBottom: 24, lineHeight: 1.58 }}>
                   What separates a good organisation from a great one — designed in deliberately, not improvised under pressure.
                 </p>
 
@@ -1424,8 +1434,8 @@ export default function FounderPage() {
 
           {/* Header */}
           <Reveal>
-            <div className="mb-12" style={{ maxWidth: 880 }}>
-              <span className="eyebrow mb-4 block">Writing &amp; Media</span>
+            <div className="mb-12" style={{ maxWidth: 880, paddingLeft: "32px" }}>
+              <span className="eyebrow mb-4 block" style={{ color: "#C9A24A" }}>Writing &amp; Media</span>
               <h2 className="h-section mb-4" style={{ maxWidth: "18ch" }}>The thinking, in the open</h2>
               <p style={{ fontSize: "15px", color: "#6A6A70", maxWidth: "56ch", lineHeight: 1.66 }}>
                 Essays, frameworks and field notes on building people systems for the unfinished organisation.
@@ -1439,7 +1449,7 @@ export default function FounderPage() {
             <div className="mb-10">
               {/* Group label */}
               <div className="flex items-center gap-4 mb-5">
-                <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".26em", textTransform: "uppercase", color: "#4A4A52" }}>
+                <span className="font-sans" style={{ fontSize: "13px", fontWeight: 600, letterSpacing: ".26em", textTransform: "uppercase", color: "#4A4A52" }}>
                   Essays
                 </span>
                 <div style={{ flex: 1, height: 1, background: "rgba(237,235,227,.06)" }} />
@@ -1472,7 +1482,7 @@ export default function FounderPage() {
                     <span className="font-sans" style={{ fontSize: "9px", fontWeight: 600, letterSpacing: ".18em", textTransform: "uppercase", color: "#C9A24A", background: "rgba(201,162,74,.08)", border: "1px solid rgba(201,162,74,.2)", borderRadius: 20, padding: "3px 10px" }}>
                       Featured
                     </span>
-                    <span className="font-sans" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".14em", textTransform: "uppercase", color: "#4A4A52" }}>
+                    <span className="font-sans" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".14em", textTransform: "uppercase", color: "#C9A24A" }}>
                       AI &amp; HR
                     </span>
                   </div>
@@ -1506,9 +1516,9 @@ export default function FounderPage() {
                       className="font-sans inline-block mb-3"
                       style={{
                         fontSize: "8.5px", fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase",
-                        color: "#5A5A62",
-                        background: "rgba(237,235,227,.04)",
-                        border: "1px solid rgba(237,235,227,.07)",
+                        color: "#C9A24A",
+                        background: "rgba(201,162,74,.06)",
+                        border: "1px solid rgba(201,162,74,.2)",
                         borderRadius: 20, padding: "3px 9px",
                       }}
                     >
@@ -1525,7 +1535,7 @@ export default function FounderPage() {
             {/* ── CHANNELS GROUP ── */}
             <div className="mb-8">
               <div className="flex items-center gap-4 mb-5">
-                <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".26em", textTransform: "uppercase", color: "#4A4A52" }}>
+                <span className="font-sans" style={{ fontSize: "13px", fontWeight: 600, letterSpacing: ".26em", textTransform: "uppercase", color: "#4A4A52" }}>
                   Channels
                 </span>
                 <div style={{ flex: 1, height: 1, background: "rgba(237,235,227,.06)" }} />
@@ -1540,7 +1550,7 @@ export default function FounderPage() {
                     borderRadius: 10, padding: "26px 28px",
                   }}
                 >
-                  <span className="font-sans block mb-3" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#4A4A52" }}>
+                  <span className="font-sans block mb-3" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#C9A24A" }}>
                     Podcast
                   </span>
                   <h4 className="font-serif mb-2" style={{ fontSize: 19, color: "#CCCAC2", fontWeight: 400, lineHeight: 1.28 }}>
@@ -1585,7 +1595,7 @@ export default function FounderPage() {
             {/* ── NEWSLETTER GROUP ── */}
             <div>
               <div className="flex items-center gap-4 mb-5">
-                <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".26em", textTransform: "uppercase", color: "#4A4A52" }}>
+                <span className="font-sans" style={{ fontSize: "13px", fontWeight: 600, letterSpacing: ".26em", textTransform: "uppercase", color: "#4A4A52" }}>
                   Newsletter
                 </span>
                 <div style={{ flex: 1, height: 1, background: "rgba(237,235,227,.06)" }} />
@@ -1653,9 +1663,9 @@ export default function FounderPage() {
 
           {/* Section label */}
           <Reveal>
-            <div className="mb-12">
-              <span className="eyebrow mb-4 block">The Vision</span>
-              <h2 className="h-section" style={{ maxWidth: "18ch" }}>The arc continues — as a loop</h2>
+            <div className="mb-12" style={{ textAlign: "center" }}>
+              <span className="eyebrow mb-4 block" style={{ color: "#C9A24A" }}>The Vision</span>
+              <h2 className="h-section" style={{ maxWidth: "18ch", margin: "0 auto" }}>The arc continues — as a loop</h2>
             </div>
           </Reveal>
 
@@ -1697,10 +1707,7 @@ export default function FounderPage() {
             ))}
           </div>
 
-          {/* Loop label */}
-          <p className="font-sans text-center mb-16" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(201,162,74,.3)" }}>
-            ↺&nbsp;&nbsp;theory returns to practice
-          </p>
+
 
           {/* ── CLOSING FINALE ── */}
           <div className="text-center" style={{ maxWidth: 680, margin: "0 auto" }}>
