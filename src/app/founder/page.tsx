@@ -1407,123 +1407,220 @@ export default function FounderPage() {
         style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
       >
         <div className="shell">
+
+          {/* Header */}
           <Reveal>
-            <div className="mb-10" style={{ maxWidth: 880 }}>
+            <div className="mb-12" style={{ maxWidth: 880 }}>
               <span className="eyebrow mb-4 block">Writing &amp; Media</span>
               <h2 className="h-section mb-4" style={{ maxWidth: "18ch" }}>The thinking, in the open</h2>
-              <p className="lead" style={{ maxWidth: "62ch" }}>
-                Essays, frameworks and field notes on building people systems for the new-age organisation — across articles, podcast and LinkedIn.
+              <p style={{ fontSize: "15px", color: "#6A6A70", maxWidth: "56ch", lineHeight: 1.66 }}>
+                Essays, frameworks and field notes on building people systems for the unfinished organisation.
               </p>
             </div>
           </Reveal>
 
-          {/* Featured article */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              display: "block",
-              background: "var(--bg-1)",
-              border: "1px solid rgba(201,162,74,.28)",
-              borderRadius: 14, padding: "34px 40px",
-              maxWidth: 1080, margin: "0 auto 14px",
-            }}
-          >
-            <span className="font-mono block mb-2" style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--accent)" }}>
-              {ARTICLES_FEATURED.cat}
-            </span>
-            <h3 className="font-serif mb-2" style={{ fontSize: "clamp(24px,3vw,32px)", lineHeight: 1.16, color: "var(--fg)", fontWeight: 500, maxWidth: "22ch" }}>
-              {ARTICLES_FEATURED.title}
-            </h3>
-            <span className="font-mono" style={{ fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--accent)" }}>
-              {ARTICLES_FEATURED.meta}
-            </span>
-          </motion.div>
+          <div style={{ maxWidth: 1080, margin: "0 auto" }}>
 
-          {/* Article grid */}
-          <div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
-            style={{ maxWidth: 1080, margin: "0 auto 24px" }}
-          >
-            {ARTICLES.map((a, i) => (
+            {/* ── ESSAYS GROUP ── */}
+            <div className="mb-10">
+              {/* Group label */}
+              <div className="flex items-center gap-4 mb-5">
+                <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".26em", textTransform: "uppercase", color: "#4A4A52" }}>
+                  Essays
+                </span>
+                <div style={{ flex: 1, height: 1, background: "rgba(237,235,227,.06)" }} />
+                {/* Single status banner — replaces 6× "Publishing soon" */}
+                <span className="font-sans" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".14em", textTransform: "uppercase", color: "#3A3A40", border: "1px solid rgba(237,235,227,.07)", borderRadius: 20, padding: "3px 10px", whiteSpace: "nowrap" }}>
+                  Publishing through 2025–26
+                </span>
+              </div>
+
+              {/* Featured essay — full width */}
               <motion.div
-                key={i}
                 initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "24px 26px" }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="mb-3"
+                style={{
+                  background: "rgba(14,13,11,.7)",
+                  border: "1px solid rgba(201,162,74,.18)",
+                  borderRadius: 12,
+                  padding: "32px 36px",
+                  display: "grid",
+                  gridTemplateColumns: "1fr auto",
+                  alignItems: "center",
+                  gap: 24,
+                }}
               >
-                <span className="font-mono block mb-2" style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>{a.cat}</span>
-                <h4 className="font-serif" style={{ fontSize: 18, lineHeight: 1.24, color: "var(--fg)", marginTop: 10 }}>{a.title}</h4>
-                <span className="font-mono block mt-3" style={{ fontSize: "9.5px", letterSpacing: ".1em", textTransform: "uppercase", color: "var(--accent)" }}>Publishing soon</span>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Channels */}
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 gap-3"
-            style={{ maxWidth: 1080, margin: "0 auto 24px" }}
-          >
-            <div style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "26px 30px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 18 }}>
-              <div>
-                <span className="font-mono block mb-1" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--accent)" }}>Podcast</span>
-                <h4 className="font-serif" style={{ fontSize: 21, color: "var(--fg)", fontWeight: 500, marginTop: 5 }}>Conversations on the operating architecture of people</h4>
-                <span className="font-mono block mt-1" style={{ fontSize: "9.5px", letterSpacing: ".12em", textTransform: "uppercase", color: "var(--accent)" }}>Coming soon</span>
-              </div>
-            </div>
-            <a
-              href="https://www.linkedin.com/in/nitinnahata"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "26px 30px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 18, textDecoration: "none" }}
-            >
-              <div>
-                <span className="font-mono block mb-1" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--accent)" }}>LinkedIn</span>
-                <h4 className="font-serif" style={{ fontSize: 21, color: "var(--fg)", fontWeight: 500, marginTop: 5 }}>Field notes and frameworks, as they form</h4>
-                <span className="font-mono block mt-1" style={{ fontSize: "9.5px", letterSpacing: ".12em", textTransform: "uppercase", color: "var(--accent)" }}>Followed by founders &amp; operators</span>
-              </div>
-              <span className="font-mono shrink-0" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--accent)" }}>Follow ↗</span>
-            </a>
-          </div>
-
-          {/* Newsletter capture */}
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center"
-            style={{ maxWidth: 1080, margin: "0 auto", background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "32px 36px" }}
-          >
-            <div>
-              <h4 className="font-serif mb-1" style={{ fontSize: 23, color: "var(--fg)", fontWeight: 500 }}>Read the thinking as it's written</h4>
-              <p style={{ fontSize: 14, color: "var(--fg-3)", marginTop: 6 }}>New essays direct to your inbox — no spam, unsubscribe anytime.</p>
-            </div>
-            <div>
-              {submittedNews ? (
-                <span className="font-mono" style={{ fontSize: 14, color: "var(--accent)" }}>✓ You're on the list.</span>
-              ) : (
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="you@company.com"
-                    aria-label="Email for newsletter"
-                    value={emailNews}
-                    onChange={e => setEmailNews(e.target.value)}
-                    className="flex-1 font-sans"
-                    style={{ fontSize: 14, padding: "12px 14px", border: "1px solid var(--line)", borderRadius: 5, background: "var(--bg)", color: "var(--fg)", outline: "none" }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setSubmittedNews(true)}
-                    className="font-mono shrink-0"
-                    style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", background: "var(--accent)", color: "#000", border: "none", borderRadius: 5, padding: "0 20px", cursor: "pointer" }}
-                  >
-                    Notify me
-                  </button>
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="font-sans" style={{ fontSize: "9px", fontWeight: 600, letterSpacing: ".18em", textTransform: "uppercase", color: "#C9A24A", background: "rgba(201,162,74,.08)", border: "1px solid rgba(201,162,74,.2)", borderRadius: 20, padding: "3px 10px" }}>
+                      Featured
+                    </span>
+                    <span className="font-sans" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".14em", textTransform: "uppercase", color: "#4A4A52" }}>
+                      AI &amp; HR
+                    </span>
+                  </div>
+                  <h3 className="font-serif" style={{ fontSize: "clamp(20px,2.2vw,26px)", lineHeight: 1.2, color: "#EDEBE3", fontWeight: 400, maxWidth: "36ch" }}>
+                    {ARTICLES_FEATURED.title}
+                  </h3>
                 </div>
-              )}
+                <span className="font-sans shrink-0" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".12em", textTransform: "uppercase", color: "#3A3A40" }}>
+                  Coming soon
+                </span>
+              </motion.div>
+
+              {/* Essay grid — clean 3×2 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {ARTICLES.map((a, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                      background: "rgba(12,11,9,.6)",
+                      border: "1px solid rgba(237,235,227,.07)",
+                      borderRadius: 10,
+                      padding: "22px 22px 20px",
+                    }}
+                  >
+                    {/* Topic tag — visual anchor */}
+                    <span
+                      className="font-sans inline-block mb-3"
+                      style={{
+                        fontSize: "8.5px", fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase",
+                        color: "#5A5A62",
+                        background: "rgba(237,235,227,.04)",
+                        border: "1px solid rgba(237,235,227,.07)",
+                        borderRadius: 20, padding: "3px 9px",
+                      }}
+                    >
+                      {a.cat}
+                    </span>
+                    <h4 className="font-serif" style={{ fontSize: "16.5px", lineHeight: 1.28, color: "#CCCAC2", fontWeight: 400 }}>
+                      {a.title}
+                    </h4>
+                  </motion.div>
+                ))}
+              </div>
             </div>
+
+            {/* ── CHANNELS GROUP ── */}
+            <div className="mb-8">
+              <div className="flex items-center gap-4 mb-5">
+                <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".26em", textTransform: "uppercase", color: "#4A4A52" }}>
+                  Channels
+                </span>
+                <div style={{ flex: 1, height: 1, background: "rgba(237,235,227,.06)" }} />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {/* Podcast */}
+                <div
+                  style={{
+                    background: "rgba(12,11,9,.6)",
+                    border: "1px solid rgba(237,235,227,.07)",
+                    borderRadius: 10, padding: "26px 28px",
+                  }}
+                >
+                  <span className="font-sans block mb-3" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#4A4A52" }}>
+                    Podcast
+                  </span>
+                  <h4 className="font-serif mb-2" style={{ fontSize: 19, color: "#CCCAC2", fontWeight: 400, lineHeight: 1.28 }}>
+                    Conversations on the operating architecture of people
+                  </h4>
+                  <span className="font-sans" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".12em", textTransform: "uppercase", color: "#3A3A40" }}>
+                    Coming soon
+                  </span>
+                </div>
+
+                {/* LinkedIn */}
+                <a
+                  href="https://www.linkedin.com/in/nitinnahata"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    background: "rgba(12,11,9,.6)",
+                    border: "1px solid rgba(237,235,227,.07)",
+                    borderRadius: 10, padding: "26px 28px",
+                    display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16,
+                    textDecoration: "none",
+                  }}
+                >
+                  <div>
+                    <span className="font-sans block mb-3" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#4A4A52" }}>
+                      LinkedIn
+                    </span>
+                    <h4 className="font-serif mb-2" style={{ fontSize: 19, color: "#CCCAC2", fontWeight: 400, lineHeight: 1.28 }}>
+                      Field notes and frameworks, as they form
+                    </h4>
+                    <span className="font-sans" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".12em", textTransform: "uppercase", color: "#4A4A52" }}>
+                      Followed by founders &amp; operators
+                    </span>
+                  </div>
+                  <span className="font-sans shrink-0 mt-1" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: "#C9A24A" }}>
+                    Follow ↗
+                  </span>
+                </a>
+              </div>
+            </div>
+
+            {/* ── NEWSLETTER GROUP ── */}
+            <div>
+              <div className="flex items-center gap-4 mb-5">
+                <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".26em", textTransform: "uppercase", color: "#4A4A52" }}>
+                  Newsletter
+                </span>
+                <div style={{ flex: 1, height: 1, background: "rgba(237,235,227,.06)" }} />
+              </div>
+
+              <div
+                className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center"
+                style={{
+                  background: "rgba(12,11,9,.6)",
+                  border: "1px solid rgba(237,235,227,.07)",
+                  borderRadius: 10, padding: "28px 32px",
+                }}
+              >
+                <div>
+                  <h4 className="font-serif mb-2" style={{ fontSize: 20, color: "#CCCAC2", fontWeight: 400, lineHeight: 1.24 }}>
+                    Read the thinking as it's written
+                  </h4>
+                  <p style={{ fontSize: "13.5px", color: "#4A4A52", lineHeight: 1.58 }}>
+                    New essays direct to your inbox — no spam, unsubscribe anytime.
+                  </p>
+                </div>
+                <div>
+                  {submittedNews ? (
+                    <span className="font-sans" style={{ fontSize: 14, color: "#C9A24A" }}>✓ You're on the list.</span>
+                  ) : (
+                    <div className="flex gap-2">
+                      <input
+                        type="email"
+                        placeholder="you@company.com"
+                        aria-label="Email for newsletter"
+                        value={emailNews}
+                        onChange={e => setEmailNews(e.target.value)}
+                        className="flex-1 font-sans"
+                        style={{ fontSize: 14, padding: "11px 14px", border: "1px solid rgba(237,235,227,.10)", borderRadius: 5, background: "#0A0A0B", color: "#EDEBE3", outline: "none" }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setSubmittedNews(true)}
+                        className="font-sans shrink-0"
+                        style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", background: "#C9A24A", color: "#000", border: "none", borderRadius: 5, padding: "0 20px", cursor: "pointer" }}
+                      >
+                        Notify me
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -1535,115 +1632,148 @@ export default function FounderPage() {
         className="relative"
         style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
       >
+        {/* Ambient glow — peaks at the CTA */}
+        <div className="absolute pointer-events-none" style={{ left: "50%", bottom: "10%", width: 600, height: 400, transform: "translateX(-50%)", background: "radial-gradient(ellipse at center, rgba(201,162,74,.06), transparent 70%)" }} />
+
         <div className="shell">
+
+          {/* Section label */}
           <Reveal>
-            <div className="mb-10">
+            <div className="mb-12">
               <span className="eyebrow mb-4 block">The Vision</span>
               <h2 className="h-section" style={{ maxWidth: "18ch" }}>The arc continues — as a loop</h2>
             </div>
           </Reveal>
 
-          {/* Loop */}
+          {/* ── THREE-STAGE LOOP ── */}
           <div
-            className="founder-loop grid gap-3 mb-6"
-            style={{ gridTemplateColumns: "1fr auto 1fr auto 1fr", maxWidth: 1040, margin: "0 auto 36px", alignItems: "stretch" }}
+            className="founder-loop grid gap-3"
+            style={{ gridTemplateColumns: "1fr auto 1fr auto 1fr", maxWidth: 1040, margin: "0 auto 20px", alignItems: "stretch" }}
           >
             {[
-              { sn: "01 · Lived",   title: "The Practice",   body: "23 years of collisions — the scars that became the raw material." },
-              { sn: "02 · Written", title: "The Philosophy",  body: "Two books in progress — Baptism by Chaos and The Operating Architect — codifying the patterns into a body of work." },
+              { sn: "01 · Lived",   title: "The Practice",    body: "23 years of collisions — the scars that became the raw material." },
+              { sn: "02 · Written", title: "The Philosophy",   body: "Two books in progress — Baptism by Chaos and The Operating Architect — codifying the patterns into a body of work." },
               { sn: "03 · Applied", title: "The Applied Loop", body: "Axion Index — the operating-architecture advisory practice — and HROS, an AI-native people operating system, in development." },
             ].map((stage, i) => (
               <>
                 <motion.div
                   key={stage.sn}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "32px 28px" }}
+                  transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    background: "rgba(12,11,9,.6)",
+                    border: `1px solid ${i === 2 ? "rgba(201,162,74,.16)" : "rgba(237,235,227,.07)"}`,
+                    borderRadius: 12, padding: "30px 26px",
+                    boxShadow: i === 2 ? "0 0 40px -20px rgba(201,162,74,.18)" : "none",
+                  }}
                 >
-                  <span className="font-mono block mb-2" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>{stage.sn}</span>
-                  <h4 className="font-serif mb-3" style={{ fontSize: 22, color: "var(--fg)", fontWeight: 500 }}>{stage.title}</h4>
-                  <p style={{ color: "var(--fg-3)", fontSize: "14.5px" }}>{stage.body}</p>
-                  {i === 2 && (
-                    <a
-                      href="#system"
-                      className="font-mono inline-block mt-4"
-                      style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--accent)", border: "1px solid rgba(201,162,74,.28)", borderRadius: 30, padding: "8px 15px" }}
-                    >
-                      See the system
-                    </a>
-                  )}
+                  <span className="font-sans block mb-2" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: i === 2 ? "#C9A24A" : "#4A4A52" }}>
+                    {stage.sn}
+                  </span>
+                  <h4 className="font-serif mb-3" style={{ fontSize: 20, color: i === 2 ? "#EDEBE3" : "#CCCAC2", fontWeight: 400, lineHeight: 1.18 }}>
+                    {stage.title}
+                  </h4>
+                  <p style={{ color: "#6A6A70", fontSize: "13.5px", lineHeight: 1.6 }}>{stage.body}</p>
                 </motion.div>
                 {i < 2 && (
-                  <div key={`arr-${i}`} className="loop-arrow flex items-center justify-center" style={{ color: "var(--accent)", fontSize: 22 }}>→</div>
+                  <div key={`arr-${i}`} className="loop-arrow flex items-center justify-center" style={{ color: "rgba(201,162,74,.3)", fontSize: 18 }}>→</div>
                 )}
               </>
             ))}
           </div>
 
-          <p className="font-mono text-center mb-10" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--accent)", opacity: .6 }}>
+          {/* Loop label */}
+          <p className="font-sans text-center mb-16" style={{ fontSize: "9px", fontWeight: 400, letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(201,162,74,.3)" }}>
             ↺&nbsp;&nbsp;theory returns to practice
           </p>
 
-          {/* Closing */}
-          <div className="text-center" style={{ maxWidth: 760, margin: "0 auto" }}>
-            <p className="font-serif italic mb-5" style={{ fontSize: 22, color: "var(--accent-2)" }}>
-              The loop closes where it began — in practice.
-            </p>
-            <blockquote className="font-serif italic" style={{ fontSize: "clamp(21px,2.7vw,29px)", lineHeight: 1.42, color: "var(--fg)" }}>
-              "The founders who once watched me build are part of what comes next. The rest, I'm still building."
-            </blockquote>
-            <div className="flex flex-col items-center gap-1 mt-8">
-              <span style={{ color: "#C9A24A", fontSize: 18 }}>◇</span>
-              <span className="font-serif" style={{ fontSize: 22, color: "#E2C078" }}>Nitin Nahata</span>
-              <span className="font-sans" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "#6A6A70" }}>The Operating Architect</span>
-              <a
-                href="https://www.linkedin.com/in/nitinnahata"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-sans mt-2"
-                style={{ fontSize: "10.5px", color: "#C9A24A" }}
-              >
-                LinkedIn ↗
-              </a>
-            </div>
+          {/* ── CLOSING FINALE ── */}
+          <div className="text-center" style={{ maxWidth: 680, margin: "0 auto" }}>
 
-            {/* Axion CTA */}
+            {/* Bridge line */}
+            <Reveal>
+              <p className="font-serif italic mb-6" style={{ fontSize: "clamp(16px,1.6vw,19px)", color: "#6A6A70", lineHeight: 1.5 }}>
+                The loop closes where it began — in practice.
+              </p>
+            </Reveal>
+
+            {/* Closing quote */}
             <Reveal delay={0.1}>
-              <div
-                className="mt-14 mx-auto"
-                style={{
-                  maxWidth: 560,
-                  background: "rgba(201,162,74,.04)",
-                  border: "1px solid rgba(201,162,74,.22)",
-                  borderRadius: 14,
-                  padding: "40px 44px",
-                  textAlign: "center",
-                }}
+              <blockquote
+                className="font-serif italic"
+                style={{ fontSize: "clamp(22px,2.8vw,32px)", lineHeight: 1.38, color: "#EDEBE3", letterSpacing: "-.01em", marginBottom: 36 }}
               >
-                <span className="font-sans block mb-3" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "#C9A24A" }}>
-                  Axion Index
+                "The founders who once watched me build are part of what comes next. The rest, I'm still building."
+              </blockquote>
+            </Reveal>
+
+            {/* Signature */}
+            <Reveal delay={0.18}>
+              <div className="flex flex-col items-center gap-1 mb-14">
+                <span style={{ color: "rgba(201,162,74,.4)", fontSize: 16, lineHeight: 1 }}>◇</span>
+                <span className="font-serif" style={{ fontSize: 20, color: "#C9A24A", marginTop: 6 }}>Nitin Nahata</span>
+                <span className="font-sans" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "#4A4A52" }}>
+                  The Operating Architect
                 </span>
-                <p className="font-serif" style={{ fontSize: "clamp(18px,2vw,22px)", lineHeight: 1.36, color: "#EDEBE3", marginBottom: 22 }}>
-                  The operating-architecture advisory practice — for founders and operators building the unfinished organisation.
-                </p>
                 <a
-                  href="https://axionindex.org"
+                  href="https://www.linkedin.com/in/nitinnahata"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans inline-flex items-center gap-2"
-                  style={{
-                    fontSize: "11.5px", fontWeight: 500, letterSpacing: ".12em", textTransform: "uppercase",
-                    color: "#000", background: "#C9A24A",
-                    borderRadius: 4, padding: "13px 26px",
-                    textDecoration: "none",
-                  }}
+                  className="font-sans mt-2"
+                  style={{ fontSize: "10px", letterSpacing: ".08em", color: "#4A4A52", textDecoration: "none" }}
                 >
-                  Visit Axion Index ↗
+                  LinkedIn ↗
                 </a>
               </div>
             </Reveal>
+
+            {/* ── SINGLE CTA — page's only ask ── */}
+            <Reveal delay={0.28}>
+              <div
+                style={{
+                  border: "1px solid rgba(201,162,74,.22)",
+                  borderRadius: 14,
+                  padding: "44px 48px",
+                  background: "rgba(12,11,9,.7)",
+                  boxShadow: "0 0 60px -24px rgba(201,162,74,.22)",
+                }}
+              >
+                {/* Corner accents */}
+                <div className="relative">
+                  <div className="absolute pointer-events-none" style={{ top: -44, left: -48, width: 40, height: 1, background: "#C9A24A", opacity: .35 }} />
+                  <div className="absolute pointer-events-none" style={{ top: -44, right: -48, width: 40, height: 1, background: "#C9A24A", opacity: .35 }} />
+
+                  <span className="font-sans block mb-3" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".28em", textTransform: "uppercase", color: "#C9A24A", opacity: .65 }}>
+                    Axion Index
+                  </span>
+                  <p className="font-serif mx-auto mb-8" style={{ fontSize: "clamp(17px,1.8vw,21px)", lineHeight: 1.44, color: "#CCCAC2", maxWidth: "34ch" }}>
+                    If the patterns in this page describe what your organisation is missing — the conversation starts here.
+                  </p>
+
+                  <a
+                    href="https://axionindex.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-sans inline-flex items-center gap-3"
+                    style={{
+                      fontSize: "11px", fontWeight: 600, letterSpacing: ".14em", textTransform: "uppercase",
+                      color: "#000", background: "#C9A24A",
+                      borderRadius: 4, padding: "14px 30px",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Start the conversation ↗
+                  </a>
+
+                  <p className="font-sans mt-4" style={{ fontSize: "11px", color: "#3A3A40", letterSpacing: ".04em" }}>
+                    via Axion Index
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
           </div>
         </div>
       </section>
@@ -1671,8 +1801,8 @@ export default function FounderPage() {
                 />
                 <button
                   type="button"
-                  className="font-mono shrink-0"
-                  style={{ fontSize: 12, fontWeight: 500, letterSpacing: ".08em", textTransform: "uppercase", background: "var(--accent)", color: "#000", border: "none", borderRadius: 6, padding: "0 22px", cursor: "pointer" }}
+                  className="font-sans shrink-0"
+                  style={{ fontSize: 12, fontWeight: 500, letterSpacing: ".08em", textTransform: "uppercase", background: "#C9A24A", color: "#000", border: "none", borderRadius: 6, padding: "0 22px", cursor: "pointer" }}
                 >
                   Follow
                 </button>
@@ -1691,13 +1821,13 @@ export default function FounderPage() {
                 { href: "#story", label: "Story" },
               ].map((l) =>
                 l.external ? (
-                  <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className="font-mono" style={{ fontSize: 11, letterSpacing: ".08em", color: "var(--fg-5)" }}>{l.label}</a>
+                  <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className="font-sans" style={{ fontSize: 11, letterSpacing: ".08em", color: "var(--fg-5)" }}>{l.label}</a>
                 ) : (
-                  <Link key={l.label} href={l.href} className="font-mono" style={{ fontSize: 11, letterSpacing: ".08em", color: "var(--fg-5)" }}>{l.label}</Link>
+                  <Link key={l.label} href={l.href} className="font-sans" style={{ fontSize: 11, letterSpacing: ".08em", color: "var(--fg-5)" }}>{l.label}</Link>
                 )
               )}
             </div>
-            <span className="font-mono" style={{ fontSize: "10.5px", color: "var(--fg-5)" }}>© 2026 Nitin Nahata. All rights reserved.</span>
+            <span className="font-sans" style={{ fontSize: "10.5px", color: "var(--fg-5)" }}>© 2026 Nitin Nahata. All rights reserved.</span>
           </div>
         </div>
       </footer>
