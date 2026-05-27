@@ -1057,7 +1057,7 @@ export default function FounderPage() {
       >
         <div className="shell">
           <Reveal>
-            <div className="text-center mb-14">
+            <div className="text-center mb-16">
               <span className="eyebrow eyebrow--center mb-4 block">The Synthesis</span>
               <h2 className="h-section mx-auto" style={{ maxWidth: "20ch" }}>
                 How the chapters became a way of working
@@ -1065,58 +1065,106 @@ export default function FounderPage() {
             </div>
           </Reveal>
 
-          {/* Timeline */}
-          <div className="synthesis-timeline relative" style={{ maxWidth: 780, margin: "0 auto 52px" }}>
-            {/* Center line */}
+          {/* ── CRESCENDO TIMELINE ── */}
+          <div className="synthesis-timeline relative" style={{ maxWidth: 800, margin: "0 auto 72px" }}>
+
+            {/* Spine — draws top→bottom, gradient intensifies toward bedrock */}
             <motion.div
               className="synthesis-center-line absolute pointer-events-none"
               initial={{ scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true, margin: "-5%" }}
-              transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 left: "50%", top: 8, bottom: 8, width: 1,
-                background: "linear-gradient(180deg, rgba(237,235,227,.08), rgba(201,162,74,.28) 60%, #C9A24A)",
+                background: "linear-gradient(180deg, rgba(201,162,74,.08) 0%, rgba(201,162,74,.22) 40%, rgba(201,162,74,.55) 75%, #C9A24A 100%)",
                 transform: "translateX(-50%)",
                 transformOrigin: "top",
               }}
             />
+
             {TIMELINE_ITEMS.map((item, i) => {
               const isOdd = i % 2 === 0;
-              const intensities = ["var(--fg-5)", "#82828a", "var(--fg-3)", "#aaa9a3", "var(--fg-2)", "#dddbd3", "var(--fg)"];
+              const isLast = i === TIMELINE_ITEMS.length - 1;
+
+              /* Crescendo: opacity + size ramp cleanly, no accidental gold on text */
+              const labelOpacity  = 0.28 + i * 0.10;   // 0.28 → 0.88
+              const quoteOpacity  = 0.38 + i * 0.09;   // 0.38 → 0.92
+              const quoteFontSize = 15 + i * 0.6;       // 15 → 18.6px
+              const quoteWeight   = i >= 5 ? 400 : 300;
+
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: isOdd ? -20 : 20 }}
+                  initial={{ opacity: 0, x: isOdd ? -18 : 18 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-8%" }}
-                  transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.65, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
                   className="relative"
                   style={{
                     width: "50%",
-                    padding: "13px 36px",
+                    padding: isLast ? "20px 40px" : "14px 40px",
                     left: isOdd ? 0 : "50%",
                     textAlign: isOdd ? "right" : "left",
                   }}
                 >
-                  {/* Dot */}
-                  <div
+                  {/* Spine node — lights up on enter */}
+                  <motion.div
                     className="tl-dot absolute rounded-full"
+                    initial={{ scale: 0.4, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true, margin: "-10%" }}
+                    transition={{ duration: 0.4, delay: i * 0.07 + 0.15, ease: [0.22, 1, 0.36, 1] }}
                     style={{
-                      top: 19, width: i === 6 ? 11 : 7, height: i === 6 ? 11 : 7,
-                      background: i === 0 ? "rgba(201,162,74,.4)" : "#C9A24A",
-                      right: isOdd ? (i === 6 ? -5.5 : -3.5) : "auto",
-                      left: !isOdd ? (i === 6 ? -5.5 : -3.5) : "auto",
-                      boxShadow: i === 6 ? "0 0 16px 1px rgba(201,162,74,.6)" : "none",
+                      top: isLast ? 22 : 20,
+                      width: isLast ? 13 : i === 0 ? 6 : 8,
+                      height: isLast ? 13 : i === 0 ? 6 : 8,
+                      background: i === 0 ? "rgba(201,162,74,.3)" : "#C9A24A",
+                      right: isOdd ? (isLast ? -6.5 : i === 0 ? -3 : -4) : "auto",
+                      left: !isOdd ? (isLast ? -6.5 : i === 0 ? -3 : -4) : "auto",
+                      boxShadow: isLast ? "0 0 20px 3px rgba(201,162,74,.55)" : "none",
                       zIndex: 2,
                     }}
                   />
-                  <span className="font-mono block mb-1" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>
+
+                  {/* Connector tick — faint horizontal line from spine to text */}
+                  <div
+                    className="absolute pointer-events-none"
+                    style={{
+                      top: isLast ? 28 : 24,
+                      width: 16,
+                      height: 1,
+                      background: `rgba(201,162,74,${0.08 + i * 0.03})`,
+                      right: isOdd ? 24 : "auto",
+                      left: !isOdd ? 24 : "auto",
+                    }}
+                  />
+
+                  {/* Source label — fixed dim color, never gold, never wraps onto quote */}
+                  <span
+                    className="font-sans block mb-1"
+                    style={{
+                      fontSize: "9.5px",
+                      fontWeight: 500,
+                      letterSpacing: ".2em",
+                      textTransform: "uppercase",
+                      color: `rgba(201,162,74,${labelOpacity})`,
+                      lineHeight: 1,
+                    }}
+                  >
                     {item.source}
                   </span>
+
+                  {/* Conviction — always its own element, no colour bleed */}
                   <p
                     className="font-serif italic"
-                    style={{ fontSize: i === 6 ? 19 : 18, lineHeight: 1.4, color: intensities[i] }}
+                    style={{
+                      fontSize: quoteFontSize,
+                      fontWeight: quoteWeight,
+                      lineHeight: 1.44,
+                      color: `rgba(237,235,227,${quoteOpacity})`,
+                      margin: 0,
+                    }}
                   >
                     {item.quote}
                   </p>
@@ -1125,51 +1173,69 @@ export default function FounderPage() {
             })}
           </div>
 
-          {/* Bedrock cards */}
-          <div className="text-center mb-8">
-            <span className="eyebrow eyebrow--center mb-3 block">The bedrock</span>
-            <p className="font-serif italic" style={{ fontSize: "clamp(18px,2vw,24px)", color: "var(--fg-2)" }}>
-              Three sentences underwrite everything above.
-            </p>
-          </div>
+          {/* ── BEDROCK ── */}
+          <Reveal>
+            <div className="text-center" style={{ marginBottom: 40 }}>
+              <span className="font-sans block mb-4" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A", opacity: .65 }}>
+                The Bedrock
+              </span>
+              <p
+                className="font-serif italic mx-auto"
+                style={{
+                  fontSize: "clamp(20px,2.2vw,26px)",
+                  lineHeight: 1.44,
+                  color: "#EDEBE3",
+                  maxWidth: "34ch",
+                  marginBottom: 0,
+                }}
+              >
+                Three sentences underwrite everything above.
+              </p>
+            </div>
+          </Reveal>
+
           <div
             className="bedrock-grid grid grid-cols-1 md:grid-cols-3 gap-5"
             style={{ maxWidth: 1080, margin: "0 auto" }}
           >
             {[
-              { k: "The thesis",    v: "People Systems Fail Before Strategy Does" },
-              { k: "The framework", v: "Belief → Conviction → Rhythm" },
-              { k: "The credo",     v: "Humanity Over Hierarchy" },
+              { k: "The Thesis",    v: "People Systems Fail Before Strategy Does" },
+              { k: "The Framework", v: "Belief → Conviction → Rhythm" },
+              { k: "The Credo",     v: "Humanity Over Hierarchy" },
             ].map((card, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="relative pattern-card"
+                viewport={{ once: true, margin: "-5%" }}
+                transition={{ duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                className="relative"
                 style={{
-                  background: "var(--bg-1)",
-                  border: "1px solid rgba(237,235,227,.08)",
+                  background: "rgba(14,13,11,.8)",
+                  border: "1px solid rgba(201,162,74,.16)",
                   borderTop: `2px solid ${i === 2 ? "#E2C078" : "#C9A24A"}`,
                   borderRadius: 14,
-                  padding: "44px 34px",
-                  boxShadow: `0 0 ${44 + i * 10}px -${26 - i * 4}px rgba(201,162,74,${0.4 + i * 0.1})`,
+                  padding: "44px 36px 40px",
+                  boxShadow: `0 0 ${50 + i * 14}px -${22 - i * 3}px rgba(201,162,74,${0.22 + i * 0.12})`,
                 }}
               >
-                <span className="font-mono block mb-4" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "#C9A24A" }}>
+                <span className="font-sans block mb-5" style={{ fontSize: "9.5px", fontWeight: 600, letterSpacing: ".22em", textTransform: "uppercase", color: "#C9A24A", opacity: .65 }}>
                   {card.k}
                 </span>
-                <p className="font-serif" style={{ fontWeight: 500, fontSize: 28, lineHeight: 1.12, color: "#EDEBE3" }}>
+                <p className="font-serif" style={{ fontWeight: 400, fontSize: "clamp(22px,2.2vw,28px)", lineHeight: 1.14, color: "#EDEBE3" }}>
                   {card.v}
                 </p>
                 {i < 2 && (
-                  <span
+                  <motion.span
                     className="bedrock-arrow absolute font-serif"
-                    style={{ right: -17, top: "50%", transform: "translateY(-50%)", color: "#E2C078", fontSize: 20, zIndex: 2 }}
+                    initial={{ opacity: 0, x: -4 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.12 + 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ right: -16, top: "50%", transform: "translateY(-50%)", color: "#C9A24A", fontSize: 18, zIndex: 2, opacity: .55 }}
                   >
                     →
-                  </span>
+                  </motion.span>
                 )}
               </motion.div>
             ))}
