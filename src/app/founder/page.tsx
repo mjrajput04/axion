@@ -1,1342 +1,1216 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
-const career = [
-  { code: "SCB", full: "Standard Chartered", sub: "Rewards architecture · 700→10,000 scaled operation", body: "Built rewards architecture across a 700-to-10,000 scaled operation. Proved data is how HR earns authority, not how it gets ignored.", stat: "96%", statLabel: "Q12 participation" },
-  { code: "TGB", full: "Tata Global Beverages", sub: "Decade · 3 heritage brands · Starbucks + PepsiCo JVs", body: "Decade-long institutional architecture across three heritage brands and joint ventures. London-to-Mumbai global HQ relocation completed at 95%+ retention.", stat: "95%+", statLabel: "Retention through global HQ relocation" },
-  { code: "UDN", full: "Udaan", sub: "800→4,000 on-roll · 22 languages · 28 states", body: "Scaled people architecture from 800 to over 4,000 on-roll across 22 languages and 28 states. During COVID, when Udaan was classified as essential government infrastructure, manning held at 95% with no productivity loss.", stat: "95%", statLabel: "COVID manning · zero productivity loss" },
-  { code: "GSK", full: "Gameskraft", sub: "9 → full institution · GST shock · zero layoffs", body: "Built the operating system from nine people managing event logistics into a full institution. When a 28% retroactive GST shock and state-level bans threatened the industry, the architecture held: 27% of roles impacted by strategy change, 97.1% top-performer retention, zero involuntary layoffs.", stat: "97.1%", statLabel: "Top-performer retention" },
+/* ─── DATA ─────────────────────────────────────────────────────────────────── */
+
+const STRATA = [
+  {
+    num: "I",
+    loc: "Delhi · A Marwari Household",
+    title: "The Origins",
+    body: "Born into a world where the script was laid out early: Commerce, CA, business, respectability. But within that structure lived a different kind of influence — a maternal grandfather who began working at thirteen, who embodied responsibility before teaching it.",
+    pq: "The first operating system is not designed. It is absorbed — from the people who raise you, the values they embody without declaring, and the quiet conviction that thinking for yourself is not defiance but duty.",
+  },
+  {
+    num: "II",
+    loc: "Delhi · 2002 — SRCC vs. Bangalore",
+    title: "The First Collision",
+    body: "SRCC held firm in my consciousness — not simply a college but a verdict. When the letter came confirming what everyone expected, the path seemed settled. But life rarely honours the scripts we write for ourselves. At eighteen, standing between certainty and duty, I chose Bangalore. Not because I wanted to leave, but because accountability felt familiar.",
+    pq: "The choices that are easy do not form identity. The ones that arrive at the worst possible time and demand an answer — those reflect character, not convenience.",
+  },
+  {
+    num: "III",
+    loc: "Bangalore · 2002–2005",
+    title: "The Anonymous Years",
+    body: "Bangalore did not welcome me with clarity. It met me with stillness — the kind that unnerves you when you are eighteen and suddenly invisible in a city that does not know your past or care about your promise. Anonymity has a strange discipline. It clears out the noise you did not know you were carrying.",
+    pq: "Anonymity is the crucible that separates those who need validation from those who generate their own momentum.",
+  },
+  {
+    num: "IV",
+    loc: "Mumbai · TISS",
+    title: "The Dual Instinct",
+    body: "I did not choose HR as a fallback. I chose it because my instinct for people and my instinct for business were never separate — they were the same instinct, looking at the same problem from two ends.",
+    pq: "Solve people problems with a business mind. Solve business problems with a people heart.",
+    last: true,
+  },
 ];
 
-const codified = [
-  { label: "Methodology", title: "The BCR Framework.", body: "Belief → Conviction → Rhythm. The signature methodology that runs the platform." },
-  { label: "Practice doctrines", title: "Four doctrines.", body: "One platform method — BCR — interpreted across labour, AI, people, and ownership through a second carrier framework, 3i (Interpret · Integrate · Institutionalise). Other methods sit underneath as embedded structures, not branded acronyms." },
-  { label: "HROS", title: "The operating-system layer.", body: "Nitin is building separately, where the architecture lives in motion. It is the destination for the patterns codified at Axion Index." },
-  { label: "In writing", title: "The Operating Architect (2026).", body: "The book that gathers the codified patterns, the institutional cases, and the doctrine into a single working text." },
+const ROOTS_TABS = [
+  {
+    id: "wipro", label: "Wipro", num: "I.", period: "2003–2004",
+    title: "The Monkey on My Back",
+    sub: "Greenfield Manufacturing · Plant HR",
+    body: "At twenty-three, fresh out of TISS, I became the sole HR point of contact at a manufacturing unit acquired from Godrej. Every worker on the floor was older than me; union dynamics were real. The mandate was wide and unglamorous — production hiring, training coordination, post-acquisition policy integration, and the first employee engagement survey the unit had ever conducted. No framework. No precedent. No one to escalate to.",
+    scar: "The first operating system you design is not for the organisation. It is for yourself.",
+    installations: [
+      { n: "01", title: "Training Built Before the Plant", desc: "Clarity before authority — systems designed in motion outlast systems designed in comfort." },
+      { n: "02", title: "Voice as Infrastructure", desc: "Once you ask people to speak, you have made a promise. Listening is commitment architecture." },
+      { n: "03", title: "The Greenfield Instinct", desc: "Building people architecture for an organisation before it knows what it will become." },
+    ],
+    installed: "A permanent orientation toward architecture over activity — and the instinct to step in before being asked.",
+    tag: "Installed → Voice Architecture",
+    doctrine: ["Clarity"],
+  },
+  {
+    id: "scb", label: "Standard Chartered", num: "II.", period: "2004–2008",
+    title: "Wizards of Data",
+    sub: "Captive Finance · Data-Led HR",
+    body: "Building Standard Chartered's finance arm under a mandate of world-class service at a fraction of the cost. This was where data learned to command a seat rather than ask for one — including an attrition analysis that overturned the business's own hypothesis, and held under senior pushback.",
+    scar: "Compliance is not commitment.",
+    installations: [
+      { n: "01", title: "The Analysis That Held", desc: "Evidence converts where argument fails — make the business unable to decide without it." },
+      { n: "02", title: "Conviction Over Conformity", desc: "Distinguishing surface compliance from genuine belief became the work itself." },
+    ],
+    installed: "The ability to let data carry authority — and to tell the difference between agreement and belief.",
+    tag: "Installed → The Credibility Stack",
+    doctrine: ["Data"],
+  },
+  {
+    id: "hsbc", label: "HSBC", num: "III.", period: "2008–2009",
+    title: "The Pilot That Changed the Room",
+    sub: "Reward Architecture · Talent Redesign",
+    body: "One year — and one of the most architecturally precise. The mandate came with hard constraints: improve competitiveness, fix South India talent acquisition, redesign the reward structure — with zero incremental budget. The conventional response was to ask for more resources. The architectural one was to ask a different question: what if constraint is the design condition, not the obstacle?",
+    scar: "Authority rarely creates alignment. Clarity does.",
+    installations: [
+      { n: "01", title: "The South India Talent Redesign", desc: "Proof before persuasion — small pilots that deliver beat strategies that reassure." },
+      { n: "02", title: "The Housing Allowance Redesign", desc: "Constraint is the mother of architecture; the budget limit was a design specification." },
+      { n: "03", title: "Stress-Testing Before the Room Does", desc: "Never enter a room with a proposal you have not already argued against." },
+    ],
+    installed: "Constraint-driven design, proof before persuasion, and self-scrutiny as the foundation of authority.",
+    tag: "Installed → Decision Architecture",
+    doctrine: ["Constraint"],
+  },
+  {
+    id: "tata", label: "Tata", num: "IV.", period: "2009–2019",
+    title: "The Decade That Made the Architect",
+    sub: "Global HR · M&A · Starbucks India",
+    body: "Ten years. Three stints. Global HR across the Americas, Australia, the Middle East, Europe & Asia. M&A integration of Tata Tea, Tetley and Eight O'Clock Coffee. Anchoring Starbucks India as a joint venture. Relocating the global headquarters from London to Mumbai — 200+ roles, continuity preserved. And the crystallisation of the floor that never left: Humanity Over Hierarchy.",
+    scar: "Culture is not what organisations declare. It is what their systems enforce.",
+    installations: [
+      { n: "01", title: "The Maverick Principle", desc: "HR earns the seat by making the business unable to decide without it." },
+      { n: "02", title: "Coherence Across Difference", desc: "Scale is not uniformity — design what must be common, protect what must stay distinct." },
+      { n: "03", title: "Anchoring the Starbucks People Charter", desc: "Values survive only when embedded in operating systems." },
+      { n: "04", title: "Inducting My Own Incoming Boss", desc: "Institutional courage: security without need for approval." },
+    ],
+    installed: "Institutional scale, coherence across difference, and Humanity Over Hierarchy as the operating floor.",
+    tag: "Installed → Belief Translation",
+    doctrine: ["Scale"],
+  },
+  {
+    id: "udaan", label: "Udaan", num: "V.", period: "2019–2021",
+    title: "The Collision",
+    sub: "Startup Hypergrowth · National Scale · COVID",
+    body: "Not a transition — a collision. The interview itself dismantled sixteen years of institutional assumptions in a single conversation. A workforce from 800 to 4,000+ on-roll in a single year, across 22 languages and 28 states. Then a national lockdown — with Udaan classified an essential service when the country shut down. Everything I knew was simultaneously my greatest asset and my most dangerous liability.",
+    scar: "Startup physics is not a faster version of institutional physics. It is a different machine.",
+    installations: [
+      { n: "01", title: "A Different Machine", desc: "First-principles design for actual conditions, not templates borrowed from mature firms." },
+      { n: "02", title: "Continuity Under Existential Pressure", desc: "In a startup, culture is the organisation — belief held when external systems fail." },
+      { n: "03", title: "Belief → Conviction → Rhythm Becomes Doctrine", desc: "Founder belief cannot be delegated. It must be translated." },
+    ],
+    installed: "Startup physics, culture as the operating system, and Belief → Conviction → Rhythm as a doctrine.",
+    tag: "Installed → Pre-Institutional Design",
+    doctrine: ["Startup Physics"],
+  },
+  {
+    id: "gameskraft", label: "Gameskraft", num: "VI.", period: "2022–Present",
+    title: "The Other Side of the Equation",
+    sub: "Culture-First Engineering · Crisis-Tested",
+    body: "The fullest test. A profitable, fast-growing company with nine HR people, 250 open roles, no performance system, no employer brand, no institutional memory beyond founder energy. Twenty-four months of architecture — and then a 4 AM regulatory notification that threatened the sector overnight. The crisis did not find the company unprepared. The architecture held: zero layoffs through the shock, top performers stayed, offers held.",
+    scar: "The architecture you build before the crisis determines whether you survive it. What you build in calm is tested in crisis.",
+    installations: [
+      { n: "01", title: "Building the Architecture Before the Crisis", desc: "Culture-first is an engineering decision: the sequence is the strategy." },
+      { n: "02", title: "The 4 AM Test", desc: "The proof of architecture is the moment it is tested — not the moment it is built." },
+      { n: "03", title: "Narrative That Scaled Itself", desc: "When the narrative is true, it scales itself — it needed to be real, not communicated." },
+    ],
+    installed: "Crisis-tested systems, culture-first engineering, and restraint as strategy.",
+    tag: "Installed → Crisis Architecture",
+    doctrine: ["Crisis Arch"],
+  },
 ];
 
-export default function Founder() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+const ALL_DOCTRINE = ["Clarity", "Data", "Constraint", "Scale", "Startup Physics", "Crisis Arch"];
+
+const TIMELINE_ITEMS = [
+  { source: "From the Soil",           quote: "The first operating system is not designed. It is absorbed." },
+  { source: "From Wipro",              quote: "Effort without system leverage becomes invisible — architecture over activity." },
+  { source: "From Standard Chartered", quote: "Evidence converts where argument fails." },
+  { source: "From HSBC",               quote: "Authority rarely creates alignment. Clarity does." },
+  { source: "From Tata",               quote: "Culture is what your systems enforce, not what you declare." },
+  { source: "From Udaan",              quote: "Design for the organisation you are becoming." },
+  { source: "From Gameskraft",         quote: "The proof of architecture is the moment it is tested." },
+];
+
+const PATTERNS_THRESHOLD = [
+  { num: "01", name: "Operating Rhythm", signal: "Cadence, memory, ownership, enforcement — with no bypass.", desc: "The recurring rituals through which work is reviewed, decisions remembered and standards enforced — what keeps the system running when attention moves elsewhere." },
+  { num: "02", name: "Decision Architecture", signal: "One owner, one deadline, one escalation path — by design.", desc: "How decisions get made, owned and escalated — structured deliberately rather than left to whoever is loudest or most senior in the room. Installed at HSBC." },
+  { num: "03", name: "The Credibility Stack", signal: "How HR earns strategic authority, in the only sequence that works.", desc: "Authority earned in sequence — evidence before argument, proof before persuasion, results the business cannot dispute. Built at Standard Chartered." },
+  { num: "04", name: "Voice Architecture", signal: "Channels for dissent, before silent failure sets in.", desc: "Designed mechanisms through which people can speak — and a system obligated to respond. First built at Wipro, as commitment architecture, not a survey." },
+];
+
+const PATTERNS_SIGNATURE = [
+  { num: "05", name: "Pre-Institutional Design", signal: "Designing the organisation before it knows it needs one.", desc: "Building people architecture for the organisation that is coming, not the one that exists today — before speed reveals the gaps. The greenfield instinct, proven at Udaan." },
+  { num: "06", name: "Rhythm Matching", signal: "Diagnosing cadence fit before the hire, not after.", desc: "Reading the operating tempo a role and a person actually run at — and matching them before commitment. The most expensive hiring errors are rhythm errors." },
+  { num: "07", name: "Belief Translation", signal: "Converting founder conviction into organisational rhythm.", desc: "Turning what a founder believes into what an organisation reliably does when the founder is not in the room. Crystallised at Tata, proven at Udaan." },
+  { num: "08", name: "Crisis Architecture", signal: "Readiness as design, not improvisation.", desc: "The commitments and trust built in calm that determine whether an organisation survives the shock. Demonstrated at Gameskraft when the sector was tested overnight." },
+];
+
+const SYS_MAP = [
+  { n: "01 · Doctrine",    title: "Founder Doctrine",    desc: "The Operating Architect — the thesis and the lived scars behind it.", entry: false },
+  { n: "02 · Framework",   title: "Operating Patterns",  desc: "How organisations hold — eight patterns, in two tiers.", entry: false },
+  { n: "03 · Entry point", title: "Diagnostics",         desc: "Where the system is breaking — measured against the patterns.", entry: true },
+  { n: "04 · Practice",    title: "Practices",           desc: "People Architecture · AI Edge Lab · Labour Codes · Family Business.", entry: false },
+  { n: "05 · Infrastructure", title: "HROS",             desc: "The operating-intelligence layer — the patterns, encoded into software.", entry: false, future: true },
+];
+
+const WHO_GRID = [
+  { aud: "Founders",              desc: "Convert founder conviction into operating rhythm — so the company runs the system, not you." },
+  { aud: "Investors & boards",    desc: "Diagnose whether the organisation can actually carry the strategy." },
+  { aud: "CHROs & CXOs",          desc: "Redesign decision, rhythm, capability and trust architecture." },
+  { aud: "Operators & people teams", desc: "Frameworks to scale without importing enterprise drag." },
+];
+
+const ARTICLES_FEATURED = { cat: "Featured · AI & HR", title: "Should AI Replace Empathy? The Limits of Technology in Hiring", meta: "Publishing soon" };
+
+const ARTICLES = [
+  { cat: "Startups",      title: "HR in Start-Ups: Unconventional Wisdom and Constant Re-Alignment" },
+  { cat: "HR Strategy",   title: "What Does HR Want? A Deep Dive Into the Wishlist of HR Leaders" },
+  { cat: "HR Leadership", title: "The Art of Being Relevant: Where Does the HR Function Stand?" },
+  { cat: "HR Tech",       title: "Beyond Tech: How Far Can HR Tech Address Human Emotions?" },
+  { cat: "Performance",   title: "Continuous Feedback Through 'Konversations'" },
+];
+
+const HONOURS = [
+  "Jombay's HR 40 Under 40",
+  "ET Human Capital Award — Trust & High Performance",
+  "BW People Gold — Performance Management",
+  "LinkedIn Talent Award 2024 — Best TA Team",
+  "Kincentric Top-Quartile Engagement",
+];
+
+/* ─── MAIN PAGE ─────────────────────────────────────────────────────────────── */
+
+export default function FounderPage() {
+  const [activeTab, setActiveTab] = useState(0);
+  const [emailDiag, setEmailDiag] = useState("");
+  const [emailNews, setEmailNews] = useState("");
+  const [submittedDiag, setSubmittedDiag] = useState(false);
+  const [submittedNews, setSubmittedNews] = useState(false);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ background: "var(--bg)" }}>
 
-      {/* ── HEADER ── */}
-      <nav style={{ position: "sticky", top: 0, zIndex: 200, minHeight: "44px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", background: "rgba(8,8,8,0.94)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "0 52px" }} className="px-4 md:px-[52px]">
-        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: "0.24em", textTransform: "uppercase", color: "#F5F0E8" }}>
-          Nitin Nahata · <Link href="/" style={{ color: "#C9A84C", textDecoration: "none" }}>Axionindex</Link>
-        </div>
-        <div className="hidden md:flex" style={{ alignItems: "center", gap: "28px" }}>
-          {[["#story","Story"],["#roots","Roots"],["#articles","Articles"],["#recognition","Recognition"],["#model","Model"]].map(([href, label]) => (
-            <a key={href} href={href} style={{ fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(200,195,185,0.55)", textDecoration: "none" }}>{label}</a>
-          ))}
-          <Link href="/" style={{ fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", background: "#C9A84C", color: "#080808", padding: "8px 18px", textDecoration: "none" }}>← Home</Link>
-        </div>
-        <div className="flex md:hidden" style={{ alignItems: "center", gap: "12px" }}>
-          <Link href="/" style={{ fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", background: "#C9A84C", color: "#080808", padding: "6px 14px", textDecoration: "none" }}>← Home</Link>
-          <button onClick={() => setMobileOpen(!mobileOpen)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "18px", color: "#F5F0E8", padding: "4px", lineHeight: 1 }} aria-label="Toggle menu">
-            {mobileOpen ? "✕" : "☰"}
-          </button>
-        </div>
-        {mobileOpen && (
-          <div className="flex md:hidden" style={{ width: "100%", flexDirection: "column", borderTop: "1px solid rgba(255,255,255,0.08)", background: "rgba(8,8,8,0.98)", paddingBottom: "12px" }}>
-            {[["#story","Story"],["#roots","Roots"],["#articles","Articles"],["#recognition","Recognition"],["#model","Model"]].map(([href, label]) => (
-              <a key={href} href={href} onClick={() => setMobileOpen(false)} style={{ fontFamily: "'DM Mono', monospace", fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(200,195,185,0.55)", textDecoration: "none", padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>{label}</a>
-            ))}
-          </div>
-        )}
-      </nav>
-
-      {/* ══════════════════════════════════════════════════════════════════
-          HERO — The Making of the Operating Architect
-      ══════════════════════════════════════════════════════════════════ */}
+      {/* ── HERO ── */}
       <header
         id="story"
-        className="relative min-h-screen flex items-stretch overflow-hidden"
-        style={{ background: "#080808" }}
+        className="relative overflow-hidden"
+        style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "0.92fr 1.08fr" }}
       >
-        {/* LEFT — full-height photo */}
-        <div className="hidden md:block w-[42%] lg:w-[45%] relative shrink-0">
+        {/* Left — monogram */}
+        <div
+          className="relative flex items-center justify-center overflow-hidden"
+          style={{ background: "radial-gradient(120% 90% at 30% 30%, #201f24, #0c0c0e 70%)" }}
+        >
           <div
-            className="absolute inset-0"
-            style={{
-              background: "linear-gradient(to right, #080808 0%, transparent 18%), linear-gradient(to left, #080808 0%, transparent 12%)",
-              zIndex: 2,
-              pointerEvents: "none",
-            }}
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: "radial-gradient(60% 50% at 50% 42%, rgba(201,162,74,.05), transparent 70%)" }}
           />
-          <img
-            src="/nitishhh.png"
-            alt="Nitin Nahata"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "center 39%" }}
+          <div
+            className="absolute top-0 right-0 bottom-0 pointer-events-none"
+            style={{ width: "42%", background: "linear-gradient(90deg, transparent, var(--bg))" }}
           />
+          <div className="relative z-10 text-center">
+            <div
+              className="flex items-center justify-center rounded-full mx-auto"
+              style={{
+                width: 188, height: 188,
+                border: "1px solid rgba(201,162,74,.28)",
+                boxShadow: "0 0 80px -40px rgba(201,162,74,.6)",
+              }}
+            >
+              <span
+                className="font-serif"
+                style={{ fontSize: 78, fontWeight: 400, color: "#3a3a40", letterSpacing: ".04em" }}
+              >
+                NN
+              </span>
+            </div>
+            <p
+              className="font-mono mt-5"
+              style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".32em", textTransform: "uppercase", color: "var(--fg-5)" }}
+            >
+              The Operating Architect
+            </p>
+          </div>
         </div>
 
-        {/* RIGHT — content */}
+        {/* Right — text */}
         <div
-          className="flex-1 flex flex-col justify-center px-8 sm:px-12 lg:px-16 relative z-10"
-          style={{ paddingTop: "clamp(100px,14vh,160px)", paddingBottom: "clamp(60px,8vh,100px)" }}
+          className="relative flex flex-col justify-center"
+          style={{ padding: "calc(64px + 36px) 9% 56px" }}
         >
-          {/* Name label */}
-          <Reveal>
-            <span
-              className="font-serif tracking-[0.35em] uppercase mb-8 block"
-              style={{ fontSize: "clamp(9px,0.75vw,11px)", color: "#C9A84C" }}
-            >
-              NITIN NAHATA
-            </span>
-          </Reveal>
-
-          {/* Main title */}
-          <Reveal delay={0.1}>
-            <h1
-              className="font-serif font-normal leading-[1.0] tracking-[-0.02em] mb-10"
-              style={{
-                fontSize: "clamp(36px,5.5vw,76px)",
-                color: "#F5F0E8",
-              }}
-            >
-              The Making<br />
-              of the<br />
-              Operating<br />
-              Architect
-            </h1>
-          </Reveal>
-
-          {/* Subtitle */}
-          <Reveal delay={0.18}>
-            <p
-              className="font-serif font-light leading-[1.5] mb-12"
-              style={{
-                fontSize: "clamp(16px,1.5vw,20px)",
-                color: "rgba(200,195,185,0.7)",
-                maxWidth: "36ch",
-              }}
-            >
-              A 23-Year Journey Through Collision, Scars &amp; Conviction
-            </p>
-          </Reveal>
-
-          {/* Italic quote — gold, no border */}
-          <Reveal delay={0.26}>
-            <p
-              className="font-serif italic leading-[1.75]"
-              style={{
-                fontSize: "clamp(14px,1.2vw,18px)",
-                color: "#C9A84C",
-                maxWidth: "42ch",
-              }}
-            >
-              &ldquo;A bamboo plant spends years building roots underground. No visible shoot. No measurable progress. Then, in what looks like weeks, it rises. The speed is not sudden. It was always happening — invisibly, structurally, below the surface.&rdquo;
-            </p>
-          </Reveal>
-
-          {/* Thin vertical line below quote */}
-          <Reveal delay={0.34}>
-            <div
-              className="mt-8"
-              style={{ width: "1px", height: "48px", background: "rgba(255,255,255,0.2)" }}
-            />
-          </Reveal>
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: "radial-gradient(80% 60% at 70% 40%, rgba(201,162,74,.035), transparent 70%)" }}
+          />
+          <div className="relative">
+            <Reveal>
+              <span className="eyebrow mb-6 block">Nitin Nahata</span>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h1 className="h-display hero-glow mb-6">
+                The Making of the<br />
+                <em>Operating Architect</em>
+              </h1>
+            </Reveal>
+            <Reveal delay={0.18}>
+              <p className="lead mb-8" style={{ maxWidth: "36ch" }}>
+                A 23-year journey through collision, scars &amp; conviction.
+              </p>
+            </Reveal>
+            <Reveal delay={0.26}>
+              <blockquote
+                className="font-serif italic mb-8"
+                style={{
+                  fontSize: "clamp(15px,1.3vw,18px)",
+                  lineHeight: 1.64,
+                  color: "var(--accent)",
+                  maxWidth: "46ch",
+                  borderLeft: "1.5px solid var(--accent)",
+                  paddingLeft: 20,
+                }}
+              >
+                A bamboo plant spends years building roots underground. No visible shoot. No measurable progress. Then, in what looks like weeks, it rises — the speed is not sudden. It was always happening, invisibly, structurally, below the surface.
+              </blockquote>
+            </Reveal>
+            <Reveal delay={0.34}>
+              <div
+                className="font-mono pt-5"
+                style={{
+                  borderTop: "1px solid var(--line)",
+                  fontSize: "10.5px",
+                  letterSpacing: ".1em",
+                  color: "var(--fg-5)",
+                  lineHeight: 2.1,
+                  textTransform: "uppercase",
+                }}
+              >
+                <span style={{ color: "var(--accent)", fontWeight: 500 }}>WIPRO</span> ·{" "}
+                <span style={{ color: "var(--accent)", fontWeight: 500 }}>STANDARD CHARTERED</span> ·{" "}
+                <span style={{ color: "var(--accent)", fontWeight: 500 }}>HSBC</span> ·{" "}
+                <span style={{ color: "var(--accent)", fontWeight: 500 }}>TATA</span> ·{" "}
+                <span style={{ color: "var(--accent)", fontWeight: 500 }}>UDAAN</span> ·{" "}
+                <span style={{ color: "var(--accent)", fontWeight: 500 }}>GAMESKRAFT</span>
+                <br />
+                40 Under 40 · Global HR across the Americas, Australia, the Middle East, Europe &amp; Asia · TISS
+              </div>
+            </Reveal>
+          </div>
         </div>
 
         {/* Bottom fade */}
         <div
-          aria-hidden
-          className="pointer-events-none absolute bottom-0 left-0 w-full h-[20vh]"
-          style={{ background: "linear-gradient(to top, #080808 0%, transparent 100%)", zIndex: 3 }}
+          className="absolute bottom-0 left-0 w-full pointer-events-none"
+          style={{ height: "20vh", background: "linear-gradient(to top, var(--bg), transparent)", gridColumn: "1 / -1" }}
         />
       </header>
-      {/* ══════════════════════════════════════════════════════════════════
-          THE SOIL — BEFORE 2003
-      ══════════════════════════════════════════════════════════════════ */}
+
+      {/* ── SOIL ── */}
       <section
+        id="soil"
         className="relative"
-        style={{
-          background: "#080808",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
-          padding: "clamp(80px,12vh,160px) 0",
-        }}
+        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
       >
         <div className="shell">
-
-          {/* Section header */}
           <Reveal>
-            <div className="mb-14 max-w-[680px] mx-auto">
-              <span
-                className="font-jetbrains tracking-[0.35em] uppercase block mb-1"
-                style={{ fontSize: "12px", color: "#C9A84C" }}
-              >
-                THE SOIL
-              </span>
-              <span
-                className="font-jetbrains tracking-[0.3em] uppercase block mb-8"
-                style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)" }}
-              >
-                BEFORE 2003
-              </span>
-              <h2
-                className="font-serif font-normal leading-[1.05] tracking-[-0.02em] mb-8"
-                style={{ fontSize: "clamp(28px,3.8vw,54px)", color: "#F5F0E8", maxWidth: "18ch" }}
-              >
-                Where the operating<br />
-                system began writing itself
+            <div className="mb-14" style={{ maxWidth: 880 }}>
+              <span className="eyebrow mb-4 block">The Soil · Before 2003</span>
+              <h2 className="h-section mb-5" style={{ maxWidth: "18ch" }}>
+                Where the operating system began writing itself
               </h2>
-              <p
-                className="font-sans font-light leading-[1.7]"
-                style={{ fontSize: "clamp(13px,1.1vw,16px)", color: "rgba(200,195,185,0.55)", maxWidth: "62ch" }}
-              >
+              <p className="lead" style={{ maxWidth: "62ch" }}>
                 Every architect needs material to work with. For buildings, it is steel and concrete. For people systems, it is something less visible: a way of reading the world, a comfort with responsibility, an internal compass that holds when external certainty disappears.
               </p>
             </div>
           </Reveal>
 
-          {/* Story cards */}
-          <div className="flex flex-col gap-6 max-w-[900px] mx-auto">
-
-            {/* Card 1 — The Origins */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8% 0px" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="p-8 sm:p-10"
+          {/* Strata timeline */}
+          <div
+            className="relative"
+            style={{ maxWidth: 860, margin: "0 auto" }}
+          >
+            {/* Vertical line */}
+            <div
+              className="absolute pointer-events-none"
               style={{
-                background: "rgba(18,18,18,0.7)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "4px",
+                left: 26, top: 18, bottom: 64, width: 1,
+                background: "linear-gradient(180deg, var(--accent), rgba(201,162,74,.28) 40%, rgba(201,162,74,.28))",
               }}
-            >
-              <span
-                className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
-                style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)" }}
-              >
-                DELHI · A MARWARI HOUSEHOLD
-              </span>
-              <h3
-                className="font-serif font-normal mb-5"
-                style={{ fontSize: "clamp(22px,2.4vw,34px)", color: "#F5F0E8" }}
-              >
-                The Origins
-              </h3>
-              <p
-                className="font-sans font-light leading-[1.7] mb-6"
-                style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.6)" }}
-              >
-                Born into a world where the script was laid out early: Commerce, CA, Business, Respectability. But within that structure lived a different kind of influence. A maternal grandfather who began working at thirteen, who embodied responsibility before teaching it.
-              </p>
-              <div
-                className="pl-5"
-                style={{ borderLeft: "2px solid rgba(201,168,76,0.35)" }}
-              >
-                <p
-                  className="font-serif italic leading-[1.7]"
-                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "#C9A84C" }}
-                >
-                  &ldquo;The first operating system is not designed. It is absorbed — from the people who raise you, the values they embody without declaring, and the quiet conviction that thinking for yourself is not defiance but duty.&rdquo;
-                </p>
-              </div>
-            </motion.div>
+            />
 
-            {/* Card 2 — The First Collision */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8% 0px" }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="p-8 sm:p-10"
-              style={{
-                background: "rgba(18,18,18,0.7)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "4px",
-              }}
-            >
-              <span
-                className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
-                style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)" }}
+            {STRATA.map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-8%" }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="relative"
+                style={{
+                  padding: "30px 0 30px 72px",
+                  borderBottom: s.last ? "none" : "1px solid var(--line)",
+                }}
               >
-                DELHI · 2002 — SRCC VS. BANGALORE
-              </span>
-              <h3
-                className="font-serif font-normal mb-5"
-                style={{ fontSize: "clamp(22px,2.4vw,34px)", color: "#F5F0E8" }}
-              >
-                The First Collision
-              </h3>
-              <p
-                className="font-sans font-light leading-[1.7] mb-6"
-                style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.6)" }}
-              >
-                SRCC held firm within my consciousness — not simply a college but a verdict. When the letter came confirming what everyone expected, the path seemed settled. But life rarely honours the scripts we write for ourselves. At eighteen, standing between certainty and duty, I chose Bangalore. Not because I wanted to leave. But because accountability felt familiar.
-              </p>
-              <div
-                className="pl-5"
-                style={{ borderLeft: "2px solid rgba(201,168,76,0.35)" }}
-              >
-                <p
-                  className="font-serif italic leading-[1.7]"
-                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "#C9A84C" }}
+                {/* Number dot */}
+                <div
+                  className="absolute flex items-center justify-center font-serif italic"
+                  style={{
+                    left: 11, top: 30, width: 31, height: 31, borderRadius: "50%",
+                    background: s.last ? "var(--accent)" : "var(--bg)",
+                    border: "1px solid rgba(201,162,74,.28)",
+                    fontSize: 14,
+                    color: s.last ? "#000" : "var(--accent)",
+                    zIndex: 2,
+                  }}
                 >
-                  &ldquo;The choices that are easy do not form identity. The ones that arrive at the worst possible time and demand an answer — those reflect character, not convenience.&rdquo;
-                </p>
-              </div>
-            </motion.div>
+                  {s.num}
+                </div>
 
-            {/* Card 3 — The Anonymous Years */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8% 0px" }}
-              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="p-8 sm:p-10"
-              style={{
-                background: "rgba(18,18,18,0.7)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "4px",
-              }}
-            >
-              <span
-                className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
-                style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)" }}
-              >
-                BANGALORE · 2002–2005
-              </span>
-              <h3
-                className="font-serif font-normal mb-5"
-                style={{ fontSize: "clamp(22px,2.4vw,34px)", color: "#F5F0E8" }}
-              >
-                The Anonymous Years
-              </h3>
-              <p
-                className="font-sans font-light leading-[1.7] mb-6"
-                style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.6)" }}
-              >
-                Bangalore did not welcome me with clarity. It met me with stillness — the kind that unnerves you when you are eighteen and suddenly invisible in a city that does not know your past or care about your promise. Anonymity has a strange discipline. It cleans out the noise you did not know you were carrying.
-              </p>
-              <div
-                className="pl-5"
-                style={{ borderLeft: "2px solid rgba(201,168,76,0.35)" }}
-              >
-                <p
-                  className="font-serif italic leading-[1.7]"
-                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "#C9A84C" }}
+                <span
+                  className="font-mono block mb-2"
+                  style={{ fontSize: "10.5px", letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}
                 >
-                  &ldquo;Anonymity is the crucible that separates those who need validation from those who generate their own momentum.&rdquo;
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Card 4 — HR at TISS */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8% 0px" }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="p-8 sm:p-10"
-              style={{
-                background: "rgba(18,18,18,0.7)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "4px",
-              }}
-            >
-              <span
-                className="font-jetbrains tracking-[0.3em] uppercase block mb-4"
-                style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)" }}
-              >
-                MUMBAI
-              </span>
-              <h3
-                className="font-serif font-normal mb-5"
-                style={{ fontSize: "clamp(22px,2.4vw,34px)", color: "#F5F0E8" }}
-              >
-                HR at TISS
-              </h3>
-              <p
-                className="font-sans font-light leading-[1.7] mb-6"
-                style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.6)" }}
-              >
-                I did not choose HR as a fallback. I chose it because I finally recognised that my instinct for people and my instinct for business were not separate — they were the same instinct. Solve people problems with a business mind. Solve business problems with a people heart.
-              </p>
-              <div
-                className="pl-5"
-                style={{ borderLeft: "2px solid rgba(201,168,76,0.35)" }}
-              >
-                <p
-                  className="font-serif italic leading-[1.7]"
-                  style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "#C9A84C" }}
+                  {s.loc}
+                </span>
+                <h3
+                  className="font-serif mb-3"
+                  style={{ fontSize: 24, fontWeight: 500, color: "var(--fg)" }}
                 >
-                  &ldquo;The people instinct and the business instinct are not separate. They are the same instinct expressed through different lenses.&rdquo;
+                  {s.title}
+                </h3>
+                <p style={{ color: "var(--fg-2)", fontWeight: 300, fontSize: 16, lineHeight: 1.68 }}>
+                  {s.body}
                 </p>
-              </div>
-            </motion.div>
-
+                <blockquote
+                  className="font-serif italic mt-4"
+                  style={{
+                    fontSize: 16, lineHeight: 1.6, color: "var(--accent)",
+                    borderLeft: "1.5px solid var(--accent)",
+                    paddingLeft: 18, maxWidth: "64ch",
+                  }}
+                >
+                  {s.pq}
+                </blockquote>
+              </motion.div>
+            ))}
           </div>
+
+          <p
+            className="font-serif italic text-center mt-10"
+            style={{ fontSize: 18, lineHeight: 1.5, color: "var(--fg-3)", maxWidth: 680, margin: "40px auto 0" }}
+          >
+            This was the soil. Everything that came after was built on it.
+          </p>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          THE ROOTS — 2003–2019
-      ══════════════════════════════════════════════════════════════════ */}
-      <div id="roots"><RootsSection /></div>
+      {/* ── ROOTS ── */}
+      <section
+        id="roots"
+        className="relative"
+        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
+      >
+        <div className="shell">
+          <Reveal>
+            <div className="mb-10" style={{ maxWidth: 880 }}>
+              <span className="eyebrow mb-4 block">The Roots · 2003 — Present</span>
+              <h2 className="h-section mb-5" style={{ maxWidth: "22ch" }}>
+                Preparing for the war when you are not at war
+              </h2>
+              <p className="lead" style={{ maxWidth: "62ch" }}>
+                Six collisions across institution and startup. In the early years the architecture was already built — the work was to operate inside it, learn its mechanics, understand what holds and what breaks. In the later years there was no architecture to inherit: only belief, speed and chaos — and every lesson installed in the root years, tested under live conditions.
+              </p>
+            </div>
+          </Reveal>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          THE SYNTHESIS — Section 4
-      ══════════════════════════════════════════════════════════════════ */}
-      <SynthesisSection />
-
-      {/* ── FEATURED ARTICLES ── */}
-      <div id="articles"><FeaturedArticlesSection /></div>
-
-      {/* ── AWARDS & EDUCATION ── */}
-      <div id="recognition"><AwardsEducationSection /></div>
-
-      {/* ══════════════════════════════════════════════════════════════════
-          THE ECONOMICS — Section 5
-      ══════════════════════════════════════════════════════════════════ */}
-      <div id="model"><EconomicsSection /></div>
-      <footer className="relative border-t border-[rgba(255,255,255,0.06)]" style={{ background: "#050505" }}>
-        <div className="flex flex-col items-center justify-center py-16 gap-6">
-          {/* Diamond icon */}
-          <div style={{ color: "rgba(201,168,76,0.5)", fontSize: "28px", lineHeight: 1 }}>◇</div>
-
-          {/* Name + title */}
-          <div className="text-center">
-            <p className="font-serif font-normal mb-1" style={{ fontSize: "clamp(18px,2vw,24px)", color: "#F5F0E8" }}>
-              Nitin Nahata
-            </p>
-            <p className="font-serif font-light" style={{ fontSize: "clamp(12px,1.1vw,15px)", color: "rgba(200,195,185,0.45)" }}>
-              The Operating Architect
-            </p>
-          </div>
-
-          {/* LinkedIn */}
-          <a
-            href="https://www.linkedin.com/in/nitinnahata"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono tracking-[0.35em] uppercase transition-colors duration-300"
-            style={{ fontSize: "11px", color: "#C9A84C" }}
-            onMouseEnter={e => (e.currentTarget.style.color = "#E8C97A")}
-            onMouseLeave={e => (e.currentTarget.style.color = "#C9A84C")}
+          {/* Tab bar */}
+          <div
+            role="tablist"
+            aria-label="Career chapters"
+            className="flex flex-wrap"
+            style={{ borderBottom: "1px solid var(--line)", marginBottom: 0, maxWidth: 1080 }}
           >
-            LinkedIn
-          </a>
-
-          {/* Copyright */}
-          <p className="font-mono tracking-[0.3em] uppercase" style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)" }}>
-            &copy; 2026 Nitin Nahata. All rights reserved.
-          </p>
-        </div>
-      </footer>
-
-    </div>
-  );
-}
-
-// ─── THE ROOTS SECTION ────────────────────────────────────────────────────────
-
-const ROOTS_TABS = [
-  {
-    id: "wipro",
-    label: "WIPRO",
-    num: "I.",
-    period: "2003–2004",
-    title: "The Monkey on My Back",
-    sub: "GREENFIELD MANUFACTURING · PLANT HR",
-    body: "At twenty-one, I stepped into the shoes of a plant manager at a manufacturing unit originally acquired from Godrej. Every worker on the floor was older than me. Union dynamics were real. I was the sole HR point of contact — production hiring, training coordination, post-acquisition policy integration, and the first employee engagement survey the unit had ever conducted.",
-    scar: "\"The first system you ever design is yourself. When no one expects you to lead, the only credential that works is presence — not position, not tenure, not the right answer, but the willingness to step into responsibility and hold the room.\"",
-    installed: "Designing for ambiguity. Sensitivity as precision, not softness. The instinct to step in before being asked.",
-    tag: "Voice Architecture → Cultural Contracts",
-  },
-  {
-    id: "scb",
-    label: "STANDARD CHARTERED",
-    num: "II.",
-    period: "2004–2008",
-    title: "The Night HR Became Dangerous",
-    sub: "CONSUMER BANKING, REWARDS, SCOPE INTERNATIONAL",
-    body: "The business had a comfortable hypothesis about why people were leaving. We challenged it. Dismantled the hypothesis with data. The authority was challenged. Senior leaders pushed back. But the numbers held. Four hours later, every number held. Overnight, we went from being the HR team to being the Wizards of Data.",
-    scar: "\"The moment your authority gets challenged and the data holds — that is when HR stops asking for a seat and starts being needed in the room.\"",
-    installed: "Data as the language of authority. When the comfortable hypothesis is wrong, the person who proves it with evidence permanently changes how the function is perceived.",
-    tag: "HR as Risk Architecture → Data as Authority",
-  },
-  {
-    id: "hsbc",
-    label: "HSBC",
-    num: "III.",
-    period: "2008–2009",
-    title: "The Pilot That Changed the Room",
-    sub: "SOUTH INDIA GENERALIST & CORPORATE REWARDS",
-    body: "South India was lagging because the business only wanted ready-made talent. But rather than confronting the belief head-on, I designed pilots — small, undeniable proofs that alternative approaches could work. The pilots turned scepticism into trust. Business managers who had resisted began advocating. Not through persuasion. Through proof.",
-    scar: "\"Dignity is tested in contraction, not growth. The frameworks you design for hard times matter more — because people remember how they were treated when it cost something.\"",
-    installed: "When the room will not listen to the argument, design a proof so small it cannot be ignored. Let the evidence do the persuading. Constraint is the mother of architecture.",
-    tag: "Belief Translation → Proof Before Philosophy",
-  },
-  {
-    id: "tgb",
-    label: "TATA GLOBAL BEVERAGES",
-    num: "IV.",
-    period: "2009–2019",
-    title: "The Decade That Made the Architect",
-    sub: "GLOBAL HR, JV ARCHITECTURE, M&A INTEGRATION",
-    body: "Ten years. Three stints. The platter was placed in my hands. Three heritage brands — Tata Tea, Tetley, Eight O'Clock Coffee — each over a century old. I managed Global HR across Europe, the Middle East, North America, Kenya, Australia, and South Asia. The Starbucks People Charter. The London to Mumbai HQ relocation — two hundred roles, ninety-five percent retention. The only HR leader on the Maverick team.",
-    scar: "\"The decade that gives you everything is also the decade that prepares you to leave it behind. Operating as a leader before the title is not ambition — it is architecture.\"",
-    installed: "Values must be structural, not aspirational. If the benefits architecture contradicts the culture narrative, the architecture wins — people believe what they experience, not what they are told.",
-    tag: "Humanity Over Hierarchy → Values as Architecture",
-  },
-];
-
-function RootsSection() {
-  const [active, setActive] = useState(0);
-  const tab = ROOTS_TABS[active];
-
-  return (
-    <section
-      className="relative"
-      style={{
-        background: "#050505",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
-        padding: "clamp(80px,12vh,160px) 0",
-      }}
-    >
-      <div className="shell">
-        {/* Header */}
-        <div className="mb-14 max-w-[680px] mx-auto">
-          <span className="font-jetbrains tracking-[0.35em] uppercase block mb-1" style={{ fontSize: "12px", color: "#C9A84C" }}>
-            THE ROOTS
-          </span>
-          <span className="font-jetbrains tracking-[0.3em] uppercase block mb-8" style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)" }}>
-            2003–2019
-          </span>
-          <h2
-            className="font-serif font-normal leading-[1.05] tracking-[-0.02em] mb-8"
-            style={{ fontSize: "clamp(28px,3.8vw,54px)", color: "#F5F0E8" }}
-          >
-            Preparing for the war<br />when you are not at war
-          </h2>
-          <p className="font-sans font-light leading-[1.7]" style={{ fontSize: "clamp(13px,1.1vw,16px)", color: "rgba(200,195,185,0.55)", maxWidth: "62ch" }}>
-            In the root years, the organisation around you is already built. Someone else designed the architecture. Your job is to operate inside it, learn its mechanics, understand what holds and what breaks.
-          </p>
-        </div>
-
-        {/* Tab bar */}
-        <div className="max-w-[680px] mx-auto mb-0">
-          <div className="flex items-center gap-0 border-b" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
             {ROOTS_TABS.map((t, i) => (
               <button
                 key={t.id}
-                onClick={() => setActive(i)}
-                className="font-jetbrains tracking-[0.2em] uppercase px-4 py-3 text-left transition-all duration-250 relative"
+                role="tab"
+                aria-selected={activeTab === i}
+                aria-controls={`panel-${t.id}`}
+                id={`tab-${t.id}`}
+                onClick={() => setActiveTab(i)}
+                className="font-mono transition-colors duration-200"
                 style={{
-                  fontSize: "clamp(9px,0.75vw,11px)",
-                  color: active === i ? "#C9A84C" : "rgba(255,255,255,0.35)",
-                  background: "transparent",
-                  borderBottom: active === i ? "2px solid #C9A84C" : "2px solid transparent",
-                  marginBottom: "-1px",
-                  whiteSpace: "nowrap",
+                  fontSize: "11.5px", fontWeight: 500, letterSpacing: ".13em",
+                  textTransform: "uppercase",
+                  color: activeTab === i ? "var(--accent-2)" : "var(--fg-5)",
+                  background: "none", border: "none",
+                  borderBottom: activeTab === i ? "2px solid var(--accent)" : "2px solid transparent",
+                  padding: "13px 16px", cursor: "pointer",
+                  marginBottom: -1,
                 }}
               >
                 {t.label}
               </button>
             ))}
           </div>
-        </div>
 
-        {/* Active card */}
-        <div className="max-w-[680px] mx-auto">
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="p-8 sm:p-10"
-            style={{
-              background: "rgba(18,18,18,0.7)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderTop: "none",
-              borderRadius: "0 0 12px 12px",
-            }}
-          >
-            {/* Company + period */}
-            <div className="flex items-baseline gap-3 mb-4">
-              <span className="font-serif italic" style={{ fontSize: "clamp(16px,1.5vw,22px)", color: "#C9A84C" }}>{tab.num}</span>
-              <span className="font-jetbrains tracking-[0.25em] uppercase font-semibold" style={{ fontSize: "11px", color: "#F5F0E8" }}>{tab.label}</span>
-              <span className="font-jetbrains tracking-[0.2em]" style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}>{tab.period}</span>
-            </div>
-
-            {/* Title */}
-            <h3 className="font-serif font-normal mb-2" style={{ fontSize: "clamp(22px,2.4vw,34px)", color: "#F5F0E8" }}>
-              {tab.title}
-            </h3>
-
-            {/* Sub */}
-            <p className="font-jetbrains tracking-[0.2em] uppercase mb-6" style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}>
-              {tab.sub}
-            </p>
-
-            {/* Body */}
-            <p className="font-sans font-light leading-[1.7] mb-8" style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.6)" }}>
-              {tab.body}
-            </p>
-
-            {/* THE SCAR box */}
-            <div
-              className="p-6 mb-6"
-              style={{
-                background: "rgba(10,10,10,0.8)",
-                border: "1px solid rgba(201,168,76,0.2)",
-                borderLeft: "3px solid rgba(201,168,76,0.5)",
-              }}
-            >
-              <span className="font-jetbrains tracking-[0.3em] uppercase block mb-3" style={{ fontSize: "9px", color: "#C9A84C" }}>
-                THE SCAR
-              </span>
-              <p className="font-serif italic leading-[1.7]" style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "#C9A84C" }}>
-                {tab.scar}
-              </p>
-            </div>
-
-            {/* What this collision installed */}
-            <div className="mb-6">
-              <span className="font-jetbrains tracking-[0.3em] uppercase block mb-3" style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}>
-                WHAT THIS COLLISION INSTALLED
-              </span>
-              <p className="font-sans font-light leading-[1.65]" style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.75)" }}>
-                {tab.installed}
-              </p>
-            </div>
-
-            {/* Tag pill */}
-            <div
-              className="inline-block px-4 py-2 font-jetbrains tracking-[0.15em] uppercase"
-              style={{
-                fontSize: "9px",
-                color: "rgba(255,255,255,0.5)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                background: "transparent",
-              }}
-            >
-              {tab.tag}
-            </div>
-
-            {/* Dot indicators */}
-            <div className="flex items-center justify-center gap-2 mt-8">
-              {ROOTS_TABS.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActive(i)}
-                  className="rounded-full transition-all duration-300"
+          {/* Tab panels */}
+          {ROOTS_TABS.map((t, i) => (
+            <AnimatePresence key={t.id} mode="wait">
+              {activeTab === i && (
+                <motion.div
+                  id={`panel-${t.id}`}
+                  role="tabpanel"
+                  aria-labelledby={`tab-${t.id}`}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   style={{
-                    width: active === i ? "20px" : "6px",
-                    height: "6px",
-                    background: active === i ? "#C9A84C" : "rgba(255,255,255,0.15)",
+                    background: "var(--bg-1)",
+                    border: "1px solid var(--line)",
+                    borderTop: "none",
+                    borderRadius: "0 0 14px 14px",
+                    padding: "36px 40px",
+                    maxWidth: 1080,
                   }}
-                />
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    {/* Left */}
+                    <div>
+                      <div className="font-mono mb-2" style={{ fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--fg-3)" }}>
+                        <span className="font-serif italic" style={{ fontSize: 16, color: "var(--accent)", marginRight: 6 }}>{t.num}</span>
+                        {t.label.toUpperCase()} · {t.period}
+                      </div>
+                      <h3 className="font-serif mb-1" style={{ fontSize: "clamp(22px,2.4vw,32px)", fontWeight: 500, color: "var(--fg)", lineHeight: 1.1 }}>
+                        {t.title}
+                      </h3>
+                      <p className="font-mono mb-4" style={{ fontSize: "10.5px", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+                        {t.sub}
+                      </p>
+                      <p style={{ color: "var(--fg-2)", fontWeight: 300, fontSize: 15, lineHeight: 1.66 }}>
+                        {t.body}
+                      </p>
+                      {/* Scar box */}
+                      <div
+                        className="mt-5"
+                        style={{
+                          background: "rgba(25,22,15,.8)",
+                          borderLeft: "3px solid var(--accent)",
+                          borderRadius: "0 10px 10px 0",
+                          padding: "20px 24px",
+                        }}
+                      >
+                        <span className="font-mono block mb-2" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--accent)" }}>
+                          The Scar
+                        </span>
+                        <p className="font-serif italic" style={{ fontSize: 18, lineHeight: 1.46, color: "var(--accent-2)", margin: 0 }}>
+                          {t.scar}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Right */}
+                    <div>
+                      <span className="font-mono block mb-3" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+                        The installations
+                      </span>
+                      {t.installations.map((inst, j) => (
+                        <div
+                          key={j}
+                          className="flex gap-3 py-3"
+                          style={{ borderTop: j === 0 ? "none" : "1px solid var(--line)" }}
+                        >
+                          <span className="font-serif italic shrink-0" style={{ fontSize: 16, color: "var(--accent)", minWidth: 24 }}>{inst.n}</span>
+                          <div>
+                            <strong className="block font-sans" style={{ fontWeight: 500, fontSize: "14.5px", color: "var(--fg)", marginBottom: 2 }}>{inst.title}</strong>
+                            <span style={{ fontSize: 14, color: "var(--fg-3)", lineHeight: 1.5 }}>{inst.desc}</span>
+                          </div>
+                        </div>
+                      ))}
+                      <div className="mt-4">
+                        <span className="font-mono block mb-2" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+                          What this collision installed
+                        </span>
+                        <p style={{ color: "var(--fg-2)", fontSize: "14.5px", lineHeight: 1.55 }}>{t.installed}</p>
+                      </div>
+                      <span
+                        className="inline-flex items-center font-mono mt-4"
+                        style={{
+                          fontSize: "11.5px", letterSpacing: ".06em",
+                          color: "var(--accent-2)",
+                          border: "1px solid rgba(201,162,74,.28)",
+                          borderRadius: 30, padding: "7px 16px",
+                        }}
+                      >
+                        {t.tag}
+                      </span>
+                      {/* Doctrine progress */}
+                      <div className="flex flex-wrap gap-2 mt-6 pt-5" style={{ borderTop: "1px solid var(--line)" }}>
+                        <span className="font-mono w-full mb-1" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--accent)" }}>
+                          Operating Architect · Doctrine Progress
+                        </span>
+                        {ALL_DOCTRINE.map((d) => (
+                          <span
+                            key={d}
+                            className="font-mono"
+                            style={{
+                              fontSize: "9.5px", fontWeight: 500, letterSpacing: ".13em",
+                              textTransform: "uppercase",
+                              color: t.doctrine.includes(d) ? "#000" : "var(--fg-5)",
+                              background: t.doctrine.includes(d) ? "var(--accent)" : "transparent",
+                              border: "1px solid var(--line)",
+                              borderRadius: 20, padding: "5px 11px",
+                            }}
+                          >
+                            {d}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          ))}
+
+          {/* Bridge */}
+          <div
+            className="text-center relative mt-16 pt-4"
+            style={{ maxWidth: 880, margin: "60px auto 0" }}
+          >
+            <div
+              className="absolute pointer-events-none"
+              style={{
+                left: "50%", top: -30, width: 560, height: 260, maxWidth: "100%",
+                transform: "translateX(-50%)",
+                background: "radial-gradient(ellipse at center, rgba(201,162,74,.06), transparent 68%)",
+              }}
+            />
+            <div className="relative">
+              <span className="eyebrow eyebrow--center mb-2 block">The Bridge</span>
+              <p className="font-mono block mb-4" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+                Rest Points
+              </p>
+              <div style={{ width: 48, height: 1, background: "var(--accent)", margin: "18px auto 24px", opacity: .6 }} />
+              <blockquote
+                className="font-serif italic mx-auto"
+                style={{ fontSize: "clamp(20px,2.5vw,26px)", lineHeight: 1.42, color: "var(--fg)", maxWidth: "24ch" }}
+              >
+                "Not every chapter in a career needs to be a collision. Some need to be a clearing."
+              </blockquote>
+              <p className="font-mono mt-5 mb-3" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".24em", textTransform: "uppercase", color: "var(--accent)" }}>
+                Marico · Lodha
+              </p>
+              <p style={{ fontSize: 15, color: "var(--fg-3)", maxWidth: "58ch", margin: "0 auto" }}>
+                Recognising when the professional timeline and the personal timeline need realignment is not weakness — it is the same first-principles thinking, applied to your own life.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10 text-left" style={{ maxWidth: 820, margin: "40px auto 0" }}>
+                {[
+                  { t: "The Discipline Bridge — Marico", h: "Where intensity paused and refocus began", p: "Between the decade at Tata and the velocity of Udaan, a deliberate clearing — a mature, consumer-first organisation where the challenge was not building systems but sustaining and refining them.", chips: ["Focus as Architecture", "Self-Architecture"] },
+                  { t: "The Reality Bridge — Lodha", h: "When the plan and the situation diverge", p: "A different sector, a different velocity. Conditions shifted from what had been anticipated — and navigating that shift compressed significant adaptability learning into a short, intense window.", chips: ["Adaptability as Design", "Context Reading"] },
+                ].map((c, i) => (
+                  <div key={i} style={{ borderTop: "1px solid rgba(201,162,74,.28)", padding: "20px 4px 0" }}>
+                    <span className="font-mono block mb-2" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>{c.t}</span>
+                    <h4 className="font-serif mb-3" style={{ fontWeight: 500, fontSize: 19, color: "var(--fg)", lineHeight: 1.2 }}>{c.h}</h4>
+                    <p style={{ color: "var(--fg-3)", fontSize: 14, fontWeight: 300, marginBottom: 12, lineHeight: 1.6 }}>{c.p}</p>
+                    {c.chips.map((ch) => (
+                      <span key={ch} className="font-mono inline-block mr-2 mb-2" style={{ fontSize: "10.5px", color: "var(--fg-3)", border: "1px solid var(--line)", borderRadius: 20, padding: "5px 12px" }}>{ch}</span>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SYNTHESIS ── */}
+      <section
+        className="relative"
+        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
+      >
+        <div className="shell">
+          <Reveal>
+            <div className="text-center mb-14">
+              <span className="eyebrow eyebrow--center mb-4 block">The Synthesis</span>
+              <h2 className="h-section mx-auto" style={{ maxWidth: "20ch" }}>
+                How the chapters became a way of working
+              </h2>
+            </div>
+          </Reveal>
+
+          {/* Timeline */}
+          <div className="relative" style={{ maxWidth: 780, margin: "0 auto 52px" }}>
+            {/* Center line */}
+            <div
+              className="absolute pointer-events-none"
+              style={{
+                left: "50%", top: 8, bottom: 8, width: 1,
+                background: "linear-gradient(180deg, var(--line), rgba(201,162,74,.28) 60%, var(--accent))",
+                transform: "translateX(-50%)",
+              }}
+            />
+            {TIMELINE_ITEMS.map((item, i) => {
+              const isOdd = i % 2 === 0;
+              const intensities = ["var(--fg-5)", "#82828a", "var(--fg-3)", "#aaa9a3", "var(--fg-2)", "#dddbd3", "var(--fg)"];
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: isOdd ? -20 : 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-8%" }}
+                  transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative"
+                  style={{
+                    width: "50%",
+                    padding: "13px 36px",
+                    left: isOdd ? 0 : "50%",
+                    textAlign: isOdd ? "right" : "left",
+                  }}
+                >
+                  {/* Dot */}
+                  <div
+                    className="absolute rounded-full"
+                    style={{
+                      top: 19, width: i === 6 ? 11 : 7, height: i === 6 ? 11 : 7,
+                      background: i === 0 ? "rgba(201,162,74,.4)" : "var(--accent)",
+                      right: isOdd ? (i === 6 ? -5.5 : -3.5) : "auto",
+                      left: !isOdd ? (i === 6 ? -5.5 : -3.5) : "auto",
+                      boxShadow: i === 6 ? "0 0 16px 1px rgba(201,162,74,.6)" : "none",
+                      zIndex: 2,
+                    }}
+                  />
+                  <span className="font-mono block mb-1" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>
+                    {item.source}
+                  </span>
+                  <p
+                    className="font-serif italic"
+                    style={{ fontSize: i === 6 ? 19 : 18, lineHeight: 1.4, color: intensities[i] }}
+                  >
+                    {item.quote}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Bedrock cards */}
+          <div className="text-center mb-8">
+            <span className="eyebrow eyebrow--center mb-3 block">The bedrock</span>
+            <p className="font-serif italic" style={{ fontSize: "clamp(18px,2vw,24px)", color: "var(--fg-2)" }}>
+              Three sentences underwrite everything above.
+            </p>
+          </div>
+          <div
+            className="grid grid-cols-1 md:grid-cols-3 gap-5"
+            style={{ maxWidth: 1080, margin: "0 auto" }}
+          >
+            {[
+              { k: "The thesis",    v: "People Systems Fail Before Strategy Does" },
+              { k: "The framework", v: "Belief → Conviction → Rhythm" },
+              { k: "The credo",     v: "Humanity Over Hierarchy" },
+            ].map((card, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="relative"
+                style={{
+                  background: "var(--bg-1)",
+                  border: "1px solid var(--line)",
+                  borderTop: `2px solid ${i === 2 ? "var(--accent-2)" : "var(--accent)"}`,
+                  borderRadius: 14,
+                  padding: "44px 34px",
+                  boxShadow: `0 0 ${44 + i * 10}px -${26 - i * 4}px rgba(201,162,74,${0.4 + i * 0.1})`,
+                }}
+              >
+                <span className="font-mono block mb-4" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>
+                  {card.k}
+                </span>
+                <p className="font-serif" style={{ fontWeight: 500, fontSize: 28, lineHeight: 1.12, color: "var(--fg)" }}>
+                  {card.v}
+                </p>
+                {i < 2 && (
+                  <span
+                    className="absolute font-serif"
+                    style={{ right: -17, top: "50%", transform: "translateY(-50%)", color: "var(--accent-2)", fontSize: 20, zIndex: 2 }}
+                  >
+                    →
+                  </span>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── OPERATING PATTERNS ── */}
+      <section
+        id="patterns"
+        className="relative"
+        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)", background: "var(--bg-1)" }}
+      >
+        <div className="shell">
+          <div style={{ maxWidth: 1120, margin: "0 auto 34px" }}>
+            <Reveal>
+              <span className="eyebrow mb-4 block">The Operating Patterns</span>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="font-serif" style={{ fontSize: "clamp(20px,2.2vw,26px)", lineHeight: 1.34, color: "var(--fg-2)", maxWidth: "34ch" }}>
+                HR has been defined by role and measured by maturity. This work asks a narrower, more practical question —{" "}
+                <strong className="font-serif italic" style={{ color: "var(--accent-2)", fontWeight: 500 }}>
+                  what are the operating patterns a new-age organisation actually runs on?
+                </strong>
+              </p>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <p style={{ marginTop: 16, fontSize: "15.5px", color: "var(--fg-3)", maxWidth: "66ch", lineHeight: 1.66 }}>
+                The startup, the scaling company, the family business — the{" "}
+                <em style={{ color: "var(--accent-2)", fontStyle: "italic" }}>unfinished organisation</em>{" "}
+                — is still writing that operating system. This work is for them. Eight patterns, in two tiers.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* Threshold tier */}
+          <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="font-mono" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+                Threshold — the floor
+              </span>
+              <span
+                className="font-mono"
+                style={{ fontSize: 9, fontWeight: 500, letterSpacing: ".13em", textTransform: "uppercase", color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 20, padding: "4px 9px" }}
+              >
+                Threshold
+              </span>
+            </div>
+            <p style={{ fontSize: 14, color: "var(--fg-3)", maxWidth: "74ch", marginBottom: 16, lineHeight: 1.55 }}>
+              The mechanics every organisation runs on — the foundation for clarity and execution. Get these wrong and nothing above them holds.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+              {PATTERNS_THRESHOLD.map((p, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-6%" }}
+                  transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -2, borderColor: "rgba(201,162,74,.28)" }}
+                  style={{
+                    background: "var(--bg-1)",
+                    border: "1px solid var(--line)",
+                    borderRadius: 12, padding: "22px",
+                    transition: "border-color .2s",
+                  }}
+                >
+                  <div className="font-serif italic mb-1" style={{ fontSize: 17, color: "var(--accent)" }}>{p.num}</div>
+                  <div className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 19, color: "var(--fg)", lineHeight: 1.12 }}>{p.name}</div>
+                  <div className="font-serif italic mb-2" style={{ fontSize: "13.5px", lineHeight: 1.4, color: "var(--accent)" }}>{p.signal}</div>
+                  <div style={{ fontSize: 13, color: "var(--fg-3)", lineHeight: 1.5 }}>{p.desc}</div>
+                </motion.div>
               ))}
             </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
-// ─── THE SYNTHESIS SECTION ────────────────────────────────────────────────────
-
-const TIMELINE_ITEMS = [
-  { source: "FROM THE SOIL",         quote: '"The first operating system is not designed. It is absorbed."' },
-  { source: "FROM WIPRO",            quote: '"Leadership is presence, not position."' },
-  { source: "FROM STANDARD CHARTERED", quote: '"HR earns authority through conviction, not compliance."' },
-  { source: "FROM HSBC",             quote: '"Dignity is tested in contraction, not growth."' },
-  { source: "FROM TATA",             quote: '"Integration is belief translation, not policy alignment."' },
-  { source: "FROM UDAAN",            quote: '"Build systems for the company becoming, not the company that exists."' },
-  { source: "FROM GAMESKRAFT",       quote: '"The architecture must be real before the crisis arrives."' },
-];
-
-const CORE_CARDS = [
-  { label: "CORE THESIS",     value: "People Systems Fail Before Strategy Does" },
-  { label: "CORE FRAMEWORK",  value: "Belief → Conviction → Rhythm" },
-  { label: "CORE CREDO",      value: "Humanity Over Hierarchy" },
-];
-
-function SynthesisSection() {
-  return (
-    <section
-      className="relative overflow-hidden"
-      style={{
-        background: "#050505",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
-        padding: "clamp(80px,14vh,180px) 0",
-      }}
-    >
-      {/* Ambient glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 80% at 50% 40%, rgba(201,168,76,0.03) 0%, transparent 70%)",
-        }}
-      />
-
-      <div className="shell relative z-10">
-
-        {/* Header — centered */}
-        <div className="text-center mb-20">
-          <Reveal>
-            <span
-              className="font-serif tracking-[0.35em] uppercase block mb-6"
-              style={{ fontSize: "12px", color: "#C9A84C" }}
-            >
-              THE SYNTHESIS
-            </span>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h2
-              className="font-serif font-normal leading-[1.05] tracking-[-0.02em]"
-              style={{ fontSize: "clamp(32px,5vw,72px)", color: "#F5F0E8" }}
-            >
-              How Lived Chapters<br />
-              Became a Philosophy
-            </h2>
-          </Reveal>
-        </div>
-
-        {/* Vertical timeline — centered */}
-        <div className="flex flex-col items-center mb-20">
-          {TIMELINE_ITEMS.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8% 0px" }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col items-center text-center"
-            >
-              {/* Gold dot */}
-              <div
-                className="rounded-full shrink-0"
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  background: "#C9A84C",
-                  boxShadow: "0 0 8px rgba(201,168,76,0.5)",
-                  margin: "0 auto",
-                }}
-              />
-              {/* Connector line */}
-              {i < TIMELINE_ITEMS.length - 1 && (
-                <div
-                  style={{
-                    width: "1px",
-                    height: "16px",
-                    background: "rgba(201,168,76,0.2)",
-                  }}
-                />
-              )}
-              {/* Content */}
-              <div className="py-2">
-                <span
-                  className="font-serif tracking-[0.3em] uppercase block mb-2"
-                  style={{ fontSize: "10px", color: "rgba(200,195,185,0.45)" }}
-                >
-                  {item.source}
-                </span>
-                <p
-                  className="font-serif italic"
-                  style={{
-                    fontSize: "clamp(13px,1.1vw,16px)",
-                    color: "rgba(220,215,205,0.7)",
-                    maxWidth: "44ch",
-                  }}
-                >
-                  {item.quote}
-                </p>
-              </div>
-              {/* Connector line after content */}
-              {i < TIMELINE_ITEMS.length - 1 && (
-                <div
-                  style={{
-                    width: "1px",
-                    height: "16px",
-                    background: "rgba(201,168,76,0.2)",
-                  }}
-                />
-              )}
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Core cards — 3 columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-[760px] mx-auto">
-          {CORE_CARDS.map((card, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="p-6 text-center"
-              style={{
-                background: "rgba(18,18,18,0.7)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "8px",
-              }}
-            >
-              <span
-                className="font-serif tracking-[0.3em] uppercase block mb-4"
-                style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)" }}
-              >
-                {card.label}
+            {/* Signature tier */}
+            <div className="flex items-center gap-3 mb-2">
+              <span className="font-mono" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+                Signature — the ceiling
               </span>
-              <p
-                className="font-serif font-normal leading-[1.2]"
-                style={{ fontSize: "clamp(16px,1.5vw,22px)", color: "#C9A84C" }}
+              <span
+                className="font-mono"
+                style={{ fontSize: 9, fontWeight: 500, letterSpacing: ".13em", textTransform: "uppercase", color: "#000", background: "var(--accent)", borderRadius: 20, padding: "4px 9px" }}
               >
-                {card.value}
+                Signature
+              </span>
+            </div>
+            <p style={{ fontSize: 14, color: "var(--fg-3)", maxWidth: "74ch", marginBottom: 16, lineHeight: 1.55 }}>
+              What separates a good organisation from a great one — the thinking, designed in deliberately rather than improvised, that turns a working system into a winning one.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+              {PATTERNS_SIGNATURE.map((p, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-6%" }}
+                  transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -2, borderColor: "rgba(201,162,74,.28)" }}
+                  style={{
+                    background: "var(--bg-1)",
+                    border: "1px solid var(--line)",
+                    borderRadius: 12, padding: "22px",
+                    transition: "border-color .2s",
+                  }}
+                >
+                  <div className="font-serif italic mb-1" style={{ fontSize: 17, color: "var(--accent)" }}>{p.num}</div>
+                  <div className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 19, color: "var(--fg)", lineHeight: 1.12 }}>{p.name}</div>
+                  <div className="font-serif italic mb-2" style={{ fontSize: "13.5px", lineHeight: 1.4, color: "var(--accent)" }}>{p.signal}</div>
+                  <div style={{ fontSize: 13, color: "var(--fg-3)", lineHeight: 1.5 }}>{p.desc}</div>
+                </motion.div>
+              ))}
+            </div>
+
+            <Reveal>
+              <p className="font-serif italic text-center" style={{ fontSize: "clamp(21px,2.5vw,28px)", color: "var(--fg)", margin: "6px auto 26px", maxWidth: "30ch" }}>
+                <strong className="font-serif" style={{ color: "var(--accent-2)", fontWeight: 500 }}>Talent guarantees the ceiling.</strong>{" "}
+                Patterns guarantee the floor.
               </p>
-            </motion.div>
-          ))}
+            </Reveal>
+          </div>
         </div>
+      </section>
 
-        {/* Bottom vertical line */}
-        <div className="flex justify-center mt-16">
-          <div style={{ width: "1px", height: "60px", background: "rgba(255,255,255,0.15)" }} />
-        </div>
-
-      </div>
-    </section>
-  );
-}
-
-// ─── THE ECONOMICS SECTION ────────────────────────────────────────────────────
-
-const PROOF_ROWS = [
-  { stat: "96%",       label: "Survey Participation",       context: "SCB — first engagement campaign",                  intervention: 'Designed "It Belongs to You" Q12 campaign',          result: "Shifted HR perception from admin to authority" },
-  { stat: "95%",       label: "Retention on HQ Relocation", context: "TGB — London to Mumbai, 200 roles",                intervention: "Designed transition architecture with belief-first approach", result: "Zero disruption to operations" },
-  { stat: "90%",       label: "Adoption in 6 Months",       context: "TGB — Global org restructuring",                   intervention: "Designed shared operating rhythm across 3 legacy cultures", result: "Unified identity across continents" },
-  { stat: "800→4K+",   label: "On-roll; 7.5K→27K+ Off-roll",context: "Udaan — hypergrowth",                              intervention: "Built people engine for national-scale ops across 28 states, 22 languages", result: "95% manning through COVID" },
-  { stat: "97.1%",     label: "Top Performer Retention",    context: "Gameskraft — regulatory crisis",                   intervention: "Golden Handshake: dignity-first separation, 27% roles impacted", result: "Ambassadors, not casualties" },
-  { stat: "90%+",      label: "Offer-to-Join",              context: "Gameskraft — zero employer brand to institution",   intervention: "Built employer identity + Generation-G campus programme", result: "88% cost reduction vs lateral hiring" },
-  { stat: "<10%",      label: "Engineering Attrition",      context: "Gameskraft — comp philosophy redesign",             intervention: "No variable pay, fixed bands, ESOPs, Performance ESOPs", result: "18 months of resistance → model proved" },
-  { stat: "2x ROI",    label: "HR Function Transformation", context: "Gameskraft — HR function transformation",           intervention: "From 9-person event team to profit-enabling function",  result: "HR savings = 2x annual HR cost" },
-  { stat: "4.3",       label: "Glassdoor Rating",           context: "Gameskraft — culture under crisis",                 intervention: "Maintained Krafter-first culture through existential threat", result: "Top-quartile engagement sustained" },
-];
-
-const SIX_C = [
-  { name: "Clarity",     desc: "How decisions move" },
-  { name: "Conviction",  desc: "How belief becomes behaviour" },
-  { name: "Commitment",  desc: "How energy aligns" },
-  { name: "Craft",       desc: "How capability develops" },
-  { name: "Culture",     desc: "How truth returns to the system" },
-  { name: "Consequence", desc: "How accountability lives" },
-];
-
-const DAY_ZERO = [
-  "9-person event logistics team (no HR function)",
-  "300 employees",
-  "250 open roles",
-  "Zero employer identity",
-  "No performance architecture",
-  "No compensation philosophy",
-  "No campus pipeline",
-];
-
-const TWENTY_FOUR_MONTHS = [
-  "Profit-enabling HR function (2x ROI)",
-  "Institution-grade people architecture",
-  "Generation-G campus programme (88% cost reduction)",
-  "Compensation philosophy that survived 18 months of resistance",
-  "Golden Handshake crisis protocol",
-  "Glassdoor 4.3, top-quartile engagement",
-  "Engineering attrition in single digits",
-];
-
-function EconomicsSection() {
-  return (
-    <section
-      className="relative"
-      style={{
-        background: "#050505",
-        padding: "0 0 clamp(80px,12vh,160px) 0",
-      }}
-    >
-      <div className="shell">
-
-        {/* The Signature Model */}
-        <div className="text-center mb-10">
+      {/* ── AXION INDEX SYSTEM ── */}
+      <section
+        id="system"
+        className="relative"
+        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)", background: "var(--bg-1)" }}
+      >
+        <div className="shell">
           <Reveal>
-            <h3 className="font-serif font-normal" style={{ fontSize: "clamp(24px,3vw,42px)", color: "#F5F0E8" }}>
-              The Signature Model
-            </h3>
-          </Reveal>
-        </div>
-
-        <div className="max-w-[760px] mx-auto mb-20">
-          <Reveal delay={0.1}>
-            <div className="p-8 sm:p-12" style={{ background: "rgba(18,18,18,0.7)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px" }}>
-
-              {/* Single row: Belief → Conviction → Rhythm */}
-              <div className="flex items-start justify-center gap-0 mb-8 flex-wrap">
-
-                {/* Belief */}
-                <div className="flex flex-col items-center" style={{ width: "180px" }}>
-                  <div className="flex items-center justify-center rounded-full mb-4"
-                    style={{ width: "140px", height: "140px", border: "1px solid rgba(201,168,76,0.35)", background: "rgba(10,10,10,0.8)" }}>
-                    <span className="font-serif italic" style={{ fontSize: "22px", color: "#C9A84C" }}>Belief</span>
-                  </div>
-                  <p className="font-serif font-light text-center leading-[1.6]" style={{ fontSize: "12px", color: "rgba(200,195,185,0.5)", maxWidth: "14ch" }}>
-                    Absorbed in the Soil. Tested at Udaan. Every founder starts here.
-                  </p>
-                </div>
-
-                {/* Arrow 1 */}
-                <div className="flex items-start pt-14 px-3">
-                  <span className="font-serif" style={{ fontSize: "18px", color: "rgba(201,168,76,0.45)" }}>→</span>
-                </div>
-
-                {/* Conviction */}
-                <div className="flex flex-col items-center" style={{ width: "180px" }}>
-                  <div className="flex items-center justify-center rounded-full mb-4"
-                    style={{ width: "140px", height: "140px", border: "2px solid rgba(201,168,76,0.7)", background: "rgba(10,10,10,0.8)", boxShadow: "0 0 20px rgba(201,168,76,0.1)" }}>
-                    <span className="font-serif italic" style={{ fontSize: "22px", color: "#C9A84C" }}>Conviction</span>
-                  </div>
-                  <p className="font-serif font-light text-center leading-[1.6]" style={{ fontSize: "12px", color: "rgba(200,195,185,0.5)", maxWidth: "16ch" }}>
-                    Earned through collisions at SCB, HSBC, TGB. Data, proof, and lived experience.
-                  </p>
-                </div>
-
-                {/* Arrow 2 */}
-                <div className="flex items-start pt-14 px-3">
-                  <span className="font-serif" style={{ fontSize: "18px", color: "rgba(201,168,76,0.45)" }}>→</span>
-                </div>
-
-                {/* Rhythm */}
-                <div className="flex flex-col items-center" style={{ width: "180px" }}>
-                  <div className="flex items-center justify-center rounded-full mb-4"
-                    style={{ width: "140px", height: "140px", border: "1px solid rgba(201,168,76,0.35)", background: "rgba(10,10,10,0.8)" }}>
-                    <span className="font-serif italic" style={{ fontSize: "22px", color: "#C9A84C" }}>Rhythm</span>
-                  </div>
-                  <p className="font-serif font-light text-center leading-[1.6]" style={{ fontSize: "12px", color: "rgba(200,195,185,0.5)", maxWidth: "14ch" }}>
-                    Designed at Gameskraft. When conviction becomes repeatable behaviour.
-                  </p>
-                </div>
-
-              </div>
-
-              {/* What breaks */}
-              <div className="mt-10 pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-                <p className="font-serif text-center leading-[1.65]" style={{ fontSize: "clamp(12px,1vw,14px)", color: "rgba(200,195,185,0.55)" }}>
-                  <strong className="font-semibold" style={{ color: "rgba(240,235,225,0.8)" }}>What breaks without it:</strong>{" "}
-                  Belief without conviction becomes fragility. Conviction without rhythm becomes bureaucracy. Speed without architecture becomes chaos.
-                </p>
-              </div>
-
+            <div className="text-center mb-8">
+              <span className="eyebrow eyebrow--center mb-4 block">The Axion Index System</span>
+              <h2 className="h-section mx-auto" style={{ maxWidth: "16ch" }}>One system, choreographed</h2>
             </div>
           </Reveal>
-        </div>
-
-        {/* The 6C Operating System */}
-        <div className="text-center mb-10">
-          <Reveal>
-            <h3 className="font-serif font-normal" style={{ fontSize: "clamp(24px,3vw,42px)", color: "#F5F0E8" }}>
-              The 6C Operating System
-            </h3>
+          <Reveal delay={0.08}>
+            <p className="text-center" style={{ fontSize: 16, color: "var(--fg-3)", maxWidth: "62ch", margin: "0 auto 8px", lineHeight: 1.66 }}>
+              Built for the <em style={{ color: "var(--accent-2)", fontStyle: "italic", fontFamily: "var(--font-serif)" }}>unfinished organisation</em> — the startup, the scaling company, the family business still writing its own operating system. Not the mature enterprise that already has one.
+            </p>
           </Reveal>
-        </div>
+          <Reveal delay={0.14}>
+            <p className="font-serif italic text-center" style={{ fontSize: "clamp(18px,2.05vw,23px)", lineHeight: 1.5, color: "var(--accent)", maxWidth: "50ch", margin: "18px auto 46px" }}>
+              The founder explains the doctrine. Axion Index installs it. The diagnostics measure it. The products scale it.
+            </p>
+          </Reveal>
 
-        <div className="max-w-[760px] mx-auto mb-6">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-            {SIX_C.map((c, i) => (
+          {/* System map */}
+          <div
+            className="grid gap-3"
+            style={{ gridTemplateColumns: "repeat(5, 1fr)", maxWidth: 1080, margin: "0 auto" }}
+          >
+            {SYS_MAP.map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="relative"
+                style={{
+                  background: "var(--bg-1)",
+                  border: `1px solid ${s.entry ? "rgba(201,162,74,.28)" : "var(--line)"}`,
+                  borderRadius: 12, padding: "24px 20px",
+                  opacity: s.future ? 0.78 : 1,
+                  boxShadow: s.entry ? "0 0 40px -22px rgba(201,162,74,.5)" : "none",
+                }}
+              >
+                <span className="font-mono block mb-2" style={{ fontSize: "9.5px", fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>
+                  {s.n}
+                </span>
+                <h4 className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 18, color: "var(--fg)", lineHeight: 1.15 }}>
+                  {s.title}
+                  {s.future && (
+                    <span className="font-mono inline-block ml-2 align-middle" style={{ fontSize: "8.5px", fontWeight: 500, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--accent)", border: "1px solid rgba(201,162,74,.28)", borderRadius: 20, padding: "2px 8px" }}>
+                      In development
+                    </span>
+                  )}
+                </h4>
+                <p style={{ fontSize: 13, color: "var(--fg-3)", lineHeight: 1.5 }}>{s.desc}</p>
+                {i < SYS_MAP.length - 1 && (
+                  <span className="absolute font-serif" style={{ right: -13, top: "50%", transform: "translateY(-50%)", color: "var(--accent)", fontSize: 15, zIndex: 2, opacity: .6 }}>→</span>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Who this is for */}
+          <p className="font-mono text-center mt-14 mb-5" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+            Who this is for
+          </p>
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"
+            style={{ maxWidth: 1080, margin: "0 auto" }}
+          >
+            {WHO_GRID.map((w, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                className="p-6 text-center"
-                style={{ background: "rgba(18,18,18,0.7)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "6px" }}
+                style={{ background: "var(--bg)", border: "1px solid var(--line)", borderRadius: 12, padding: "24px 22px" }}
               >
-                <span className="font-serif font-normal block mb-2" style={{ fontSize: "clamp(18px,1.8vw,24px)", color: "#C9A84C" }}>
-                  {c.name}
-                </span>
-                <span className="font-serif font-light" style={{ fontSize: "12px", color: "rgba(200,195,185,0.5)" }}>
-                  {c.desc}
-                </span>
+                <div className="font-serif mb-2" style={{ fontWeight: 500, fontSize: 18, color: "var(--accent-2)" }}>{w.aud}</div>
+                <p style={{ fontSize: 14, color: "var(--fg-2)", lineHeight: 1.55 }}>{w.desc}</p>
               </motion.div>
             ))}
           </div>
-          <Reveal delay={0.2}>
-            <p className="font-serif italic text-center" style={{ fontSize: "clamp(12px,1vw,14px)", color: "rgba(200,195,185,0.4)" }}>
-              These six domains map directly to the six chapters of The Operating Architect book.
+
+          {/* CTA */}
+          <div className="text-center mt-14">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-3" style={{ maxWidth: 460, margin: "0 auto 12px" }}>
+              <input
+                type="email"
+                placeholder="you@company.com"
+                aria-label="Email for diagnostic"
+                value={emailDiag}
+                onChange={e => setEmailDiag(e.target.value)}
+                className="flex-1 font-sans"
+                style={{ fontSize: 14, padding: "14px 16px", border: "1px solid rgba(201,162,74,.28)", borderRadius: 6, background: "var(--bg)", color: "var(--fg)", outline: "none" }}
+              />
+              {submittedDiag ? (
+                <span className="font-mono" style={{ fontSize: 14, color: "var(--accent)" }}>✓ You're on the list.</span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setSubmittedDiag(true)}
+                  className="font-mono shrink-0"
+                  style={{ fontSize: 12, fontWeight: 500, letterSpacing: ".08em", textTransform: "uppercase", background: "var(--accent)", color: "#000", border: "none", borderRadius: 6, padding: "0 22px", height: 48, cursor: "pointer", whiteSpace: "nowrap" }}
+                >
+                  Request the Diagnostic
+                </button>
+              )}
+            </div>
+            <p style={{ fontSize: "12.5px", color: "var(--fg-5)", marginBottom: 24 }}>
+              The diagnostic maps your organisation against the eight patterns — in development. Request early access.
             </p>
-          </Reveal>
-        </div>
-
-        {/* What Comes Next */}
-        <div className="mt-24 pt-16" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          <div className="text-center mb-14">
-            <Reveal>
-              <span className="font-serif tracking-[0.35em] uppercase block mb-4" style={{ fontSize: "11px", color: "#C9A84C" }}>
-                WHAT COMES NEXT
-              </span>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <h2 className="font-serif font-normal leading-[1.05] tracking-[-0.02em]" style={{ fontSize: "clamp(28px,4vw,52px)", color: "#F5F0E8" }}>
-                The arc continues
-              </h2>
-            </Reveal>
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              <a href="https://axionindex.org" target="_blank" rel="noopener noreferrer" className="font-mono" style={{ fontSize: 12, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--accent)" }}>
+                Request an advisory conversation →
+              </a>
+            </div>
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-[860px] mx-auto mb-16">
-            {[
-              {
-                icon: "📖",
-                title: "The Books",
-                body: <><em>Baptism by Chaos</em> — the startup HR survival manual. <em>The Operating Architect</em> — the codified philosophy. Two books that turn lived scars into transferable architecture.</>,
-              },
-              {
-                icon: "⚙️",
-                title: <>The Startup<br />— HROS</>,
-                body: "A people operating system for unfinished organisations. Not another HR tool — but the codification of every framework forged through two decades of collision.",
-              },
-              {
-                icon: "🎯",
-                title: "The Mission",
-                body: "Democratising HR through codification. Making institutional-grade people architecture accessible to every growing company, not just those who can afford a twenty-year veteran.",
-              },
-            ].map((item, i) => (
+      {/* ── WRITING & MEDIA ── */}
+      <section
+        id="writing"
+        className="relative"
+        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
+      >
+        <div className="shell">
+          <Reveal>
+            <div className="mb-10" style={{ maxWidth: 880 }}>
+              <span className="eyebrow mb-4 block">Writing &amp; Media</span>
+              <h2 className="h-section mb-4" style={{ maxWidth: "18ch" }}>The thinking, in the open</h2>
+              <p className="lead" style={{ maxWidth: "62ch" }}>
+                Essays, frameworks and field notes on building people systems for the new-age organisation — across articles, podcast and LinkedIn.
+              </p>
+            </div>
+          </Reveal>
+
+          {/* Featured article */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              display: "block",
+              background: "var(--bg-1)",
+              border: "1px solid rgba(201,162,74,.28)",
+              borderRadius: 14, padding: "34px 40px",
+              maxWidth: 1080, margin: "0 auto 14px",
+            }}
+          >
+            <span className="font-mono block mb-2" style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--accent)" }}>
+              {ARTICLES_FEATURED.cat}
+            </span>
+            <h3 className="font-serif mb-2" style={{ fontSize: "clamp(24px,3vw,32px)", lineHeight: 1.16, color: "var(--fg)", fontWeight: 500, maxWidth: "22ch" }}>
+              {ARTICLES_FEATURED.title}
+            </h3>
+            <span className="font-mono" style={{ fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--accent)" }}>
+              {ARTICLES_FEATURED.meta}
+            </span>
+          </motion.div>
+
+          {/* Article grid */}
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
+            style={{ maxWidth: 1080, margin: "0 auto 24px" }}
+          >
+            {ARTICLES.map((a, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-6% 0px" }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="p-7"
-                style={{ background: "rgba(18,18,18,0.7)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "24px 26px" }}
               >
-                <div className="text-[32px] mb-5">{item.icon}</div>
-                <h3 className="font-serif font-normal mb-4" style={{ fontSize: "clamp(16px,1.5vw,20px)", color: "#F5F0E8" }}>
-                  {item.title}
-                </h3>
-                <p className="font-serif font-light leading-[1.7]" style={{ fontSize: "clamp(12px,1vw,14px)", color: "rgba(200,195,185,0.55)" }}>
-                  {item.body}
-                </p>
+                <span className="font-mono block mb-2" style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>{a.cat}</span>
+                <h4 className="font-serif" style={{ fontSize: 18, lineHeight: 1.24, color: "var(--fg)", marginTop: 10 }}>{a.title}</h4>
+                <span className="font-mono block mt-3" style={{ fontSize: "9.5px", letterSpacing: ".1em", textTransform: "uppercase", color: "var(--accent)" }}>Publishing soon</span>
               </motion.div>
             ))}
           </div>
 
-          <Reveal delay={0.2}>
-            <p className="font-serif italic text-center max-w-[680px] mx-auto" style={{ fontSize: "clamp(16px,1.8vw,24px)", color: "rgba(200,195,185,0.7)", lineHeight: 1.6 }}>
-              &ldquo;The founders who watched me build are funding what I build next. The arc is complete. The next chapter is my own.&rdquo;
-            </p>
-          </Reveal>
-        </div>
-
-      </div>
-    </section>
-  );
-}
-
-// ─── ARTICLE CARD ─────────────────────────────────────────────────────────────
-
-function ArticleCard({ article, index }: { article: typeof articles[0]; index: number }) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <motion.a
-      href={article.link}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-6% 0px" }}
-      transition={{ duration: 0.5, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      animate={{
-        y: hovered ? -6 : 0,
-        boxShadow: hovered
-          ? "0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.3)"
-          : "0 0 0 1px rgba(255,255,255,0.07)",
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        display: "block",
-        background: hovered ? "rgba(24,24,24,0.95)" : "rgba(18,18,18,0.7)",
-        border: "1px solid rgba(255,255,255,0.07)",
-        borderRadius: "6px",
-        padding: "24px 24px 28px",
-        textDecoration: "none",
-        position: "relative",
-        transition: "background 0.25s",
-      }}
-    >
-      {/* Tag */}
-      <span
-        className="font-jetbrains tracking-[0.18em] uppercase inline-block mb-4"
-        style={{
-          fontSize: "9px",
-          color: "#C9A84C",
-          background: "rgba(201,168,76,0.1)",
-          border: "1px solid rgba(201,168,76,0.2)",
-          padding: "3px 8px",
-          borderRadius: "3px",
-        }}
-      >
-        {article.tag}
-      </span>
-
-      {/* Arrow — only visible on hover */}
-      <span
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          color: "#C9A84C",
-          fontSize: "14px",
-          opacity: hovered ? 1 : 0,
-          transition: "opacity 0.2s",
-        }}
-      >
-        ↗
-      </span>
-
-      {/* Title */}
-      <h3
-        className="font-serif font-normal mb-2"
-        style={{
-          fontSize: "clamp(15px,1.3vw,18px)",
-          color: "#F5F0E8",
-          lineHeight: 1.35,
-        }}
-      >
-        {article.title}
-      </h3>
-
-      {/* Subtitle */}
-      <p
-        className="font-sans font-light"
-        style={{
-          fontSize: "clamp(12px,1vw,14px)",
-          color: "rgba(200,195,185,0.45)",
-          lineHeight: 1.5,
-        }}
-      >
-        {article.sub}
-      </p>
-    </motion.a>
-  );
-}
-
-// ─── FEATURED ARTICLES SECTION ───────────────────────────────────────────────
-
-const articles = [
-  { tag: "Talent Development", title: "Fresh Outta Campus: Straight Into the Game", sub: "How Gameskraft is Powering Early Talent", link: "#" },
-  { tag: "AI & HR", title: "Should AI Replace Empathy?", sub: "The Limits of Technology in Hiring", link: "#", highlight: true },
-  { tag: "HR Strategy", title: "What Does HR Want?", sub: "A Deep Dive Into the Wishlist of HR Leaders", link: "#" },
-  { tag: "Employee Experience", title: "Building Employee Experience Framework", sub: "Gameskraft's Approach in the Time of Expansion", link: "#" },
-  { tag: "Performance", title: "Continuous Feedback Through 'Konversations'", sub: "Innovative Performance Management", link: "#" },
-  { tag: "HR Leadership", title: "The Art of Being Relevant", sub: "Where Does the HR Function Stand?", link: "#" },
-  { tag: "Startups", title: "HR in Start-Ups", sub: "Unconventional Wisdom and Constant Re-Alignment", link: "#" },
-  { tag: "Recruitment", title: "Recruiting In-House, Outsourcing, or Hybrid", sub: "Which Hiring Practice Works Best for Startups?", link: "#" },
-  { tag: "Performance", title: "Innovative Performance Management System", sub: "How to Earn Employees' Trust", link: "#" },
-  { tag: "Policy", title: "Are Unlimited Leave Policies Working?", sub: "No Questions Asked Leave Analysis", link: "#" },
-  { tag: "Future of Work", title: "Can a 4-5 Day Workweek Be a Game Changer?", sub: "Exploring Flexible Work in India", link: "#" },
-  { tag: "Industry Insights", title: "Online Gaming Industry in 2023", sub: "A Lot More Than Just Entertainment", link: "#" },
-  { tag: "HR Tech", title: "Beyond Tech", sub: "How Far Can HR Tech Address Human Emotions?", link: "#" },
-  { tag: "HR Tech", title: "HR Tech Tools Defining 2023", sub: "Industry Trends and Innovations", link: "#", highlight: true },
-];
-
-function FeaturedArticlesSection() {
-  return (
-    <section
-      className="relative"
-      style={{
-        background: "#050505",
-        padding: "0 0 clamp(80px,12vh,140px) 0",
-      }}
-    >
-      <div className="shell">
-        {/* Header */}
-        <div className="text-center mb-14">
-          <Reveal>
-            <span
-              className="font-jetbrains tracking-[0.35em] uppercase block mb-4"
-              style={{ fontSize: "11px", color: "#C9A84C" }}
+          {/* Channels */}
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 gap-3"
+            style={{ maxWidth: 1080, margin: "0 auto 24px" }}
+          >
+            <div style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "26px 30px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 18 }}>
+              <div>
+                <span className="font-mono block mb-1" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--accent)" }}>Podcast</span>
+                <h4 className="font-serif" style={{ fontSize: 21, color: "var(--fg)", fontWeight: 500, marginTop: 5 }}>Conversations on the operating architecture of people</h4>
+                <span className="font-mono block mt-1" style={{ fontSize: "9.5px", letterSpacing: ".12em", textTransform: "uppercase", color: "var(--accent)" }}>Coming soon</span>
+              </div>
+            </div>
+            <a
+              href="https://www.linkedin.com/in/nitinnahata"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "26px 30px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 18, textDecoration: "none" }}
             >
-              THOUGHT LEADERSHIP
-            </span>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h2
-              className="font-serif font-normal mb-4"
-              style={{ fontSize: "clamp(32px,4vw,56px)", color: "#F5F0E8" }}
-            >
-              Featured Articles
-            </h2>
-          </Reveal>
-          <Reveal delay={0.14}>
-            <p
-              className="font-sans font-light"
-              style={{ fontSize: "clamp(13px,1.1vw,16px)", color: "rgba(200,195,185,0.5)", maxWidth: "48ch", margin: "0 auto" }}
-            >
-              Insights featured in Economic Times, Financial Express, Moneycontrol, and more.
-            </p>
-          </Reveal>
-        </div>
+              <div>
+                <span className="font-mono block mb-1" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--accent)" }}>LinkedIn</span>
+                <h4 className="font-serif" style={{ fontSize: 21, color: "var(--fg)", fontWeight: 500, marginTop: 5 }}>Field notes and frameworks, as they form</h4>
+                <span className="font-mono block mt-1" style={{ fontSize: "9.5px", letterSpacing: ".12em", textTransform: "uppercase", color: "var(--accent)" }}>Followed by founders &amp; operators</span>
+              </div>
+              <span className="font-mono shrink-0" style={{ fontSize: "10.5px", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--accent)" }}>Follow ↗</span>
+            </a>
+          </div>
 
-        {/* Grid */}
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-          style={{ gap: "16px" }}
-        >
-          {articles.map((article, i) => (
-            <ArticleCard key={i} article={article} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── AWARDS & EDUCATION SECTION ──────────────────────────────────────────────
-
-function AwardsEducationSection() {
-  const honours = [
-    "Jombay's HR 40 Under 40",
-    "Economic Times Human Capital Awards",
-    "BW Businessworld HR Excellence Awards",
-    "Two Harvard Business Publishing Case Studies",
-  ];
-
-  return (
-    <section
-      className="relative"
-      style={{
-        background: "#050505",
-        padding: "0 0 clamp(80px,12vh,140px) 0",
-      }}
-    >
-      <div className="shell">
-        {/* Header */}
-        <div className="text-center mb-14">
-          <Reveal>
-            <span
-              className="font-jetbrains tracking-[0.35em] uppercase block mb-4"
-              style={{ fontSize: "11px", color: "#C9A84C" }}
-            >
-              RECOGNITION
-            </span>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <h2
-              className="font-serif font-normal"
-              style={{ fontSize: "clamp(32px,4vw,56px)", color: "#F5F0E8" }}
-            >
-              Awards &amp; Education
-            </h2>
-          </Reveal>
-        </div>
-
-        {/* Two column grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "48px", maxWidth: "860px", margin: "0 auto" }}>
-
-          {/* LEFT — Honours */}
-          <Reveal delay={0.1}>
+          {/* Newsletter capture */}
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center"
+            style={{ maxWidth: 1080, margin: "0 auto", background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "32px 36px" }}
+          >
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span style={{ fontSize: "18px", color: "#C9A84C" }}>◎</span>
-                <h3 className="font-serif font-normal" style={{ fontSize: "clamp(18px,2vw,24px)", color: "#F5F0E8" }}>
-                  Honours
-                </h3>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {honours.map((h, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      background: "rgba(18,18,18,0.7)",
-                      border: "1px solid rgba(255,255,255,0.07)",
-                      borderRadius: "6px",
-                      padding: "14px 18px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                    }}
+              <h4 className="font-serif mb-1" style={{ fontSize: 23, color: "var(--fg)", fontWeight: 500 }}>Read the thinking as it's written</h4>
+              <p style={{ fontSize: 14, color: "var(--fg-3)", marginTop: 6 }}>New essays direct to your inbox — no spam, unsubscribe anytime.</p>
+            </div>
+            <div>
+              {submittedNews ? (
+                <span className="font-mono" style={{ fontSize: 14, color: "var(--accent)" }}>✓ You're on the list.</span>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    placeholder="you@company.com"
+                    aria-label="Email for newsletter"
+                    value={emailNews}
+                    onChange={e => setEmailNews(e.target.value)}
+                    className="flex-1 font-sans"
+                    style={{ fontSize: 14, padding: "12px 14px", border: "1px solid var(--line)", borderRadius: 5, background: "var(--bg)", color: "var(--fg)", outline: "none" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setSubmittedNews(true)}
+                    className="font-mono shrink-0"
+                    style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", background: "var(--accent)", color: "#000", border: "none", borderRadius: 5, padding: "0 20px", cursor: "pointer" }}
                   >
-                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#C9A84C", flexShrink: 0 }} />
-                    <span className="font-sans font-light" style={{ fontSize: "clamp(13px,1.1vw,15px)", color: "rgba(200,195,185,0.8)" }}>
-                      {h}
-                    </span>
-                  </div>
-                ))}
-              </div>
+                    Notify me
+                  </button>
+                </div>
+              )}
             </div>
-          </Reveal>
-
-          {/* RIGHT — Education + Based In */}
-          <Reveal delay={0.16}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-
-              {/* Education */}
-              <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <span style={{ fontSize: "18px", color: "#C9A84C" }}>🎓</span>
-                  <h3 className="font-serif font-normal" style={{ fontSize: "clamp(18px,2vw,24px)", color: "#F5F0E8" }}>
-                    Education
-                  </h3>
-                </div>
-                <div
-                  style={{
-                    background: "rgba(18,18,18,0.7)",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderRadius: "6px",
-                    padding: "20px 22px",
-                  }}
-                >
-                  <p className="font-serif font-normal mb-2" style={{ fontSize: "clamp(14px,1.2vw,17px)", color: "#F5F0E8" }}>
-                    TISS Mumbai
-                  </p>
-                  <p className="font-sans font-light" style={{ fontSize: "clamp(12px,1vw,14px)", color: "rgba(200,195,185,0.5)", lineHeight: 1.65 }}>
-                    Tata Institute of Social Sciences — blending academic rigor with lived experience across corporate giants and startup insurgents.
-                  </p>
-                </div>
-              </div>
-
-              {/* Based In */}
-              <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <span style={{ fontSize: "18px", color: "#C9A84C" }}>◎</span>
-                  <h3 className="font-serif font-normal" style={{ fontSize: "clamp(18px,2vw,24px)", color: "#F5F0E8" }}>
-                    Based In
-                  </h3>
-                </div>
-                <div
-                  style={{
-                    background: "rgba(18,18,18,0.7)",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderRadius: "6px",
-                    padding: "20px 22px",
-                  }}
-                >
-                  <p className="font-serif font-normal mb-2" style={{ fontSize: "clamp(14px,1.2vw,17px)", color: "#F5F0E8" }}>
-                    Bangalore, India
-                  </p>
-                  <p className="font-sans font-light" style={{ fontSize: "clamp(12px,1vw,14px)", color: "rgba(200,195,185,0.5)", lineHeight: 1.65 }}>
-                    Advising organisations on scaling strategies, leadership design, culture architecture, and sustainable growth practices.
-                  </p>
-                </div>
-              </div>
-
-            </div>
-          </Reveal>
-
+          </div>
         </div>
-      </div>
-    </section>
-  );
-}
+      </section>
+
+      {/* ── RECOGNITION ── */}
+      <section
+        id="recognition"
+        className="relative"
+        style={{ padding: "clamp(80px,12vh,140px) 0", borderTop: "1px solid var(--line)" }}
+      >
+        <div className="shell">
+          <Reveal>
+            <div className="mb-10">
+              <span className="eyebrow mb-4 block">Recognition</span>
+              <h2 className="h-section" style={{ maxWidth: "16ch" }}>Awards &amp; Education</h2>
+            </div>
+          </Reveal>
+          <div
+            className="grid grid-cols-1 md:grid-cols-3 gap-4"
+            style={{ maxWidth: 1080, margin: "0 auto" }}
+          >
+            {/* Honours */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "30px 28px" }}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.4" style={{ width: 26, height: 26, marginBottom: 14 }}>
+                <circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/>
+              </svg>
+              <h4 className="font-mono mb-4" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>Honours</h4>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                {HONOURS.map((h, i) => (
+                  <li key={i} style={{ padding: "8px 0", borderBottom: i < HONOURS.length - 1 ? "1px solid var(--line)" : "none", color: "var(--fg-2)", fontSize: 15 }}>{h}</li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Education */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "30px 28px" }}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.4" style={{ width: 26, height: 26, marginBottom: 14 }}>
+                <path d="M2 8l10-4 10 4-10 4z"/><path d="M6 10v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/>
+              </svg>
+              <h4 className="font-mono mb-4" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>Education</h4>
+              <p style={{ color: "var(--fg-3)", fontSize: "14.5px" }}>
+                <strong style={{ color: "var(--fg)" }}>TISS Mumbai</strong><br />
+                Tata Institute of Social Sciences — academic rigour paired with lived experience across corporate giants and startup insurgents.
+              </p>
+            </motion.div>
+
+            {/* Based In */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              style={{ background: "var(--bg-1)", border: "1px solid var(--line)", borderRadius: 12, padding: "30px 28px" }}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.4" style={{ width: 26, height: 26, marginBottom: 14 }}>
+                <path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.4"/>
+              </svg>
+              <h4 className="font-mono mb-4" style={{ fontSize: 11, fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--accent)" }}>Based In</h4>
+              <p style={{ color: "var(--fg-3)", fontSize: "14.5px" }}>
+                <strong style={{ color: "var(--fg)" }}>Bangalore, India</strong><br />
+                Advising organisations on scaling, leadership design and culture architecture.
+              </p>
+              <a
+                href="https://axionindex.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono inline-block mt-3"
+                style={{ fontSize: "10.5px", letterSpacing: ".05em", color: "var(--accent)" }}
+              >
+                Advisory work through Axion Index →
+              </a>
+            </motion.div>
+          </div>
+        </div>
+      </section>
