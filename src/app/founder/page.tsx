@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, Fragment } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
@@ -393,14 +394,17 @@ export default function FounderPage() {
                   border: "1px solid rgba(201,162,74,.32)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   boxShadow: "0 0 80px -30px rgba(201,162,74,.55), inset 0 0 40px -20px rgba(201,162,74,.06)",
+                  overflow: "hidden",
                 }}
               >
-                <span
-                  className="font-serif"
-                  style={{ fontSize: 72, fontWeight: 400, color: "#3e3d44", letterSpacing: ".06em", userSelect: "none" }}
-                >
-                  NN
-                </span>
+                <Image
+                  src="/nitishcolorfull.png"
+                  alt="Nitin Nahata"
+                  width={188}
+                  height={188}
+                  style={{ objectFit: "cover", width: "100%", height: "100%", borderRadius: "50%" }}
+                  priority
+                />
               </div>
             </div>
             {/* Caption */}
