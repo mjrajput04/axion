@@ -934,12 +934,13 @@ function Footer() {
 
             {/* Follow capture */}
             <div>
-              <p className="font-mono text-[9px] tracking-[0.45em] uppercase text-[var(--fg-5)] mb-4">Follow the work</p>
+              <p className="font-mono text-[9px] tracking-[0.45em] uppercase mb-4" style={{ color: "#EDEBE3" }}>Follow the work</p>
               <a
                 href="https://linkedin.com/company/axionindex"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--fg-4)] hover:text-[var(--accent)] transition-colors duration-300"
+                className="group inline-flex items-center gap-3 font-mono text-[10px] tracking-[0.22em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
+                style={{ color: "#EDEBE3" }}
               >
                 <span
                   className="w-7 h-7 rounded-full border border-[var(--line-strong)] group-hover:border-[var(--line-gold)] flex items-center justify-center transition-colors duration-300"
@@ -967,7 +968,8 @@ function Footer() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--fg-4)] hover:text-[var(--accent)] transition-colors duration-300"
+                    className="font-mono text-[10px] tracking-[0.18em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
+                    style={{ color: "#EDEBE3" }}
                   >
                     {l.label}
                   </Link>
@@ -989,7 +991,8 @@ function Footer() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--fg-4)] hover:text-[var(--accent)] transition-colors duration-300"
+                    className="font-mono text-[10px] tracking-[0.18em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
+                    style={{ color: "#EDEBE3" }}
                   >
                     {l.label}
                   </Link>
@@ -1002,19 +1005,26 @@ function Footer() {
           <div>
             <p className="font-mono text-[9px] tracking-[0.5em] uppercase text-[var(--accent)] opacity-50 mb-7">Contact</p>
             <div className="flex flex-col gap-4">
-              <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--fg-4)]">Bengaluru, India</span>
+              <span className="font-mono text-[10px] tracking-[0.18em] uppercase" style={{ color: "#EDEBE3" }}>Bengaluru, India</span>
               <a
                 href="mailto:office@axionindex.com"
-                className="font-mono text-[10px] tracking-[0.1em] text-[var(--fg-4)] hover:text-[var(--accent)] transition-colors duration-300 normal-case"
+                className="font-mono text-[10px] tracking-[0.1em] hover:text-[var(--accent)] transition-colors duration-300 normal-case"
+                style={{ color: "#EDEBE3" }}
               >
                 office@axionindex.com
               </a>
               <Link
                 href="/connect"
-                className="group inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--fg-4)] hover:text-[var(--accent)] transition-colors duration-300 mt-2"
+                className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase font-semibold transition-all duration-300 mt-2"
+                style={{
+                  color: "#080A0F",
+                  background: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
+                  borderRadius: 6,
+                  padding: "8px 16px",
+                }}
               >
                 Reach Us
-                <ArrowRight size={9} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+                <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform duration-300" />
               </Link>
             </div>
           </div>
@@ -1023,7 +1033,7 @@ function Footer() {
 
         {/* ── Bottom bar ── */}
         <div className="py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-[var(--fg-5)]">
+          <span className="font-mono text-[9px] tracking-[0.4em] uppercase" style={{ color: "#EDEBE3" }}>
             &copy; 2026 Axion Index. All rights reserved.
           </span>
           <div className="flex items-center gap-6">
@@ -1038,7 +1048,8 @@ function Footer() {
                 href={l.href}
                 target={l.external ? "_blank" : undefined}
                 rel={l.external ? "noopener noreferrer" : undefined}
-                className="font-mono text-[9px] tracking-[0.3em] uppercase text-[var(--fg-5)] hover:text-[var(--fg-3)] transition-colors duration-300"
+                className="font-mono text-[9px] tracking-[0.3em] uppercase hover:text-[var(--accent)] transition-colors duration-300"
+                style={{ color: "#EDEBE3" }}
               >
                 {l.label}
               </Link>

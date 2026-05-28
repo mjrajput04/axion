@@ -404,12 +404,24 @@ export default function FounderPage() {
               </div>
             </div>
             {/* Caption */}
-            <p
-              className="font-sans"
-              style={{ marginTop: 24, fontSize: "9.5px", fontWeight: 500, letterSpacing: ".38em", textTransform: "uppercase", color: "#4A4A52" }}
+            <div
+              style={{
+                marginTop: 24,
+                display: "inline-block",
+                border: "1px solid rgba(201,162,74,0.4)",
+                borderRadius: 10,
+                padding: "14px 32px",
+                background: "rgba(201,162,74,0.07)",
+                boxShadow: "0 0 24px -8px rgba(201,162,74,0.2)",
+              }}
             >
-              The Operating Architect
-            </p>
+              <p
+                className="font-sans"
+                style={{ fontSize: "12px", fontWeight: 600, letterSpacing: ".32em", textTransform: "uppercase", color: "#C9A24A", margin: 0 }}
+              >
+                The Operating Architect
+              </p>
+            </div>
           </div>
         </div>
 
