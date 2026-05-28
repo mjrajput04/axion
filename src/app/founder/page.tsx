@@ -333,9 +333,7 @@ export default function FounderPage() {
             ))}
             <a
               className="fn-btn"
-              href="https://axionindex.org"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/"
               onClick={() => setMobileOpen(false)}
             >
               Axion Index ↗
@@ -1339,10 +1337,10 @@ export default function FounderPage() {
                         borderRadius: 10, padding: "22px 20px",
                       }}
                     >
-                      <div className="font-serif italic mb-2" style={{ fontSize: 15, color: "rgba(201,162,74,.55)" }}>{p.num}</div>
-                      <div className="font-serif mb-2" style={{ fontWeight: 400, fontSize: 18, color: "#CCCAC2", lineHeight: 1.14 }}>{p.name}</div>
-                      <div className="font-serif italic mb-3" style={{ fontSize: "13px", lineHeight: 1.42, color: "rgba(201,162,74,.65)" }}>{p.signal}</div>
-                      <div style={{ fontSize: "12.5px", color: "#5A5A62", lineHeight: 1.54 }}>{p.desc}</div>
+                      <div className="font-serif italic mb-2" style={{ fontSize: 17, color: "rgba(201,162,74,.55)" }}>{p.num}</div>
+                      <div className="font-serif mb-2" style={{ fontWeight: 400, fontSize: 21, color: "#CCCAC2", lineHeight: 1.14 }}>{p.name}</div>
+                      <div className="font-serif italic mb-3" style={{ fontSize: "15px", lineHeight: 1.42, color: "rgba(201,162,74,.65)" }}>{p.signal}</div>
+                      <div style={{ fontSize: "14px", color: "#5A5A62", lineHeight: 1.54 }}>{p.desc}</div>
                     </motion.div>
                   ))}
                 </div>
@@ -1392,10 +1390,10 @@ export default function FounderPage() {
                         borderRadius: 10, padding: "22px 20px",
                       }}
                     >
-                      <div className="font-serif italic mb-2" style={{ fontSize: 15, color: "rgba(201,162,74,.7)" }}>{p.num}</div>
-                      <div className="font-serif mb-2" style={{ fontWeight: 400, fontSize: 18, color: "#EDEBE3", lineHeight: 1.14 }}>{p.name}</div>
-                      <div className="font-serif italic mb-3" style={{ fontSize: "13px", lineHeight: 1.42, color: "rgba(201,162,74,.75)" }}>{p.signal}</div>
-                      <div style={{ fontSize: "12.5px", color: "#6A6A70", lineHeight: 1.54 }}>{p.desc}</div>
+                      <div className="font-serif italic mb-2" style={{ fontSize: 17, color: "rgba(201,162,74,.7)" }}>{p.num}</div>
+                      <div className="font-serif mb-2" style={{ fontWeight: 400, fontSize: 21, color: "#EDEBE3", lineHeight: 1.14 }}>{p.name}</div>
+                      <div className="font-serif italic mb-3" style={{ fontSize: "15px", lineHeight: 1.42, color: "rgba(201,162,74,.75)" }}>{p.signal}</div>
+                      <div style={{ fontSize: "14px", color: "#6A6A70", lineHeight: 1.54 }}>{p.desc}</div>
                     </motion.div>
                   ))}
                 </div>
@@ -1838,7 +1836,7 @@ export default function FounderPage() {
 
               {/* Email follow capture */}
               <div>
-                <p className="font-mono mb-4" style={{ fontSize: "9px", letterSpacing: ".45em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+                <p className="font-mono mb-4" style={{ fontSize: "9px", letterSpacing: ".45em", textTransform: "uppercase", color: "#EDEBE3" }}>
                   Follow the work
                 </p>
                 <div className="flex gap-2 max-w-[340px]">
@@ -1888,9 +1886,9 @@ export default function FounderPage() {
                     <Link
                       href={l.href}
                       className="font-mono"
-                      style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-4)", textDecoration: "none", transition: "color 0.3s" }}
+                      style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
                       onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-4)")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                     >
                       {l.label}
                     </Link>
@@ -1910,9 +1908,9 @@ export default function FounderPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 font-mono"
-                  style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-4)", textDecoration: "none", transition: "color 0.3s" }}
+                  style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-4)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                 >
                   <span
                     style={{
@@ -1933,18 +1931,18 @@ export default function FounderPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-mono"
-                  style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--fg-4)", textDecoration: "none", transition: "color 0.3s" }}
+                  style={{ fontSize: "10px", letterSpacing: ".18em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-4)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                 >
                   Axion Index ↗
                 </a>
                 <a
                   href="mailto:office@axionindex.com"
                   className="font-mono"
-                  style={{ fontSize: "10px", letterSpacing: ".1em", color: "var(--fg-4)", textDecoration: "none", textTransform: "none", transition: "color 0.3s" }}
+                  style={{ fontSize: "10px", letterSpacing: ".1em", color: "#EDEBE3", textDecoration: "none", textTransform: "none", transition: "color 0.3s" }}
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-4)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                 >
                   office@axionindex.com
                 </a>
@@ -1955,7 +1953,7 @@ export default function FounderPage() {
 
           {/* ── Bottom bar ── */}
           <div className="py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <span className="font-mono" style={{ fontSize: "9px", letterSpacing: ".4em", textTransform: "uppercase", color: "var(--fg-5)" }}>
+            <span className="font-mono" style={{ fontSize: "9px", letterSpacing: ".4em", textTransform: "uppercase", color: "#EDEBE3" }}>
               © 2026 Nitin Nahata · Axion Index. All rights reserved.
             </span>
             <div className="flex items-center gap-6">
@@ -1972,9 +1970,9 @@ export default function FounderPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-mono"
-                    style={{ fontSize: "9px", letterSpacing: ".3em", textTransform: "uppercase", color: "var(--fg-5)", textDecoration: "none", transition: "color 0.3s" }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "var(--fg-3)")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-5)")}
+                    style={{ fontSize: "9px", letterSpacing: ".3em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                   >
                     {l.label}
                   </a>
@@ -1983,9 +1981,9 @@ export default function FounderPage() {
                     key={l.label}
                     href={l.href}
                     className="font-mono"
-                    style={{ fontSize: "9px", letterSpacing: ".3em", textTransform: "uppercase", color: "var(--fg-5)", textDecoration: "none", transition: "color 0.3s" }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "var(--fg-3)")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-5)")}
+                    style={{ fontSize: "9px", letterSpacing: ".3em", textTransform: "uppercase", color: "#EDEBE3", textDecoration: "none", transition: "color 0.3s" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "#EDEBE3")}
                   >
                     {l.label}
                   </Link>
