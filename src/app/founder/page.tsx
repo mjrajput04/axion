@@ -381,7 +381,7 @@ export default function FounderPage() {
             {/* Outer halo ring */}
             <div
               style={{
-                width: 220, height: 220, borderRadius: "50%",
+                width: 340, height: 340, borderRadius: "50%",
                 border: "1px solid rgba(201,162,74,.10)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 margin: "0 auto",
@@ -390,7 +390,7 @@ export default function FounderPage() {
               {/* Inner ring */}
               <div
                 style={{
-                  width: 188, height: 188, borderRadius: "50%",
+                  width: 300, height: 300, borderRadius: "50%",
                   border: "1px solid rgba(201,162,74,.32)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   boxShadow: "0 0 80px -30px rgba(201,162,74,.55), inset 0 0 40px -20px rgba(201,162,74,.06)",
@@ -400,8 +400,8 @@ export default function FounderPage() {
                 <Image
                   src="/nitishcolorfull.png"
                   alt="Nitin Nahata"
-                  width={188}
-                  height={188}
+                  width={300}
+                  height={300}
                   style={{ objectFit: "cover", width: "100%", height: "100%", borderRadius: "50%" }}
                   priority
                 />
